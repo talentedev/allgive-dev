@@ -4,8 +4,10 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "dev": "ng serve",
     "build": "ng build --prod",
+    "start": "node server.js",
+    "postinstall": "ng build --aot -prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -13,8 +15,10 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
+    "@angular/cli": "^7.1.4",
     "@angular/common": "^5.2.0",
     "@angular/compiler": "^5.2.0",
+    "@angular/compiler-cli": "^5.2.11",
     "@angular/core": "^5.2.0",
     "@angular/forms": "^5.2.0",
     "@angular/http": "^5.2.0",
@@ -28,17 +32,22 @@
     "bootstrap": "^4.1.2",
     "contentful": "^6.1.1",
     "core-js": "^2.4.1",
+    "express": "^4.16.4",
     "firebase": "^5.3.0",
     "marked": "^0.4.0",
     "ngx-stripe": "^0.8.2",
     "ngx-swiper-wrapper": "^6.3.0",
+    "path": "^0.12.7",
     "require": "^2.4.20",
     "rxjs": "^5.5.6",
+    "tslib": "^1.9.0",
+    "typescript": "~2.5.3",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
-    "@angular/cli": "~1.7.4",
-    "@angular/compiler-cli": "^5.2.0",
+    "@angular-devkit/build-angular": "~0.11.0",
+    "@angular/cli": "^7.1.4",
+    "@angular/compiler-cli": "^5.2.11",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
@@ -55,5 +64,9 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~2.5.3"
+  },
+  "engines": {
+    "node": "8.12.0",
+    "npm": "6.4.1"
   }
 }

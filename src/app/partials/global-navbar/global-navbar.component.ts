@@ -11,16 +11,22 @@ export class GlobalNavbarComponent implements OnInit {
 
   user: Observable<firebase.User>;
   authState;
-  public menuState: boolean = false;
+  menuState: boolean = false;
+  mobileVersion: boolean = false;
 
   constructor(public authService: AuthService) {
     this.authState = this.authService.authState;
   }
 
   ngOnInit() {
+    if (window.screen.width < 414) {
+      this.mobileVersion = true;
+    } else {
+      this.mobileVersion = false;
+    }
   }
 
-  public toggleMenu(event?: MouseEvent): void {
+  toggleMenu(event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
     }
