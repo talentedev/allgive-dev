@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md bg-white navbar-light" [ngClass]="{'fixed-top fixed-height-nav': !mobileVersion}">
+<nav class="navbar navbar-expand-md bg-white navbar-light fixed-top">
     <a class="navbar-brand"
        routerLink="/main" routerLinkActive="active">
       <img src="../../assets/images/logo.png">
@@ -9,7 +9,7 @@
             data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault"
             aria-expanded="false"
-            aria-label="Toggle navigation"  (click)="toggleMenu()">
+            aria-label="Toggle navigation"  (click)="menuState = !menuState">
       <span class="navbar-toggler-icon"></span>
     </button>
 
