@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h4 class="modal-title">Make a Donation Selection:</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngFor="let donation of donationElements" class="donation-card" [class.active]="donation.active" (click)="selectDonationAmount(donation)">
+    <div class="donation-amount">{{ donation.donationAmount | currency }}</div>
+    <div class="donation-frequency">{{ donation.donationFrequency }}</div>
+  </div>
+
+  <div>{{ selectedDonation?.donationAmount }}</div> <!-- For testing. Remove for production -->
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-light" (click)="open()" [disabled]="!submitActive">Submit</button>
+</div>

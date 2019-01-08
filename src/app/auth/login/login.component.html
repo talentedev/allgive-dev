@@ -1,0 +1,22 @@
+<main>
+  <h1>Log In</h1>
+  
+  <form [formGroup]="loginForm"
+        id="loginForm"
+        (ngSubmit)="onSubmit()">
+  
+    <input type="text"
+           formControlName="email"
+           required>
+    <input type="password"
+           formControlName="password"
+           required>
+  
+    <button type="submit"
+            [disabled]="!loginForm.valid">Log In</button>
+  
+  </form>
+
+  <p style="color: #000000">New user? <a routerLink="/signup">Sign up here.</a></p>
+  
+</main>

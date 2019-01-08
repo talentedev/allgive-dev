@@ -1,0 +1,161 @@
+<div id="available-charities" class="hero-charities jumbotron jumbotron-fluid">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col align-self-center">
+        <h1>{{carouselType}}</h1>
+      </div>
+    </div>
+
+    <ngb-carousel *ngIf="!mobile" id="charityCarousel"
+                  class="carousel-charities row align-items-center carousel-fade">
+      <div class="carousel-inner">
+
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:0:5">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' +(charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a ></a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:6:11">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' + (charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a [routerLink]="['/charities', charity?.fields.slug]">{{charity.fields.charityName}}</a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:11:16">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' + (charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a [routerLink]="['/charities', charity?.fields.slug]">
+                      {{charity.fields.charityName}}
+                    </a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ngb-carousel>
+
+    <ngb-carousel *ngIf="mobile" id="charityCarousel"
+                  class="carousel-charities row align-items-center carousel-fade">
+      <div class="carousel-inner">
+
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:0:3">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' +(charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a ></a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:4:7">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' + (charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a [routerLink]="['/charities', charity?.fields.slug]">{{charity.fields.charityName}}</a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:8:11">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' + (charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a [routerLink]="['/charities', charity?.fields.slug]">
+                      {{charity.fields.charityName}}
+                    </a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:9:12">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' + (charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a [routerLink]="['/charities', charity?.fields.slug]">
+                      {{charity.fields.charityName}}
+                    </a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template ngbSlide
+                     class="carousel-item active">
+          <div class="row justify-content-center">
+            <div class="card-deck col justify-content-center">
+              <div class="card"
+                   *ngFor="let charity of charities | slice:13:16">
+                <div class="card-body card-logo"
+                     [ngStyle]="{'background-image': 'url(' + (charity?.fields.logo?.fields.file.url) + ')'}" [routerLink]="['/charities', charity?.fields.slug]">
+                  <!-- <span class="charity-1">
+                    <a [routerLink]="['/charities', charity?.fields.slug]">
+                      {{charity.fields.charityName}}
+                    </a>
+                  </span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ngb-carousel>
+  </div>
+</div>
+
+<!-- [ngStyle]="{'background-image':'url(' + charities?.fields.coverImage.fields.file.url + ')'}" -->

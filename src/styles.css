@@ -1,0 +1,1024 @@
+@import url(../node_modules/bootstrap/dist/css/bootstrap.min.css);
+
+@font-face {
+    /* Open Sans Light */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: url("./assets/fonts/OpenSans/Light/OpenSans-Light.eot");
+    src: local("Open Sans Light"), local("OpenSans-Light"), url("./assets/fonts/OpenSans/Light/OpenSans-Light.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/OpenSans/Light/OpenSans-Light.woff") format("woff"), url("./assets/fonts/OpenSans/Light/OpenSans-Light.ttf") format("truetype");
+}
+
+@font-face {
+    /* Open Sans Light Italic */
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 300;
+    src: url("./assets/fonts/OpenSans/LightItalic/OpenSans-LightItalic.eot");
+    src: local("Open Sans Light Italic"), local("OpenSansLight-Italic"), url("./assets/fonts/OpenSans/LightItalic/OpenSans-LightItalic.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/OpenSans/LightItalic/OpenSans-LightItalic.woff") format("woff"), url("./assets/fonts/OpenSans/LightItalic/OpenSans-LightItalic.ttf") format("truetype");
+}
+
+@font-face {
+    /* Open Sans Regular */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url("./assets/fonts/OpenSans/Regular/OpenSans-Regular.eot");
+    src: local("Open Sans Regular"), local("OpenSans-Regular"), url("./assets/fonts/OpenSans/Regular/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/OpenSans/Regular/OpenSans-Regular.woff") format("woff"), url("./assets/fonts/OpenSans/Regular/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    /* Open Sans Italic */
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: url("./assets/fonts/OpenSans/Italic/OpenSans-Italic.eot");
+    src: local("Open Sans Italic"), local("OpenSans-Italic"), url("./assets/fonts/OpenSans/Italic/OpenSans-Italic.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/OpenSans/Italic/OpenSans-Italic.woff") format("woff"), url("./assets/fonts/OpenSans/Italic/OpenSans-Italic.ttf") format("truetype");
+}
+
+@font-face {
+    /* Open Sans Bold */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url("./assets/fonts/OpenSans/Bold/OpenSans-Bold.eot");
+    src: local("Open Sans Bold"), local("OpenSans-Bold"), url("./assets/fonts/OpenSans/Bold/OpenSans-Bold.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/OpenSans/Bold/OpenSans-Bold.woff") format("woff"), url("./assets/fonts/OpenSans/Bold/OpenSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    /* Open Sans Bold Italic */
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 700;
+    src: url("./assets/fonts/OpenSans/BoldItalic/OpenSans-BoldItalic.eot");
+    src: local("Open Sans Bold Italic"), local("OpenSans-BoldItalic"), url("./assets/fonts/OpenSans/BoldItalic/OpenSans-BoldItalic.eot?#iefix") format("embedded-opentype"), url("./assets/fonts/OpenSans/BoldItalic/OpenSans-BoldItalic.woff") format("woff"), url("./assets/fonts/OpenSans/BoldItalic/OpenSans-BoldItalic.ttf") format("truetype");
+}
+
+/* ########## Fonts ########## */
+
+/*
+    Montserrat-Bold 700
+    Montserrat-LightItalic 300
+    Montserrat-Regular 400
+    Nunito-Black 900
+    Nunito-Bold 700
+    Nunito-ExtraBold 800
+    Nunito-ExtraBoldItalic 800
+    Nunito-Italic 400
+    Nunito-Light 300
+    Nunito-Regular 400
+    Nunito-SemiBold 600
+*/
+
+/*
+    font-family: 'Nunito', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+*/
+
+/* ########## Global: Start ########## */
+
+body {
+    font-family: "Nunito", sans-serif;
+    font-weight: 400;
+    color: #fff;
+}
+
+main {
+    margin-top: 110px;
+    width: 100%;
+}
+
+.jumbotron {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-weight: 800;
+    font-size: 3rem;
+}
+
+.arrow-right {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.carousel-indicators {
+    display: none;
+}
+
+#featured-charities .carousel-control-prev,
+#featured-charities .carousel-control-next {
+    display: none;
+}
+
+/* ########## Global: End ########## */
+
+/* ########## Homepage: Start ########## */
+
+.hero-charity {
+    position: relative;
+    height: 33vw;
+}
+
+.hero-charity .carousel {
+    width: 100%;
+    height: 33vw;
+}
+
+.hero-charity .carousel .carousel-inner,
+.hero-charity .carousel .carousel-item {
+    height: 100%;
+}
+
+.hero-charity .carousel .carousel-item .container {
+    height: 100%;
+    width: 100%;
+    padding-top: 6rem;
+}
+
+.hero-charity .carousel .carousel-item .carousel-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#carousel-text,
+#carousel-text .featured {
+    text-shadow: 1px 1px 2px #000000;
+}
+
+/* .hero-charity .carousel .carousel-item.first {
+    background-image: url(./assets/images/top-hero_coffee.jpg);
+}
+
+.hero-charity .carousel .carousel-item.second {
+    background-image: url(./assets/images/top-hero_water-india.jpg);
+} */
+
+.hero-charity h1 {
+    margin-bottom: 1.5rem;
+}
+
+.hero-charity p {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.75rem;
+}
+
+.hero-charity .button {
+    width: 10rem;
+    height: 3rem;
+    border: 1px solid white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.hero-charity .featured {
+    position: absolute;
+    bottom: 1rem;
+    left: auto;
+    font-style: italic;
+}
+
+.hero-charity .featured a {
+    color: #fff;
+    text-decoration: underline;
+    font-style: normal;
+    margin-left: 5px;
+}
+
+.charity-details .hero-charity {
+    height: 25vw;
+}
+
+.hero-sacrifice {
+    height: 25vw;
+    background-color: white;
+    color: #000;
+}
+
+.hero-sacrifice .container,
+.hero-sacrifice .row {
+    height: 100%;
+}
+
+.hero-sacrifice h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-sacrifice p {
+    font-size: 1.5rem;
+}
+
+.hero-works {
+    height: 33vw;
+    background-color: #058cb3;
+    background-image: url(./assets/images/home_third_ipad.png);
+    background-repeat: no-repeat;
+    background-position: 100px 80px;
+    background-size: 50% auto;
+}
+
+.hero-works .row {
+    height: 33vw;
+}
+
+.hero-works h1 {
+    margin-bottom: 1.5rem;
+}
+
+.hero-works p {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.75rem;
+}
+
+.hero-works .button {
+    width: 10rem;
+    height: 3rem;
+    border: 1px solid white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 3rem;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.hero-charities {
+    height: 36vw;
+    padding: 3vw 0;
+    background-color: white;
+}
+
+#available-charities {
+    height: auto;
+}
+
+.hero-charities .container-fluid {
+    height: 100%;
+}
+
+.hero-charities h1 {
+    color: #0872ba;
+    text-align: center;
+    line-height: 5vw;
+}
+
+.hero-charities .view-all {
+    color: #0872ba;
+    text-align: center;
+    width: 100%;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    height: 5vw;
+}
+
+.hero-charities .view-all a {
+    color: #0872ba;
+}
+
+.hero-charities .view-all a:hover {
+    color: #0872ba;
+    text-decoration: underline;
+}
+
+.hero-charities .carousel-charities {
+    height: 15vw;
+    margin-bottom: 1.5vw;
+}
+
+.hero-charities .carousel-charities .card {
+    width: 15vw;
+    max-width: 15vw;
+    height: 15vw;
+    border-radius: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* .hero-charities .carousel-charities .card {
+    background-color: #555;
+} */
+
+.carousel-charities {
+    outline: none;
+}
+
+.hero-charities .carousel-charities .card span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    display: block;
+    text-align: center;
+    line-height: 15vw;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev,
+.hero-charities .carousel-charities .carousel-control-next {
+    width: 8vw;
+    opacity: 1;
+    background-color: #fff;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev:hover,
+.hero-charities .carousel-charities .carousel-control-next:hover {
+    opacity: 1;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev-icon,
+.hero-charities .carousel-charities .carousel-control-next-icon {
+    width: 22px;
+    height: 40px;
+    background-image: url(./assets/images/carousel-arrow.png);
+    opacity: 0.666;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev-icon:hover,
+.hero-charities .carousel-charities .carousel-control-next-icon:hover {
+    opacity: 1;
+}
+
+.hero-charities .carousel-charities .carousel-control-next-icon {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.hero-testimonials {
+    height: 40vw;
+    background-image: url(./assets/images/home_fourth_girl.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.hero-testimonials .row.testimonial-card {
+    height: 40vw;
+}
+
+.hero-testimonials .card {
+    background-color: #0872ba;
+}
+
+.hero-testimonials .card .card-body {
+    padding: 3.5rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.hero-testimonials .card .card-footer {
+    text-align: center;
+    background-color: transparent;
+}
+
+.hero-testimonials .card .card-footer .testimonial-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: block;
+}
+
+.hero-testimonials .card .card-footer .testimonial-city {
+    font-style: italic;
+}
+
+.hero-testimonials .card .card-footer .arrow-right>img,
+.hero-testimonials .card .card-footer .arrow-left>img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.hero-adds {
+    height: 20vw;
+    background-color: white;
+}
+
+.hero-adds .row {
+    height: 20vw;
+}
+
+.hero-adds h4 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 4rem;
+    color: #333;
+    text-align: center;
+}
+
+.hero-adds p {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.hero-charities .carousel-charities {
+    height: 15vw;
+    margin-bottom: 1.5vw;
+}
+
+.hero-charities .carousel-charities .card,
+.hero-charities .carousel-charities .card-body {
+    width: 15vw;
+    max-width: 15vw;
+    height: 15vw;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* .hero-charities .carousel-charities .card {
+    background-color: #555;
+} */
+
+.hero-charities .carousel-charities .card span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    display: block;
+    text-align: center;
+    line-height: 15vw;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev,
+.hero-charities .carousel-charities .carousel-control-next {
+    width: 8vw;
+    opacity: 1;
+    background-color: #fff;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev:hover,
+.hero-charities .carousel-charities .carousel-control-next:hover {
+    opacity: 1;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev-icon,
+.hero-charities .carousel-charities .carousel-control-next-icon {
+    width: 22px;
+    height: 40px;
+    background-image: url(./assets/images/carousel-arrow.png);
+    opacity: 0.666;
+}
+
+.hero-charities .carousel-charities .carousel-control-prev-icon:hover,
+.hero-charities .carousel-charities .carousel-control-next-icon:hover {
+    opacity: 1;
+}
+
+.hero-charities .carousel-charities .carousel-control-next-icon {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.hero-testimonials {
+    height: 40vw;
+    background-image: url(./assets/images/home_fourth_girl.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.hero-testimonials .row.testimonial-card {
+    height: 40vw;
+}
+
+.hero-testimonials .card {
+    background-color: #0872ba;
+}
+
+.hero-testimonials .card .card-body {
+    padding: 3.5rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.card-body.card-logo {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-testimonials .card .card-footer {
+    text-align: center;
+    background-color: transparent;
+}
+
+.hero-testimonials .card .card-footer .testimonial-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: block;
+}
+
+.hero-testimonials .card .card-footer .testimonial-city {
+    font-style: italic;
+}
+
+.hero-testimonials .card .card-footer .arrow-right>img,
+.hero-testimonials .card .card-footer .arrow-left>img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.hero-adds {
+    height: 20vw;
+    background-color: white;
+}
+
+.hero-adds .row {
+    height: 20vw;
+}
+
+.hero-adds h4 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 4rem;
+    color: #333;
+    text-align: center;
+}
+
+.hero-adds p {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+/* ########## Homepage: End ########## */
+
+/* ########## Charity Grid: Start ########## */
+
+.charity-grid {
+    line-height: 0;
+}
+
+.card-columns {
+    -webkit-column-gap: 0;
+    column-gap: 0;
+}
+
+.card a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #000000;
+    text-align: center;
+}
+
+.card.medium div.card-image {
+    width: 100%;
+    height: 100%;
+}
+
+.card.medium div.card-image .card-cover {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%);
+    transition: filter 0.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card.medium div.card-image:hover .card-cover {
+    filter: none;
+}
+
+div.card-image img.logo{
+    position: absolute;
+    width: 35%;
+    height: 35%;
+    bottom: 5%;
+    right: 5%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 10;
+    transition: width 0.5s ease-in-out, height 0.5s ease-in-out, top 0.5s ease-in-out, left 0.5s ease-in-out;
+    filter: drop-shadow(-5px 5px 5px gray);
+}
+
+div.card-image:hover img.logo {
+    width: 15%;
+    height: 15%;
+}
+
+.card-charity-text {
+    position: absolute;
+    width: 70%;
+    bottom:5%;
+    left: 5%;
+    color: #ffffff;
+    line-height: 1.25;
+    text-shadow: 1px 1px 2px #000000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+div.card-image:hover .card-charity-text {
+    opacity: 1;
+}
+
+.card-charity-text .card-urgent {
+    color: red;
+    font-style: italic;
+}
+ 
+.card-charity-text .charity-name {
+    font-weight: 800;
+    margin: 6px 0px;
+}
+
+.card-charity-text .card-cta {
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-size: 0.6rem;
+    font-weight: 800;
+}
+
+.card-columns .card {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.card-columns .card.small {
+    height: 16.5vw;
+    /* border: 1px solid green; */
+}
+
+.card-columns .card.medium {
+    height: 33vw;
+    /* border: 1px solid red; */
+}
+
+.card-columns .card.large {
+    height: 49.5vw;
+    /* border: 1px solid blue; */
+}
+
+.charity-filters {
+    width: 100%;
+    height: 5vh;
+    border: 1px solid #000000;
+}
+
+#featured-charity.hero-charity {
+    background-size: 100% auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#featured-charity h1,
+#featured-charity .lead,
+#featured-charity .featured {
+    text-shadow: 1px 1px 2px #000000;
+}
+
+/* ########## Charity Grid: End ########## */
+
+/* ########## Charity Details: Start ########## */
+
+#charity-details .hero-charity {
+    height: 25vw;
+    /* background-image: url(./assets/images/charity-details-hero.jpg); */
+    background-position: center 20%;
+    background-size: cover;
+    margin-bottom: 7vw;
+}
+
+#charity-details .hero-charity .logo {
+    position: absolute;
+    overflow: hidden;
+    width: 10vw;
+    height: 10vw;
+    /* background-image: url(./assets/images/charity-details_square-logo.png); */
+    background-size: cover;
+    bottom: -5vw;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-indent: -10rem;
+    filter: drop-shadow(-2px 2px 4px #000000);
+}
+
+#charity-details .charity-overview .category {
+    font-size: 1.25rem;
+    color: #333333;
+    margin-bottom: 1.75rem;
+}
+
+#charity-details .charity-overview .category .divide {
+    margin: auto 0.5rem;
+    color: #b0afaf;
+}
+
+#charity-details .charity-overview .category .highlight {
+    color: #f3052c;
+}
+
+#charity-details .charity-overview .name {
+    color: #0004d0;
+}
+
+#charity-details .charity-text {
+    font-size: 1.25rem;
+    color: #000;
+}
+
+#charity-details .charity-text p:last-of-type {
+    margin-bottom: 4rem;
+}
+
+#charity-details .charity-text .media-container {
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+#charity-details .charity-text .media-container img {
+    width: 100%;
+    height: auto;
+}
+
+#charity-details .charity-testimonial {
+    height: 20vw;
+    background-color: #faf8f8;
+    color: #0872ba;
+    margin-bottom: 4rem;
+}
+
+#charity-details .charity-testimonial .row {
+    height: 100%;
+}
+
+#charity-details .charity-testimonial p {
+    color: #333;
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    color: #0872ba;
+}
+
+#charity-details .charity-testimonial .testimonial-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: block;
+    color: #074c7a;
+    text-align: center;
+}
+
+#charity-details .charity-testimonial .testimonial-city {
+    font-style: italic;
+    color: #074c7a;
+    text-align: center;
+    display: block;
+}
+
+#charity-details .news .row.justify-content-center {
+    margin-bottom: 2rem;
+}
+
+#charity-details .news h3 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#charity-details .news img {
+    width: 100%;
+    height: auto;
+}
+
+#charity-details .news p {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+#charity-details .news a.read-more {
+    color: #074c7a;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+#charity-details .news div.row:last-of-type {
+    margin-bottom: 6rem;
+}
+
+#charity-details .hero-charities {
+    background-color: #faf8f8;
+}
+
+#charity-details .hero-charities .carousel-control-prev,
+#charity-details .hero-charities .carousel-control-next {
+    background-color: #faf8f8;
+}
+
+/* ########## Charity Details: End ########## */
+
+/* ########## Login: Start ######### */
+
+/* ######### Login: End ######### */
+
+/* ######### Signup: Start ######### */
+
+/* ######### Signup: End ######### */
+
+/* ######### Subscription/Payment Modal: Start ######### */
+
+.modal {
+    color: #000000;
+    color: #31325F;
+    line-height: 40px;
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.modal::placeholder {
+    color: #CFD7E0;
+}
+
+#name, #email {
+    outline: none;
+    line-height: 1rem;
+    margin-bottom: 10px;
+}
+
+/* ######### Subscription/Payment Modal: End ######### */
+
+/* ########## Donor Dashboard: Start ########## */
+.hero-user {
+    height: 10vw;
+    margin-bottom: 3rem; }
+    .hero-user .container, .hero-user .row {
+      height: 100%; }
+    .hero-user h1 {
+      color: #0004d0; }
+    .hero-user .donor-affirmation {
+      color: #333;
+      font-size: 1.25rem;
+      line-height: 1; }
+  
+  .section--title {
+    margin-bottom: 2rem; }
+  
+  .hero-charities {
+    height: 20vw; }
+    .hero-charities.donor-manage {
+      height: 35vw; }
+  
+  .active-charities {
+    height: 15vw;
+    margin-bottom: 1.5vw; }
+    .active-charities .card,
+    .active-charities .card-body {
+      width: 15vw;
+      max-width: 15vw;
+      height: 15vw;
+      border-radius: 0;
+      padding: 0;
+      overflow: hidden; }
+    .active-charities .card {
+      background-color: #555; }
+      .active-charities .card span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        display: block;
+        text-align: center;
+        line-height: 15vw; }
+    .active-charities .charity-details {
+      background-color: #2fa4f3;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      height: 100%;
+      -webkit-transform: translateY(16vw);
+              transform: translateY(16vw);
+      transition: -webkit-transform .666s ease-in-out;
+      transition: transform .666s ease-in-out;
+      transition: transform .666s ease-in-out, -webkit-transform .666s ease-in-out;
+      overflow: hidden; }
+      .active-charities .charity-details .manage-charity {
+        position: absolute;
+        bottom: 1rem;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 6vw; }
+    .active-charities .card-body:hover .charity-details {
+      -webkit-transform: translateY(0);
+              transform: translateY(0); }
+  
+  .donor-charity--container {
+    width: 100%;
+    position: relative;
+    height: 15vw; }
+  
+  .donor-charity--manage {
+    position: absolute;
+    top: 0;
+    height: 30vw;
+    background-color: green; }
+  
+  .expand-payment-details {
+    /* height: 10vw; */
+    padding: 2.5rem;
+    background-color: #fff;
+    border-bottom: 2px solid #e4e8eb;
+    line-height: 1.5; }
+    .expand-payment-details h5 {
+      font-size: 1rem; }
+    .expand-payment-details .name-title, .expand-payment-details .address-title {
+      font-weight: 700;
+      color: #333; }
+    .expand-payment-details .name-info, .expand-payment-details .address-info {
+      font-weight: 800;
+      font-size: 1.25rem;
+      margin-bottom: .75rem; }
+      .expand-payment-details .name-info span, .expand-payment-details .address-info span {
+        display: block; }
+    .expand-payment-details .card-options {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      line-height: 2; }
+      .expand-payment-details .card-options .delete-card {
+        color: #c10442; }
+      .expand-payment-details .card-options .edit:hover, .expand-payment-details .card-options .edit:active, .expand-payment-details .card-options .lost-or-stolen:hover, .expand-payment-details .card-options .lost-or-stolen:active, .expand-payment-details .card-options .delete-card:hover, .expand-payment-details .card-options .delete-card:active {
+        text-decoration: underline; }
+    .expand-payment-details ul.payment-charities {
+      width: 100%;
+      background-color: #f8f8f8;
+      padding: 2rem;
+      list-style: none; }
+      .expand-payment-details ul.payment-charities li {
+        font-size: 1.25rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 1rem; }
+        .expand-payment-details ul.payment-charities li:last-of-type {
+          margin-bottom: 0; }
+  
+  .hero-payments {
+    margin-bottom: 6rem; }
+    .hero-payments .container {
+      padding-top: 2rem;
+      color: black; }
+    .hero-payments .card-info {
+      padding: 2.5rem;
+      background-color: #f4f3f3;
+      color: #333; }
+      .hero-payments .card-info > div {
+        height: 1rem;
+        line-height: 1; }
+  
+  /* ########## Donor Dashboard: End ########## */
+  
+
+/* ######### Page Wrapper: Start ######### */
+
+#page-wrapper .text.page-text {
+    font-size: 1.25rem;
+    color: #000;
+}
+
+#page-wrapper .text h1 {
+    color: #000000;
+}
+
+/* ######### Page Wrapper: End ######### */

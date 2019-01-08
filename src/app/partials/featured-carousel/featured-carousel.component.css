@@ -1,0 +1,21 @@
+@media (max-width: 414px) {
+    .hero-charity {
+        height: 100%;
+    }
+    #featured-charities {
+        height: 350px;
+    }
+    #featured-charities .container {
+        padding-top: 30px;
+    }
+    #carousel-text h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    #carousel-text p {
+        font-size: 22px;
+    }
+    #carousel-text .button {
+        margin: 10px auto;
+    }
+}

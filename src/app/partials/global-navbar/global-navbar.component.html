@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-md bg-white navbar-light" [ngClass]="{'fixed-top fixed-height-nav': !menuState}">
+    <a class="navbar-brand"
+       routerLink="/main" routerLinkActive="active">
+      <img src="../../assets/images/logo.png">
+    </a>
+    <button class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault"
+            aria-expanded="false"
+            aria-label="Toggle navigation"  (click)="toggleMenu()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div [ngbCollapse]="!menuState" class="collapse navbar-collapse justify-content-end"
+         id="navbarsExampleDefault">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link"
+             routerLink="/charities" routerLinkActive="active">Find A Charity
+            <!--<span class="sr-only">(current)</span>-->
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/faqs">FAQs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="!authService.authState" routerLink="/login">Login</a>
+          <a class="nav-link" *ngIf="authService.authState" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+      <div class="navbar-text my-2 my-lg-0 button">
+        <a routerLink="/charities"
+        *ngIf="!authService.authState"
+           class="my-2 my-sm-0">Get Started</a>
+           <a class="my-2 my-sm-0" routerLink="/user/dashboard" *ngIf="authService.authState">My Portfolio</a>
+      </div>
+    </div>
+</nav>

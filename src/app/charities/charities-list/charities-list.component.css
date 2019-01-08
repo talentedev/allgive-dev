@@ -1,0 +1,19 @@
+@media (max-width: 414px) {
+    #featured-charity.hero-charity {
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+    }
+    .hero-charity h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    .hero-charity p {
+        font-size: 22px;
+        text-align: center;
+    }
+    .hero-charity .featured {
+        position: relative;
+    }
+}

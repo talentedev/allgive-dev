@@ -1,0 +1,34 @@
+<main style="color: #000000">
+  <h1>Sign Up</h1>
+
+  <form [formGroup]="signupForm"
+        id="signupForm"
+        (ngSubmit)="onSubmit()">
+
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" formControlName="firstName" required>
+    
+    <label for="lastName">Last Name</label>
+    <input type="text"
+           id="lastName"
+           formControlName="lastName"
+           required>
+
+    <label for="email">Email</label>
+    <input type="text"
+           id="email"
+           formControlName="email"
+           required>
+
+    <label for="password">Password</label>
+    <input type="password"
+           id="password"
+           formControlName="password"
+           required>
+
+    <button type="submit"
+            [disabled]="!signupForm.valid">Sign Up</button>
+
+  </form>
+
+</main>

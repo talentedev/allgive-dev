@@ -1,0 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { ContentfulService } from '../../contentful.service';
+import { EntryCollection, Entry } from 'contentful';
+
+@Component({
+  selector: 'app-charities-list',
+  templateUrl: './charities-list.component.html',
+  styleUrls: ['./charities-list.component.css'],
+})
+export class CharitiesListComponent implements OnInit {
+
+  charities: Entry<any>[] = [];
+  categories: Entry<any>[] = [];
+  activeCategory;
+  featuredCharity;
+  showAll: boolean = true;
+  coverStyle: {};
+  title: string = 'All Charities | Allgive.org';
+
+  constructor(private titleService: Title, private contentfulService: ContentfulService) { }
+
+  ngOnInit() {
+    this.getAllCharities()
+    .then(res => {
+      this.coverStyle = {
+        'background-image': 'url(' + this.featuredCharity.fields.coverImage.fields.file.url + ')'
+      }
+    });
+
+    this.setTitle(this.title);
+    
+    this.contentfulService.getCategories()
+      .then(res => this.categories = res);
+    
+    this.activeCategory = 'Category';
+  }
+
+  getCategory(category) {
+    return this.contentfulService.getCategory(category)
+      .then(res => this.activeCategory = res.fields.categoryName);
+  }
+
+  getAllCharities() {
+    return this.contentfulService.getCharities()
+      .then(res => {
+        this.charities = res;
+        this.showAll = true;
+        this.activeCategory = 'Category';
+        this.featuredCharity = res[Math.floor(Math.random() * res.length)]
+      });
+  }
+
+  getCharitiesByCategory(category) {
+    return this.contentfulService.getCharitiesByCategory(category)
+      .then(res => {
+        this.charities = res;
+        this.showAll = false;
+        this.getCategory(category);
+      });
+  }
+
+  setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
+
+}

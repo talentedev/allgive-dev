@@ -1,0 +1,33 @@
+@media (max-width: 414px) {
+    .hero-sacrifice {
+        height: 100%;
+        font-size: 28px;
+        text-align: center;
+    }
+    .hero-sacrifice h1, .hero-works h1, .hero-charities h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    .hero-sacrifice p, .hero-works p, .hero-testimonials p, .hero-adds p {
+        font-size: 22px;
+        text-align: center;
+    }
+    .hero-works {
+        height: 500px;
+        background-position: 60px 27px;
+        background-size: 68% auto;
+    }
+    .hero-works .row {
+        height: 100%;
+        padding-top: 220px;
+    }
+    .hero-works .button {
+        margin: 10px auto;
+    }
+    .hero-charities, .hero-testimonials, .row.testimonial-card, .hero-adds, .hero-adds .row {
+        height: 100%;
+    }
+    .hero-adds h4 {
+        margin: 5px auto 15px;
+    }
+}
