@@ -15,7 +15,7 @@ export const environment = {
   },
   stripeKey: 'pk_test_A1hL1cLlXqg5ObWRn1eaIgXU',
   actionCodeSettings : {
-    url: 'https://allgive.herokuapp.com/link-login',//'http://localhost:4200/link-login', 
+    url: 'http://localhost:4200/link-login', 
     handleCodeInApp: true,
   }
 };
