@@ -20,7 +20,8 @@ const routes: Routes = [
   {
     path: 'faqs',
     component: FaqsComponent,
-    data: {title: "FAQs"}
+    data: {title: "FAQs"},
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { PasswordlessAuthComponent } from './passwordless-auth/passwordless-auth.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
     path: 'signup',
     component: SignupComponent,
     data: { title: 'Sign Up'}
+  },
+  {
+    path: 'link-login',
+    component: PasswordlessAuthComponent,
+    data: { title: 'Email Link Login'}
   }
 ]
 

@@ -32,6 +32,7 @@ import { SubscriptionPaymentComponent } from './payments/subscription-payment/su
 import { PaymentComponent } from './payments/payment/payment.component';
 import { PaymentConfirmationComponent } from './payments/payment-confirmation/payment-confirmation.component';
 import { PagesModule } from './pages/pages.module';
+import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { PagesModule } from './pages/pages.module';
     MainComponent,
     FaqsComponent,
     ContactComponent,
+    PasswordlessAuthComponent,
   ],
   imports: [
     BrowserModule,

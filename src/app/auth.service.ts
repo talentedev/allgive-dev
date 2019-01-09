@@ -6,6 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { Observable } from '../../node_modules/rxjs';
 import { PaymentsService } from './payments.service';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -109,7 +110,10 @@ export class AuthService {
   emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.authState = user;
+        if (user) {
+          this.authState = user;
+          this.router.navigate(['/charities']);
+        }
       })
       .catch(error => console.log(error));
   }
@@ -121,6 +125,26 @@ export class AuthService {
     return auth.sendPasswordResetEmail(email)
       .then(() => console.log('email sent'))
       .catch((error) => console.log(error));
+  }
+
+  // Passwordless Login
+  emailLinkLogin(email: string) {
+    const actionCodeSettings = environment.actionCodeSettings
+
+    return this.afAuth.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+      .then(() => window.localStorage.setItem('emailForSignIn', email))
+      .catch(err => console.log(err))
+  }
+
+  confirmSignIn(url) {
+    let email = window.localStorage.getItem('emailForSignIn')
+
+    if (this.afAuth.auth.isSignInWithEmailLink(url) && email) {
+        const result = this.afAuth.auth.signInWithEmailLink(email, url)
+        window.localStorage.removeItem('emailForSignIn')
+        this.authState = result;
+        this.router.navigate(['/charities'])
+    }
   }
 
   // Sign out

@@ -1,34 +1,31 @@
 <main style="color: #000000">
-  <h1>Sign Up</h1>
+  <div class="row justify-content-center signup-form">
+    <div class="col-sm-12 col-md-4">
+      <h1>Sign Up</h1>
 
-  <form [formGroup]="signupForm"
-        id="signupForm"
-        (ngSubmit)="onSubmit()">
+      <form [formGroup]="signupForm"
+            id="signupForm"
+            (ngSubmit)="onSubmit()">
 
-    <label for="firstName">First Name</label>
-    <input type="text" id="firstName" formControlName="firstName" required>
-    
-    <label for="lastName">Last Name</label>
-    <input type="text"
-           id="lastName"
-           formControlName="lastName"
-           required>
+        <div class="form-group">
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName" required>
+        </div>
 
-    <label for="email">Email</label>
-    <input type="text"
-           id="email"
-           formControlName="email"
-           required>
+        <div class="form-group">
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName" required>
+        </div>
 
-    <label for="password">Password</label>
-    <input type="password"
-           id="password"
-           formControlName="password"
-           required>
+        <div class="form-group">
+            <input type="email" class="form-control" id="email" placeholder="Email Address" formControlName="email" required>
+        </div>
 
-    <button type="submit"
-            [disabled]="!signupForm.valid">Sign Up</button>
+        <div class="form-group">
+            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password" required>
+        </div>
 
-  </form>
+        <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Sign Up</button>
 
+      </form>
+    </div>
+  </div>
 </main>

@@ -5,7 +5,7 @@ import { CharitiesListComponent } from './charities-list/charities-list.componen
 import { CharityDetailsComponent } from './charity-details/charity-details.component';
 import { CharityDetailResolverService } from './charity-detail-resolver.service';
 import { SubscriptionPaymentComponent } from '../payments/subscription-payment/subscription-payment.component';
-
+import { AuthGuard } from '../auth.guard';
 
 
 const routes: Routes = [
@@ -31,7 +31,8 @@ const routes: Routes = [
         path: '',
         component: CharitiesListComponent
       }
-    ]
+    ],
+    canActivate: [AuthGuard]
   }
 ]
 

@@ -54,5 +54,6 @@ nav .button a {
 @media (max-width: 414px) {
     .navbar-collapse {
         text-align: center;
+        background-color: #c7eef9;
     }
 }

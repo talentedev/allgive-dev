@@ -34,10 +34,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.authService.emailLogin(this.loginForm.value.email, this.loginForm.value.password)
-      .then(res => {
-        console.log(res);
-        this.router.navigate(['/charities']);
-      });
+  }
+
+  goPasswordlessLogin() {
+    this.router.navigate(['/link-login']);
   }
 
   setTitle(newTitle: string) {
