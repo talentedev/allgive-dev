@@ -140,10 +140,12 @@ export class AuthService {
     let email = window.localStorage.getItem('emailForSignIn')
 
     if (this.afAuth.auth.isSignInWithEmailLink(url) && email) {
-        const result = this.afAuth.auth.signInWithEmailLink(email, url)
-        window.localStorage.removeItem('emailForSignIn')
-        this.authState = result;
-        this.router.navigate(['/charities'])
+        this.afAuth.auth.signInWithEmailLink(email, url)
+          .then((res) => {
+            window.localStorage.removeItem('emailForSignIn')
+            this.authState = res
+            this.router.navigate(['/charities'])
+          })
     }
   }
 
