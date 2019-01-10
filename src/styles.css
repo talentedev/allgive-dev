@@ -221,10 +221,7 @@ h1 {
     background-repeat: no-repeat;
     background-position: 100px 80px;
     background-size: 50% auto;
-}
-
-.hero-works .row {
-    height: 33vw;
+    padding: 5vw 0;
 }
 
 .hero-works h1 {
