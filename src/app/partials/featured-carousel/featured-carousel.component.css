@@ -1,12 +1,20 @@
-@media (max-width: 414px) {
-    .hero-charity {
-        height: 100%;
+#featured-charities.carousel .carousel-img .row {
+    padding: 200px 0;
+}
+@media (max-width: 992px) {
+    #featured-charities.carousel .carousel-img .row {
+        padding: 120px 0;
     }
-    #featured-charities {
-        height: 350px;
+    #carousel-text {
+        text-align: center;
     }
-    #featured-charities .container {
-        padding-top: 30px;
+    #carousel-text .button{
+        margin: 0 auto;
+    }
+}
+@media (max-width: 576px) {
+    #featured-charities.carousel .carousel-img .row {
+        padding: 80px 0;
     }
     #carousel-text h1 {
         font-size: 28px;
@@ -14,8 +22,5 @@
     }
     #carousel-text p {
         font-size: 22px;
-    }
-    #carousel-text .button {
-        margin: 10px auto;
     }
 }

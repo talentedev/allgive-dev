@@ -1,14 +1,32 @@
-@media (max-width: 414px) {
+@media (max-width: 992px) {
+    .hero-sacrifice .container {
+        max-width: 100%;
+    }
+   .hero-sacrifice .container h1{
+        max-width: 100%;
+    }
+}
+@media (max-width: 768px) {
+   .hero-sacrifice .container h1{
+        font-size: 25px;
+    }
+    .hero-sacrifice .container p{
+        font-size: 18px;
+    }
+    .hero-testimonials .card .card-body {
+        font-size: 25px;
+    }
+}
+/* Styles for mobile devices */
+@media (max-width: 576px) {
     .hero-sacrifice {
-        height: 100%;
+        text-align: center;
+    }
+    .hero-works h1, .hero-charities h1 {
         font-size: 28px;
         text-align: center;
     }
-    .hero-sacrifice h1, .hero-works h1, .hero-charities h1 {
-        font-size: 28px;
-        text-align: center;
-    }
-    .hero-sacrifice p, .hero-works p, .hero-testimonials p, .hero-adds p {
+    .hero-works p, .hero-testimonials p, .hero-adds p {
         font-size: 22px;
         text-align: center;
     }
@@ -24,7 +42,7 @@
     .hero-works .button {
         margin: 10px auto;
     }
-    .hero-charities, .hero-testimonials, .row.testimonial-card, .hero-adds, .hero-adds .row {
+    .hero-testimonials, .row.testimonial-card, .hero-adds, .hero-adds .row {
         height: 100%;
     }
     .hero-adds h4 {

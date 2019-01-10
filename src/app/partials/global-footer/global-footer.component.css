@@ -1,12 +1,5 @@
 footer {
-    position: relative;
     background-color: #058cb3;
-    height: 20vw;
-    width: 100%;
-}
-
-footer .footer-content {
-    height: 20vw;
 }
 
 footer .footer-logo {
@@ -50,14 +43,19 @@ footer .button.footer {
 footer .button a {
     color: #fff;
 }
-@media (max-width: 414px) {
+@media (max-width: 576px) {
+    footer .footer-logo {
+        margin-bottom: 1rem;
+    }
     footer, footer .footer-content {
         height: 100%;
         text-align: center;
         padding: 10px;
     }
     footer .footer.button {
-        display: none;
+        width: 50%;
+        margin: 10px auto;
+        padding: 5px;
     }
     footer .copyright {
         text-align: center !important;

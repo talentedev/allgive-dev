@@ -118,12 +118,10 @@ h1 {
 
 .hero-charity {
     position: relative;
-    height: 33vw;
 }
 
 .hero-charity .carousel {
     width: 100%;
-    height: 33vw;
 }
 
 .hero-charity .carousel .carousel-inner,
@@ -134,7 +132,6 @@ h1 {
 .hero-charity .carousel .carousel-item .container {
     height: 100%;
     width: 100%;
-    padding-top: 6rem;
 }
 
 .hero-charity .carousel .carousel-item .carousel-img {
@@ -199,9 +196,9 @@ h1 {
 }
 
 .hero-sacrifice {
-    height: 25vw;
     background-color: white;
     color: #000;
+    padding: 3vw 0;
 }
 
 .hero-sacrifice .container,
@@ -219,7 +216,6 @@ h1 {
 }
 
 .hero-works {
-    height: 33vw;
     background-color: #058cb3;
     background-image: url(./assets/images/home_third_ipad.png);
     background-repeat: no-repeat;
@@ -254,7 +250,6 @@ h1 {
 }
 
 .hero-charities {
-    height: 36vw;
     padding: 3vw 0;
     background-color: white;
 }
@@ -361,15 +356,14 @@ h1 {
 }
 
 .hero-testimonials {
-    height: 40vw;
     background-image: url(./assets/images/home_fourth_girl.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.hero-testimonials .row.testimonial-card {
-    height: 40vw;
+.hero-testimonials .testimonial-card {
+    min-height: 40vw;
 }
 
 .hero-testimonials .card {
@@ -409,12 +403,8 @@ h1 {
 }
 
 .hero-adds {
-    height: 20vw;
     background-color: white;
-}
-
-.hero-adds .row {
-    height: 20vw;
+    padding: 3vw 0;
 }
 
 .hero-adds h4 {
@@ -494,48 +484,10 @@ h1 {
     transform: rotate(180deg);
 }
 
-.hero-testimonials {
-    height: 40vw;
-    background-image: url(./assets/images/home_fourth_girl.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.hero-testimonials .row.testimonial-card {
-    height: 40vw;
-}
-
-.hero-testimonials .card {
-    background-color: #0872ba;
-}
-
-.hero-testimonials .card .card-body {
-    padding: 3.5rem;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 600;
-}
-
 .card-body.card-logo {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.hero-testimonials .card .card-footer {
-    text-align: center;
-    background-color: transparent;
-}
-
-.hero-testimonials .card .card-footer .testimonial-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    display: block;
-}
-
-.hero-testimonials .card .card-footer .testimonial-city {
-    font-style: italic;
 }
 
 .hero-testimonials .card .card-footer .arrow-right>img,
@@ -549,12 +501,7 @@ h1 {
 }
 
 .hero-adds {
-    height: 20vw;
     background-color: white;
-}
-
-.hero-adds .row {
-    height: 20vw;
 }
 
 .hero-adds h4 {
@@ -888,8 +835,6 @@ div.card-image:hover .card-charity-text {
   .section--title {
     margin-bottom: 2rem; }
   
-  .hero-charities {
-    height: 20vw; }
     .hero-charities.donor-manage {
       height: 35vw; }
   

@@ -51,7 +51,7 @@ nav .button:hover {
 nav .button a {
     color: #fff;
 }
-@media (max-width: 414px) {
+@media (max-width: 768px) {
     .navbar-collapse {
         text-align: center;
         background-color: #c7eef9;

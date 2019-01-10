@@ -8,12 +8,6 @@ import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/main',
-    pathMatch: 'full',
-    data: { title: "Small Sacrifice, Big Difference"}
-  },
-  {
-    path: 'main',
     component: MainComponent,
     data: { title: "Small Sacrifice, Big Difference"}
   },
