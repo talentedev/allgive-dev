@@ -205,10 +205,6 @@ h1 {
     margin-left: 5px;
 }
 
-.charity-details .hero-charity {
-    height: 25vw;
-}
-
 .hero-sacrifice {
     background-color: white;
     color: #000;
@@ -610,11 +606,6 @@ div.card-image:hover .card-charity-text {
     font-style: italic;
 }
  
-.card-charity-text .charity-name {
-    font-weight: 800;
-    margin: 6px 0px;
-}
-
 .card-charity-text .card-cta {
     text-transform: uppercase;
     margin-top: 6px;

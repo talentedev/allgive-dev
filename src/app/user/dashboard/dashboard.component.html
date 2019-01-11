@@ -59,7 +59,7 @@
     </div>
   </section>
 
-  <!-- <section class="section hero-charities">
+  <section class="section hero-charities">
     <div class="row">
       <div class="col-9">
         <h3 class="section-title">Manage Your Contributions</h3>
@@ -69,67 +69,63 @@
       </div>
     </div>
     <div class="row active-charities pt-3">
-      <div class="col-3">
+      <div class="col-6 col-lg-3">
         <div class="card">
-          <div class="card-body">
-            <span class="charity-name">Charity One</span>
-            <div class="charity-details">
-              <div class="charity-details--name">You give the <span>ASPCA</span></div>
-              <div class="charity-details--amount">
-                <span class="amount-per">$5</span>
-                <span class="amount-freq">every day</span>
-              </div>
-              <div class="btn btn-primary manage-charity">Manage</div>
+          <img src="../../../assets/images/ASPCA.png" class="img-fluid">
+          <div class="row charity-details text-center align-items-center">
+            <div class="col">
+              <p>YOU GIVE THE</p>
+              <p>ASPCA</p>
+              <h3 class="pt-2"><small>$</small>40</h3>
+              <p>every day</p>
+              <button class="btn btn-manage-charity">MANAGE</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6 col-lg-3">
         <div class="card">
-          <div class="card-body">
-            <span class="charity-name">Charity Two</span>
-            <div class="charity-details">
-              <div class="charity-details--name">You give the <span>ASPCA</span></div>
-              <div class="charity-details--amount">
-                <span class="amount-per">$5</span>
-                <span class="amount-freq">every day</span>
-              </div>
-              <div class="btn btn-primary manage-charity">Manage</div>
+          <img src="../../../assets/images/NCADV.png" class="img-fluid">
+          <div class="row charity-details text-center align-items-center">
+            <div class="col">
+              <p>YOU GIVE THE</p>
+              <p>NCADV</p>
+              <h3 class="pt-2"><small>$</small>40</h3>
+              <p>every day</p>
+              <button class="btn btn-manage-charity">MANAGE</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6 col-lg-3">
         <div class="card">
-          <div class="card-body">
-            <span class="charity-name">Charity Three</span>
-            <div class="charity-details">
-              <div class="charity-details--name">You give the <span>ASPCA</span></div>
-              <div class="charity-details--amount">
-                <span class="amount-per">$5</span>
-                <span class="amount-freq">every day</span>
-              </div>
-              <div class="btn btn-primary manage-charity">Manage</div>
+          <img src="../../../assets/images/MOMA.png" class="img-fluid">
+          <div class="row charity-details text-center align-items-center">
+            <div class="col">
+              <p>YOU GIVE THE</p>
+              <p>MOMA</p>
+              <h3 class="pt-2"><small>$</small>40</h3>
+              <p>every day</p>
+              <button class="btn btn-manage-charity">MANAGE</button>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-6 col-lg-3">
         <div class="card">
-          <div class="card-body">
-            <span class="charity-name">Charity Four</span>
-            <div class="charity-details">
-              <div class="charity-details--name">You give the <span>ASPCA</span></div>
-              <div class="charity-details--amount">
-                <span class="amount-per">$5</span>
-                <span class="amount-freq">every day</span>
-              </div>
-              <div class="btn btn-primary manage-charity">Manage</div>
+          <img src="../../../assets/images/Alzheimer.png" class="img-fluid">
+          <div class="row charity-details text-center align-items-center">
+            <div class="col">
+              <p>YOU GIVE THE</p>
+              <p>Alzheimer</p>
+              <h3 class="pt-2"><small>$</small>40</h3>
+              <p>every day</p>
+              <button class="btn btn-manage-charity">MANAGE</button>
             </div>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
       <!-- SINCE THIS PANEL CAN ONLY SHOW ONE AT A TIME,
            WE SHOULD JUST POPULATE THIS WITH THE CHARITY INFO
            THAT WAY IT'S EASIER TO MANAGE
@@ -173,65 +169,57 @@
           </div>
         </div>
       </div> -->
-  <!-- </section> -->
-    <!-- ##################################################
-        Section: Payment Settings
-        ################################################## -->
-<!--     <div class="hero-payments">
-      <div class="container">
-        <div class="row justify-content-between section--title">
-          <div class="col-4">
-            <h3>Payment Settings</h3>
-          </div>
-          <div class="col-2">
-            <a href="#" class="button white">Add Payment Method</a>
+  </section>
+
+  <section class="section hero-payments">
+    <div class="row">
+      <div class="col-9">
+        <h3 class="section-title">Payment Settings</h3>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-add-charity">ADD PAYMENT METHOD</button>
+      </div>
+    </div>
+    <div class="row card-info">
+      <div class="col-3">Visa ending in 3456</div>
+      <div class="col-3">Expires 04/2021</div>
+      <div class="col-3">Used for 03 charities</div>
+      <div class="col-3"><button class="btn btn-manage-charity">MORE DETAILS</button></div>
+    </div>
+    <div class="row collapse expand-payment-details" id="payment-details-one">
+      <div class="col-4">
+        <div class="row card-name">
+          <div class="col">
+            <div class="name-title">Name on Card</div>
+            <div class="name-info">John Smith</div>
           </div>
         </div>
-        <div class="row">
+        <div class="row card-address">
           <div class="col">
-            <div class="row default card-info">
-              <div class="col-3">Visa ending in 3456</div>
-              <div class="col-3">Expires 04/2021</div>
-              <div class="col-3">Used for 03 charities</div>
-              <div class="col-3"><a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">More Details</a></div>
+            <div class="address-title">Billing Address</div>
+            <div class="address-info">
+              <span class="street">1234 Main St</span>
+              <span class="city-state-zip">Atlanta, GA 30318</span>
             </div>
-            <div class="row collapse expand-payment-details" id="payment-details-one">
-              <div class="col-4">
-                <div class="row card-name">
-                  <div class="col">
-                    <div class="name-title">Name on Card</div>
-                    <div class="name-info">John Smith</div>
-                  </div>
-                </div>
-                <div class="row card-address">
-                  <div class="col">
-                    <div class="address-title">Billing Address</div>
-                    <div class="address-info">
-                      <span class="street">1234 Main St</span>
-                      <span class="city-state-zip">Atlanta, GA 30318</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row card-options">
-                  <div class="col">
-                    <div class="edit">Edit Information</div>
-                    <div class="lost-or-stolen">Lost or Stolen?</div>
-                    <div class="delete-card">Delete</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-8">
-                <h5>Supporting Charities</h5>
-                <ul class="payment-charities">
-                  <li>MOMA</li>
-                  <li>ASPCA</li>
-                  <li>Atlanta Humane Society</li>
-                  <li>National Coalition Against Domestic Violence</li>
-                </ul>
-              </div>
-            </div>
+          </div>
+        </div>
+        <div class="row card-options">
+          <div class="col">
+            <div class="edit">Edit Information</div>
+            <div class="lost-or-stolen">Lost or Stolen?</div>
+            <div class="delete-card">Delete</div>
           </div>
         </div>
       </div>
-    </div> -->
-  </main>
+      <div class="col-8">
+        <h5>Supporting Charities</h5>
+        <ul class="payment-charities">
+          <li>MOMA</li>
+          <li>ASPCA</li>
+          <li>Atlanta Humane Society</li>
+          <li>National Coalition Against Domestic Violence</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
