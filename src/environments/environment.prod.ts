@@ -12,5 +12,6 @@ export const environment = {
   actionCodeSettings : {
     url: 'https://allgive.herokuapp.com/link-login', 
     handleCodeInApp: true,
-  }
+  },
+  mailchimpKey: 'c58f25891f8aa88f801a5a3faefaf2d6-us7'
 };

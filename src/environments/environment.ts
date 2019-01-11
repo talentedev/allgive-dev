@@ -17,5 +17,6 @@ export const environment = {
   actionCodeSettings : {
     url: 'http://localhost:4200/link-login', 
     handleCodeInApp: true,
-  }
+  },
+  mailchimpKey: 'c58f25891f8aa88f801a5a3faefaf2d6-us7'
 };

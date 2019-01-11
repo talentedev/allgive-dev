@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { MailChimpService } from '../../mailchimp.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +15,13 @@ export class SignupComponent implements OnInit {
   user;
   title: string = 'Sign Up | Allgive.org';
 
-  constructor(private titleService: Title, private authService: AuthService, private fb: FormBuilder, private router: Router) { }
+  constructor(
+    private titleService: Title,
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private mailchimpService: MailChimpService
+   ) { }
 
   ngOnInit() {
     if (this.authService.authState) {
@@ -38,10 +45,15 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.email,
       this.signupForm.value.password
     )
-      .then((res) => { this.router.navigate(['/charities']) })
+      .then((res) => {
+        this.router.navigate(['/charities'])
+
+        // Subscribe user
+        this.mailchimpService.subscribeUser()
+          .subscribe(res => console.log(res));
+      })
       .catch(error => {
         console.log(error);
-
     })
   }
 

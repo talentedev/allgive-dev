@@ -75,6 +75,20 @@
     font-family: 'Montserrat', sans-serif;
 */
 
+@font-face {
+    /* Nunito-Bold */
+    font-family: 'Nunito';
+    font-style: normal;
+    src: url("./assets/fonts/Nunito/Nunito-Bold.ttf");
+    src: local("Nunito Bold"), local("Nunito-Bold"), url("./assets/fonts/Nunito/Nunito-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    /* Montserrat-Bold */
+    font-family: Montserrat;
+    src: url("./assets/fonts/montserrat/Montserrat-Bold.otf") format("opentype");
+}
+
 /* ########## Global: Start ########## */
 
 body {
@@ -815,142 +829,6 @@ div.card-image:hover .card-charity-text {
 }
 
 /* ######### Subscription/Payment Modal: End ######### */
-
-/* ########## Donor Dashboard: Start ########## */
-.hero-user {
-    height: 10vw;
-    margin-bottom: 3rem; }
-    .hero-user .container, .hero-user .row {
-      height: 100%; }
-    .hero-user h1 {
-      color: #0004d0; }
-    .hero-user .donor-affirmation {
-      color: #333;
-      font-size: 1.25rem;
-      line-height: 1; }
-  
-  .section--title {
-    margin-bottom: 2rem; }
-  
-    .hero-charities.donor-manage {
-      height: 35vw; }
-  
-  .active-charities {
-    height: 15vw;
-    margin-bottom: 1.5vw; }
-    .active-charities .card,
-    .active-charities .card-body {
-      width: 15vw;
-      max-width: 15vw;
-      height: 15vw;
-      border-radius: 0;
-      padding: 0;
-      overflow: hidden; }
-    .active-charities .card {
-      background-color: #555; }
-      .active-charities .card span {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        display: block;
-        text-align: center;
-        line-height: 15vw; }
-    .active-charities .charity-details {
-      background-color: #2fa4f3;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
-      height: 100%;
-      -webkit-transform: translateY(16vw);
-              transform: translateY(16vw);
-      transition: -webkit-transform .666s ease-in-out;
-      transition: transform .666s ease-in-out;
-      transition: transform .666s ease-in-out, -webkit-transform .666s ease-in-out;
-      overflow: hidden; }
-      .active-charities .charity-details .manage-charity {
-        position: absolute;
-        bottom: 1rem;
-        left: 0;
-        right: 0;
-        margin: auto;
-        width: 6vw; }
-    .active-charities .card-body:hover .charity-details {
-      -webkit-transform: translateY(0);
-              transform: translateY(0); }
-  
-  .donor-charity--container {
-    width: 100%;
-    position: relative;
-    height: 15vw; }
-  
-  .donor-charity--manage {
-    position: absolute;
-    top: 0;
-    height: 30vw;
-    background-color: green; }
-  
-  .expand-payment-details {
-    /* height: 10vw; */
-    padding: 2.5rem;
-    background-color: #fff;
-    border-bottom: 2px solid #e4e8eb;
-    line-height: 1.5; }
-    .expand-payment-details h5 {
-      font-size: 1rem; }
-    .expand-payment-details .name-title, .expand-payment-details .address-title {
-      font-weight: 700;
-      color: #333; }
-    .expand-payment-details .name-info, .expand-payment-details .address-info {
-      font-weight: 800;
-      font-size: 1.25rem;
-      margin-bottom: .75rem; }
-      .expand-payment-details .name-info span, .expand-payment-details .address-info span {
-        display: block; }
-    .expand-payment-details .card-options {
-      font-family: 'Montserrat', sans-serif;
-      font-size: .75rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      line-height: 2; }
-      .expand-payment-details .card-options .delete-card {
-        color: #c10442; }
-      .expand-payment-details .card-options .edit:hover, .expand-payment-details .card-options .edit:active, .expand-payment-details .card-options .lost-or-stolen:hover, .expand-payment-details .card-options .lost-or-stolen:active, .expand-payment-details .card-options .delete-card:hover, .expand-payment-details .card-options .delete-card:active {
-        text-decoration: underline; }
-    .expand-payment-details ul.payment-charities {
-      width: 100%;
-      background-color: #f8f8f8;
-      padding: 2rem;
-      list-style: none; }
-      .expand-payment-details ul.payment-charities li {
-        font-size: 1.25rem;
-        font-weight: 800;
-        line-height: 1;
-        margin-bottom: 1rem; }
-        .expand-payment-details ul.payment-charities li:last-of-type {
-          margin-bottom: 0; }
-  
-  .hero-payments {
-    margin-bottom: 6rem; }
-    .hero-payments .container {
-      padding-top: 2rem;
-      color: black; }
-    .hero-payments .card-info {
-      padding: 2.5rem;
-      background-color: #f4f3f3;
-      color: #333; }
-      .hero-payments .card-info > div {
-        height: 1rem;
-        line-height: 1; }
-  
-  /* ########## Donor Dashboard: End ########## */
-  
 
 /* ######### Page Wrapper: Start ######### */
 

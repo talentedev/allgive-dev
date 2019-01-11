@@ -1,134 +1,183 @@
-<main role="main">
-    <!-- ##################################################
-            Hero: Featured Charities
-           ################################################## -->
-    <div class="hero-user jumbotron jumbotron-fluid">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-8 donor-salutations">
-            <h1>High-Five, Kevin!</h1>
+<main class="user-dashboard" role="main">
+
+  <section class="section donation-statistics">
+    <div class="row">
+      <div class="col-9">
+        <h1 class="section-title">High-Five, Kevin!</h1>
+        <p class="donor-affirmation">You’ve really worked hard to make a difference and it’s showing!</p>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-export">EXPORT DATA</button>
+      </div>
+    </div>
+    <div class="row text-center mt-2 align-items-center">
+      <div class="col-12 col-md-4">
+        <div class="card pt-3 pb-3">
+          <div class="card-body">
+            <h1>$2981</h1>
+            <p>DONATED THIS YEAR</p>
           </div>
-          <div class="col-10 donor-affirmation">You’ve really worked hard to make a difference and it’s showing!</div>
+        </div>
+        <div class="card pt-3 pb-3">
+          <div ngbDropdown>
+            <button class="btn btn-outline-primary" id="donationPeriods" ngbDropdownToggle>2018 Year-End-Projection</button>
+            <div ngbDropdownMenu aria-labelledby="donationPeriods">
+              <button class="dropdown-item dropdown-color-1">Daily Giving Total</button>
+              <button class="dropdown-item dropdown-color-2">Weekly Giving Total</button>
+              <button class="dropdown-item dropdown-color-3">Monthly Giving Total</button>
+              <button class="dropdown-item dropdown-color-4">Quaterly Giving Total</button>
+            </div>
+          </div>
+          <h2>$5628</h2>
+        </div>
+      </div>
+      <div class="col-6 col-md-4">
+        <highcharts-chart 
+          [Highcharts]="Highcharts"
+          [options]="chartOptions"
+          style="width: 100%; height: 400px; display: block;"
+        ></highcharts-chart>
+      </div>
+      <div class="col-6 col-md-4">
+        <div class="donation-item">
+          <h3>$1281</h3>
+          <p>ASPCA</p>
+        </div>
+        <div class="donation-item">
+          <h3>$414</h3>
+          <p>NATIONAL COALITION AGAINST DOME</p>
+        </div>
+        <div class="donation-item">
+          <h3>$625</h3>
+          <p>MOMA</p>
+        </div>
+        <div class="donation-item">
+          <h3>$1070</h3>
+          <p>ALZEIMERS ASSOCIATION</p>
         </div>
       </div>
     </div>
-    <!-- ##################################################
-        Section: Charities
-        ################################################## -->
-    <div class="hero-charities jumbotron jumbotron-fluid">
-      <div class="container">
-        <div class="row justify-content-between section--title">
-          <div class="col-6">
-            <h3>Manage Your Contributions</h3>
+  </section>
+
+  <!-- <section class="section hero-charities">
+    <div class="row">
+      <div class="col-9">
+        <h3 class="section-title">Manage Your Contributions</h3>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-add-charity">ADD A CHARITY</button>
+      </div>
+    </div>
+    <div class="row active-charities pt-3">
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <span class="charity-name">Charity One</span>
+            <div class="charity-details">
+              <div class="charity-details--name">You give the <span>ASPCA</span></div>
+              <div class="charity-details--amount">
+                <span class="amount-per">$5</span>
+                <span class="amount-freq">every day</span>
+              </div>
+              <div class="btn btn-primary manage-charity">Manage</div>
+            </div>
           </div>
         </div>
-        <div class="donor-charity--container">
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <span class="charity-name">Charity Two</span>
+            <div class="charity-details">
+              <div class="charity-details--name">You give the <span>ASPCA</span></div>
+              <div class="charity-details--amount">
+                <span class="amount-per">$5</span>
+                <span class="amount-freq">every day</span>
+              </div>
+              <div class="btn btn-primary manage-charity">Manage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <span class="charity-name">Charity Three</span>
+            <div class="charity-details">
+              <div class="charity-details--name">You give the <span>ASPCA</span></div>
+              <div class="charity-details--amount">
+                <span class="amount-per">$5</span>
+                <span class="amount-freq">every day</span>
+              </div>
+              <div class="btn btn-primary manage-charity">Manage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <span class="charity-name">Charity Four</span>
+            <div class="charity-details">
+              <div class="charity-details--name">You give the <span>ASPCA</span></div>
+              <div class="charity-details--amount">
+                <span class="amount-per">$5</span>
+                <span class="amount-freq">every day</span>
+              </div>
+              <div class="btn btn-primary manage-charity">Manage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+      <!-- SINCE THIS PANEL CAN ONLY SHOW ONE AT A TIME,
+           WE SHOULD JUST POPULATE THIS WITH THE CHARITY INFO
+           THAT WAY IT'S EASIER TO MANAGE
+      -->
+<!--       <div class="row donor-charity--manage">
+        <div class="col-8">
           <div class="row">
-            <div class="card-deck col active-charities">
-              <div class="card">
-                <div class="card-body">
-                  <span class="charity-name">Charity One</span>
-                  <div class="charity-details">
-                    <div class="charity-details--name">You give the <span>ASPCA</span></div>
-                    <div class="charity-details--amount">
-                      <span class="amount-per">$5</span>
-                      <span class="amount-freq">every day</span>
-                    </div>
-                    <div class="btn btn-primary manage-charity">Manage</div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <span class="charity-name">Charity Two</span>
-                  <div class="charity-details">
-                    <div class="charity-details--name">You give the <span>ASPCA</span></div>
-                    <div class="charity-details--amount">
-                      <span class="amount-per">$5</span>
-                      <span class="amount-freq">every day</span>
-                    </div>
-                    <div class="btn btn-primary manage-charity">Manage</div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <span class="charity-name">Charity Three</span>
-                  <div class="charity-details">
-                    <div class="charity-details--name">You give the <span>ASPCA</span></div>
-                    <div class="charity-details--amount">
-                      <span class="amount-per">$5</span>
-                      <span class="amount-freq">every day</span>
-                    </div>
-                    <div class="btn btn-primary manage-charity">Manage</div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-body">
-                  <span class="charity-name">Charity Four</span>
-                  <div class="charity-details">
-                    <div class="charity-details--name">You give the <span>ASPCA</span></div>
-                    <div class="charity-details--amount">
-                      <span class="amount-per">$5</span>
-                      <span class="amount-freq">every day</span>
-                    </div>
-                    <div class="btn btn-primary manage-charity">Manage</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="col-8">You’ve raised a total of $3,105 since December 2017 for the:</div>
           </div>
-          <!-- SINCE THIS PANEL CAN ONLY SHOW ONE AT A TIME,
-               WE SHOULD JUST POPULATE THIS WITH THE CHARITY INFO
-               THAT WAY IT'S EASIER TO MANAGE
-          -->
-          <div class="row donor-charity--manage">
-            <div class="col-8">
-              <div class="row">
-                <div class="col-8">You’ve raised a total of $3,105 since December 2017 for the:</div>
-              </div>
-              <div class="row">
-                <div class="col-8">ASPCA</div>
-              </div>
-              <div class="row">
-                <div class="col-8">Dropdown area</div>
-              </div>
-              <div class="row">
-                <div class="col-8">Stats (what's available?)</div>
-              </div>
-              <div class="row">
-                <div class="col-4">
-                  <a class="option--cancel">Cancel</a>
-                </div>
-                <div class="col-6">
-                  <a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">Save Changes</a>
-                </div>
-              </div>
-            </div>
+          <div class="row">
+            <div class="col-8">ASPCA</div>
+          </div>
+          <div class="row">
+            <div class="col-8">Dropdown area</div>
+          </div>
+          <div class="row">
+            <div class="col-8">Stats (what's available?)</div>
+          </div>
+          <div class="row">
             <div class="col-4">
-              <div class="row">
-                <div class="col">
-                  some sort of image
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <h4>Latest News</h4>
-                  <p>ASPCA uses National Pit Bull Awareness Day to educate those who fear the breed</p>
-                  <a href="#">Read More</a>
-                  <a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">More About This Charity</a>
-                </div>
-              </div>
+              <a class="option--cancel">Cancel</a>
+            </div>
+            <div class="col-6">
+              <a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">Save Changes</a>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        <div class="col-4">
+          <div class="row">
+            <div class="col">
+              some sort of image
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h4>Latest News</h4>
+              <p>ASPCA uses National Pit Bull Awareness Day to educate those who fear the breed</p>
+              <a href="#">Read More</a>
+              <a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">More About This Charity</a>
+            </div>
+          </div>
+        </div>
+      </div> -->
+  <!-- </section> -->
     <!-- ##################################################
         Section: Payment Settings
         ################################################## -->
-    <div class="hero-payments">
+<!--     <div class="hero-payments">
       <div class="container">
         <div class="row justify-content-between section--title">
           <div class="col-4">
@@ -184,5 +233,5 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>

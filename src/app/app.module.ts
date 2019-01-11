@@ -27,6 +27,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { PaymentsModule } from './payments/payments.module';
 import { PaymentsService } from './payments.service';
+import { MailChimpService } from './mailchimp.service';
 import { ContactComponent } from './contact/contact.component';
 import { SubscriptionPaymentComponent } from './payments/subscription-payment/subscription-payment.component';
 import { PaymentComponent } from './payments/payment/payment.component';
@@ -63,7 +64,7 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
     PagesModule,
     AppRoutingModule,
   ],
-  providers: [ HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService, AuthService, AuthGuard, PaymentsService ],
+  providers: [ HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService, AuthService, AuthGuard, PaymentsService, MailChimpService ],
   bootstrap: [ AppComponent ],
   entryComponents: [ 
     SubscriptionPaymentComponent, 

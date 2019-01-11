@@ -10,28 +10,22 @@ const routes = [
   {
     path: 'user',
     component: UserComponent,
-    canActivate: ['AuthGuard'],
+    canActivate: [ AuthGuard ],
     children: [
       {
-        path: '',
-        canActivateChild: ['AuthGuard'],
+        path: 'dashboard',
+        component: DashboardComponent
+      },
+      {
+        path: 'profile',
         children: [
           {
-            path: 'dashboard',
-            component: DashboardComponent
+            path: 'edit',
+            component: EditProfileComponent
           },
           {
-            path: 'profile',
-            children: [
-              {
-                path: 'edit',
-                component: EditProfileComponent
-              },
-              {
-                path: '',
-                component: ProfileComponent
-              }
-            ]
+            path: '',
+            component: ProfileComponent
           }
         ]
       }
