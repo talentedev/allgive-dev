@@ -83,7 +83,6 @@
     border-radius: 0;
     border: none;
     overflow: hidden;
-    background-color: #555;
     margin-top: 5px;
 }
 .active-charities .charity-details {
@@ -117,13 +116,66 @@
     -webkit-transform: translateY(0);
     transform: translateY(0);
 }
-
-/*.donor-charity--manage {
-    position: absolute;
-    top: 0;
-    height: 30vw;
-    background-color: green;
-}*/
+.charity-manage .card {
+    background-color: #e9ecef;
+    border: 1px solid #ddd;
+}
+.charity-manage-detail {
+    background-color: #0004D1;
+    color: white;
+    padding-bottom: 20px;
+}
+.charity-manage-detail .btn-close {
+    background-color: transparent;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+    border: none;
+    cursor: pointer;
+}
+.donation-dropdown-wrapper {
+    margin: 20px 50px;
+    padding: 10px;
+    background-color: #e9ecef;
+    color: #323232;
+}
+.donation-dropdown-wrapper .dropdown button {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    padding: 1rem;
+}
+.donation-dropdown-wrapper span {
+    color: #0004D1;
+}
+.donation-dropdown-wrapper sup {
+    font-size: 56%;
+}
+.donation-dropdown-wrapper p {
+    color: #2B77B0;
+}
+.charity-manage-detail .price-compare {
+    border-top: 2px solid #5867E9;
+    border-bottom: 2px solid #5867E9;
+    background-color: #1344DE;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+.charity-manage-detail .btn-cancel {
+    background-color: #0004D1;
+    color: white;
+}
+.charity-manage-detail .btn-save {
+    background-color: #e9ecef;
+    border-radius: 0;
+    color: #323232;
+}
+.charity-manage .btn-more-charity {
+    background-color: #0004D1;
+    border-radius: 0;
+    color: white;
+    width: 100%;
+}
 
 /* Payment Settings */
 .hero-payments .card-info {

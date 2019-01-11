@@ -60,7 +60,7 @@
   </section>
 
   <section class="section hero-charities">
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-9">
         <h3 class="section-title">Manage Your Contributions</h3>
       </div>
@@ -68,7 +68,7 @@
         <button class="btn btn-add-charity">ADD A CHARITY</button>
       </div>
     </div>
-    <div class="row active-charities pt-3">
+    <div *ngIf="!showCharityManageView" class="row active-charities">
       <div class="col-6 col-lg-3">
         <div class="card">
           <img src="../../../assets/images/ASPCA.png" class="img-fluid">
@@ -78,7 +78,7 @@
               <p>ASPCA</p>
               <h3 class="pt-2"><small>$</small>40</h3>
               <p>every day</p>
-              <button class="btn btn-manage-charity">MANAGE</button>
+              <button class="btn btn-manage-charity" (click)="setShowCharityManage(true)">MANAGE</button>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
               <p>NCADV</p>
               <h3 class="pt-2"><small>$</small>40</h3>
               <p>every day</p>
-              <button class="btn btn-manage-charity">MANAGE</button>
+              <button class="btn btn-manage-charity" (click)="setShowCharityManage(true)">MANAGE</button>
             </div>
           </div>
         </div>
@@ -106,7 +106,7 @@
               <p>MOMA</p>
               <h3 class="pt-2"><small>$</small>40</h3>
               <p>every day</p>
-              <button class="btn btn-manage-charity">MANAGE</button>
+              <button class="btn btn-manage-charity" (click)="setShowCharityManage(true)">MANAGE</button>
             </div>
           </div>
         </div>
@@ -120,55 +120,78 @@
               <p>Alzheimer</p>
               <h3 class="pt-2"><small>$</small>40</h3>
               <p>every day</p>
-              <button class="btn btn-manage-charity">MANAGE</button>
+              <button class="btn btn-manage-charity" (click)="setShowCharityManage(true)">MANAGE</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-      <!-- SINCE THIS PANEL CAN ONLY SHOW ONE AT A TIME,
-           WE SHOULD JUST POPULATE THIS WITH THE CHARITY INFO
-           THAT WAY IT'S EASIER TO MANAGE
-      -->
-<!--       <div class="row donor-charity--manage">
-        <div class="col-8">
-          <div class="row">
-            <div class="col-8">You’ve raised a total of $3,105 since December 2017 for the:</div>
-          </div>
-          <div class="row">
-            <div class="col-8">ASPCA</div>
-          </div>
-          <div class="row">
-            <div class="col-8">Dropdown area</div>
-          </div>
-          <div class="row">
-            <div class="col-8">Stats (what's available?)</div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <a class="option--cancel">Cancel</a>
+    <!-- Charity Manage Popup -->
+    <div *ngIf="showCharityManageView" class="charity-manage">
+      <div class="card">
+        <div class="row no-gutters">
+          <div class="col-7">
+            <div class="charity-manage-detail">
+              <button type="button" class="btn-close text-left" aria-label="Close" (click)="setShowCharityManage(false)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="text-center">
+                <p>You’ve raised a total of <strong>$3,105</strong> since December <strong>2017</strong> for the:</p>
+                <h1 class="text-white">ASPCA</h1>
+              </div>
+              <div class="donation-dropdown-wrapper text-center">
+                <span class="glyphicon glyphicon-question-sign"></span>
+                <div ngbDropdown>
+                  <button class="btn btn-outline-primary" id="donationByDay" ngbDropdownToggle>
+                    <span class="h1"><sup>$</sup>5.00 <span class="text-secondary">|</span> </span><span class="h3"><span class="text-dark">every</span> day</span>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="donationByDay">
+                  </div>
+                </div>
+                <p>SEE OTHER DONATION SUGGESTIONS</p>
+              </div>
+              <div class="text-center">
+                <p>via your Visa ending in in <strong>8467</strong></p>
+              </div>
+              <div class="price-compare text-center">
+                <p>Your selected settings, <strong>over one year</strong>, will equal:</p>
+                <div class="row">
+                  <div class="col-4">
+                    <h3>52</h3>
+                    <p>ANIMALS SAVED</p>
+                  </div>
+                  <div class="col-4">
+                    <h3>52</h3>
+                    <p>ANIMALS SAVED</p>
+                  </div>
+                  <div class="col-4">
+                    <h3>52</h3>
+                    <p>ANIMALS SAVED</p>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-cancel">CANCEL</button>
+                <button class="btn btn-save">SAVE CHANGES</button>
+              </div>
             </div>
-            <div class="col-6">
-              <a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">Save Changes</a>
+          </div>
+          <div class="col-5">
+            <img src="../../../assets/images/happy-dog.png" class="img-fluid">
+            <div class="row align-items-center p-4 no-gutters">
+              <div class="col">
+                <p class="text-primary">Latest News</p>
+                <h5>ASPCA uses National Pit Bull Awareness Day to educate those who fear the breed</h5>
+                <a href="#" class="float-right">Read More</a>
+              </div>
+            </div>
+            <div class="p-4">
+              <button class="btn btn-more-charity">MORE ABOUT THIS CHARITY</button>
             </div>
           </div>
         </div>
-        <div class="col-4">
-          <div class="row">
-            <div class="col">
-              some sort of image
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <h4>Latest News</h4>
-              <p>ASPCA uses National Pit Bull Awareness Day to educate those who fear the breed</p>
-              <a href="#">Read More</a>
-              <a class="btn btn-primary" data-toggle="collapse" href="#payment-details-one" role="button">More About This Charity</a>
-            </div>
-          </div>
-        </div>
-      </div> -->
+      </div>
+    </div><!-- Charity Manage Popup End -->
   </section>
 
   <section class="section hero-payments">
@@ -184,9 +207,11 @@
       <div class="col-3">Visa ending in 3456</div>
       <div class="col-3">Expires 04/2021</div>
       <div class="col-3">Used for 03 charities</div>
-      <div class="col-3"><button class="btn btn-manage-charity">MORE DETAILS</button></div>
+      <div class="col-3">
+        <button class="btn btn-manage-charity" (click)="togglePaymentDetail()">{{ showPaymentDetail? 'CLOSE DETAILS': 'MORE DETAILS' }}</button>
+      </div>
     </div>
-    <div class="row collapse expand-payment-details" id="payment-details-one">
+    <div [ngbCollapse]="!showPaymentDetail" class="row collapse expand-payment-details" id="payment-details-one">
       <div class="col-4">
         <div class="row card-name">
           <div class="col">

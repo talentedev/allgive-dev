@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit {
 
   user;
   title: string = 'Dashboard | Allgive.org';
+  showCharityManageView: boolean = false;
+  showPaymentDetail: boolean = false;
   Highcharts = Highcharts;
   chartOptions = {
     chart: {
@@ -76,6 +78,14 @@ export class DashboardComponent implements OnInit {
 
   setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
+  }
+
+  setShowCharityManage(value) {
+    this.showCharityManageView = value;
+  }
+
+  togglePaymentDetail() {
+    this.showPaymentDetail = !this.showPaymentDetail;
   }
 
 }
