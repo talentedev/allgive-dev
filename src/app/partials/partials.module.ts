@@ -18,7 +18,13 @@ const routes: Routes = [];
     RouterModule.forChild(routes),
     NgbModule
   ],
-  declarations: [CharitiesCarouselComponent, GlobalNavbarComponent, GlobalFooterComponent, MdToHtmlPipe, FeaturedCarouselComponent, ValuesPipe],
-  exports: [ CharitiesCarouselComponent, FeaturedCarouselComponent, GlobalNavbarComponent, GlobalFooterComponent, MdToHtmlPipe, ValuesPipe, RouterModule ]
+  declarations: [
+    CharitiesCarouselComponent, GlobalNavbarComponent, GlobalFooterComponent,
+    MdToHtmlPipe, FeaturedCarouselComponent, ValuesPipe
+  ],
+  exports: [
+    CharitiesCarouselComponent, FeaturedCarouselComponent, GlobalNavbarComponent,
+    GlobalFooterComponent, MdToHtmlPipe, ValuesPipe, RouterModule
+  ]
 })
 export class PartialsModule { }

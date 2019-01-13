@@ -31,7 +31,7 @@ const routes = [
       }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [

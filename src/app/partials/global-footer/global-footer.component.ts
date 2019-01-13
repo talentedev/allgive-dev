@@ -13,7 +13,7 @@ export class GlobalFooterComponent implements OnInit {
 
   currentDate = new Date();
   currentYear = this.currentDate.getFullYear();
-  
+
   constructor(public authService: AuthService) {
     this.authState = this.authService.authState;
   }

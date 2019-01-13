@@ -11,7 +11,7 @@ interface MailChimpResponse {
 @Injectable()
 export class MailChimpService {
 
-  private endpoint : string = environment.mailchimpKey.endpoint;
+  private endpoint: string = environment.mailchimpKey.endpoint;
   private hiddenName: string = environment.mailchimpKey.hiddenName;
 
   constructor(
@@ -31,8 +31,7 @@ export class MailChimpService {
     this.http.jsonp<MailChimpResponse>(mailChimpUrl, 'c').subscribe(response => {
       if (response.result && response.result !== 'error') {
         console.log(response.result);
-      }
-      else {
+      } else {
         console.log(response);
       }
     }, error => {

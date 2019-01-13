@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class PageNotFoundComponent implements OnInit {
 
-  title: string = 'Page Not Found | Allgive.org';
+  title = 'Page Not Found | Allgive.org';
 
   constructor( private titleService: Title ) { }
 

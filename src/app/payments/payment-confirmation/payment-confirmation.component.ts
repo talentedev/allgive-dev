@@ -35,16 +35,16 @@ export class PaymentConfirmationComponent implements OnInit {
           return console.log('Something went wrong', result.error);
         } else {
           // Convert charge amount to pennies for Stripe
-          let stripeAmount = this.donation.donationAmount * 100;
-          
-          let data = {
+          const stripeAmount = this.donation.donationAmount * 100;
+
+          const data = {
             donation: stripeAmount,
             frequency: this.donation.donationFrequency,
             user: this.authState,
             charity: this.charity
-          }
+          };
           this.payments.processSubscription(result.token.id, data)
-            .subscribe(data => this.router.navigate(['/user/dashboard']));
+            .subscribe(res => this.router.navigate(['/user/dashboard']));
         }
       });
   }

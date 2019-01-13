@@ -15,9 +15,20 @@ import { User } from 'firebase';
 export class LoginComponent implements OnInit {
 
   user;
-  title: string = 'Log In | Allgive.org';
+  title = 'Log In | Allgive.org';
 
-  constructor( private titleService: Title, private authService: AuthService, private fb: FormBuilder, private router: Router, private location: Location) { }
+  constructor(
+    private titleService: Title,
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private location: Location
+  ) { }
+
+  loginForm = this.fb.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  });
 
   ngOnInit() {
     if (this.authService.authState) {
@@ -27,13 +38,8 @@ export class LoginComponent implements OnInit {
     this.setTitle(this.title);
   }
 
-  loginForm = this.fb.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
-  });
-
   onSubmit() {
-    this.authService.emailLogin(this.loginForm.value.email, this.loginForm.value.password)
+    this.authService.emailLogin(this.loginForm.value.email, this.loginForm.value.password);
   }
 
   goPasswordlessLogin() {

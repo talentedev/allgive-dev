@@ -37,7 +37,7 @@ export class SubscriptionPaymentComponent {
   selectedDonation;
   submitActive = false;
 
-  constructor( 
+  constructor(
     private modalService: NgbModal,
     public activeModal: NgbActiveModal
     ) { }
@@ -47,7 +47,7 @@ export class SubscriptionPaymentComponent {
     this.donationFrequency = donation.stripeFrequency;
 
     this.donationElements.forEach(element => {
-      if (element != donation) {
+      if (element !== donation) {
         element.active = false;
       }
 
@@ -69,7 +69,7 @@ export class SubscriptionPaymentComponent {
       modalRef.componentInstance.donation = this.selectedDonation;
       this.activeModal.close();
     }
-    
+
   }
 
 }

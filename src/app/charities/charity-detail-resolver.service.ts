@@ -11,7 +11,7 @@ export class CharityDetailResolverService implements Resolve<Promise<any>> {
   constructor(private cs: ContentfulService, private router: Router) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
-    let id = route.paramMap.get('id');
+    const id = route.paramMap.get('id');
 
     return this.cs.getCharityDetail(id)
       .then(charity => {

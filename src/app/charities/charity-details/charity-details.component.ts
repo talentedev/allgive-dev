@@ -34,7 +34,7 @@ export class CharityDetailsComponent implements OnInit {
         this.ngOnInit();
         window.scroll(0, 0);
       }
-    })
+    });
   }
 
   ngOnInit() {
@@ -54,7 +54,7 @@ export class CharityDetailsComponent implements OnInit {
             'background-position': 'center 20%',
             'background-size': 'cover',
             'margin-bottom': '7vw'
-          }
+          };
           this.logoStyle = {
             'background-image': 'url(' + this.charity.fields.logo.fields.file.url + ')',
             'background-size': 'cover',
@@ -67,7 +67,7 @@ export class CharityDetailsComponent implements OnInit {
             'right': '0',
             'margin': 'auto',
             'text-indent': '-10rem'
-          }
+          };
         });
     } else {
       this.contentfulService.getCharityDetail(charityId)
@@ -80,7 +80,7 @@ export class CharityDetailsComponent implements OnInit {
             'background-position': 'center 20%',
             'background-size': 'cover',
             'margin-bottom': '7vw'
-          }
+          };
           this.logoStyle = {
             'background-image': 'url(' + this.charity.fields.logo.fields.file.url + ')',
             'background-size': 'cover',
@@ -93,7 +93,7 @@ export class CharityDetailsComponent implements OnInit {
             'right': '0',
             'margin': 'auto',
             'text-indent': '-10rem'
-          }
+          };
         });
     }
   }

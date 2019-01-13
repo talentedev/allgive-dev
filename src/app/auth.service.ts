@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 export class AuthService {
 
   stripeCustomer;
-  apiUrl: string = 'http://localhost:3000';
+  apiUrl = 'http://localhost:3000';
 
   authState: any = null;
 
@@ -49,12 +49,11 @@ export class AuthService {
   }
 
   currentUserDisplayName(): string {
-    if (!this.authState) { return '' }
-    else { return this.authState['displayName'] || 'Current User' }
+    if (!this.authState) { return ''; } else { return this.authState['displayName'] || 'Current User'; }
   }
 
   currentDbUser(): any {
-    let id = this.currentUserId();
+    const id = this.currentUserId();
     return this.db.list('/users', ref => ref.orderByChild('authId')).query.equalTo(id);
   }
 
@@ -72,9 +71,9 @@ export class AuthService {
 
         // Write user's name and email to Firebase auth
         this.authState = user;
-        let authUser = this.afAuth.auth.currentUser;
+        const authUser = this.afAuth.auth.currentUser;
 
-        let fullName = firstName + ' ' + lastName;
+        const fullName = firstName + ' ' + lastName;
 
         // Create Stripe customer
         this.createStripeCustomer(email)
@@ -120,7 +119,7 @@ export class AuthService {
 
   // Reset password
   resetPassword(email: string) {
-    let auth = firebase.auth();
+    const auth = firebase.auth();
 
     return auth.sendPasswordResetEmail(email)
       .then(() => console.log('email sent'))
@@ -129,23 +128,23 @@ export class AuthService {
 
   // Passwordless Login
   emailLinkLogin(email: string) {
-    const actionCodeSettings = environment.actionCodeSettings
+    const actionCodeSettings = environment.actionCodeSettings;
 
     return this.afAuth.auth.sendSignInLinkToEmail(email, actionCodeSettings)
       .then(() => window.localStorage.setItem('emailForSignIn', email))
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }
 
   confirmSignIn(url) {
-    let email = window.localStorage.getItem('emailForSignIn')
+    const email = window.localStorage.getItem('emailForSignIn');
 
     if (this.afAuth.auth.isSignInWithEmailLink(url) && email) {
         this.afAuth.auth.signInWithEmailLink(email, url)
           .then((res) => {
-            window.localStorage.removeItem('emailForSignIn')
-            this.authState = res
-            this.router.navigate(['/charities'])
-          })
+            window.localStorage.removeItem('emailForSignIn');
+            this.authState = res;
+            this.router.navigate(['/charities']);
+          });
     }
   }
 

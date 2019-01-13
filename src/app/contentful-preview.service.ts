@@ -10,7 +10,7 @@ const CONFIG = {
         charity: 'charity',
         category: 'category'
     }
-}
+};
 
 @Injectable()
 export class ContentfulPreviewService {

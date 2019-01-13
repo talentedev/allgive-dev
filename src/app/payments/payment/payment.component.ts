@@ -77,12 +77,12 @@ export class PaymentComponent implements AfterViewInit, OnDestroy {
       if (source) {
         this.source = source;
       }
-        
+
       modalRef.componentInstance.source = this.source;
       modalRef.componentInstance.charity = this.charity;
       modalRef.componentInstance.donation = this.donation;
       modalRef.componentInstance.card = this.card;
     });
-    
+
   }
 }

@@ -15,7 +15,7 @@ export class PaymentsService {
   membership: any;
   customer;
   stripe: Observable<any>;
-  apiUrl: string = 'http://localhost:3000';
+  apiUrl = 'http://localhost:3000';
 
   constructor(
     private http: HttpClient,
@@ -25,7 +25,7 @@ export class PaymentsService {
   ) {
 
     this.afAuth.authState.subscribe((auth) => {
-      if (auth) this.userId = auth.uid;
+      if (auth) { this.userId = auth.uid; }
     });
 
     this.membership = this.afAuth.authState

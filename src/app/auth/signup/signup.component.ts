@@ -14,7 +14,7 @@ import { MailChimpService } from '../../mailchimp.service';
 export class SignupComponent implements OnInit {
 
   user;
-  title: string = 'Sign Up | Allgive.org';
+  title = 'Sign Up | Allgive.org';
 
   constructor(
     private titleService: Title,
@@ -24,6 +24,13 @@ export class SignupComponent implements OnInit {
     private mailchimpService: MailChimpService
    ) { }
 
+  signupForm = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    email: ['', Validators.required],
+    password: ['', Validators.required]
+  });
+
   ngOnInit() {
     if (this.authService.authState) {
       this.router.navigate(['/charities']);
@@ -31,13 +38,6 @@ export class SignupComponent implements OnInit {
 
     this.setTitle(this.title);
   }
-
-  signupForm = this.fb.group({
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    email: ['', Validators.required],
-    password: ['', Validators.required]
-  });
 
   onSubmit() {
 
@@ -48,7 +48,7 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.password
     )
       .then((res) => {
-        this.router.navigate(['/charities'])
+        this.router.navigate(['/charities']);
 
         // Subscribe user to mailchimp
         this.mailchimpService.subscribeUser(
@@ -59,7 +59,7 @@ export class SignupComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
-    })
+    });
   }
 
   setTitle(newTitle: string) {

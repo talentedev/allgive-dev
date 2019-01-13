@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class ContactComponent implements OnInit {
 
-  title: string = 'Contact Us | Allgive.org';
+  title = 'Contact Us | Allgive.org';
 
   constructor( private titleService: Title ) { }
 

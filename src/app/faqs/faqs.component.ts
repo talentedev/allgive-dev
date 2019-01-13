@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class FaqsComponent implements OnInit {
 
-  title: string = 'FAQ | Allgive.org';
+  title = 'FAQ | Allgive.org';
 
   constructor( private titleService: Title ) { }
 

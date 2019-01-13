@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class EditProfileComponent implements OnInit {
 
-  title: string = 'Edit Profile | Allgive.org';
+  title = 'Edit Profile | Allgive.org';
 
   constructor( private titleService: Title ) { }
 

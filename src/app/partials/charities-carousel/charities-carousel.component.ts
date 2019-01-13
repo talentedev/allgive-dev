@@ -11,9 +11,9 @@ import { map } from 'rxjs/operators';
 })
 export class CharitiesCarouselComponent implements OnInit {
 
-  @Input('carouselType') carouselType: string;
+  @Input() carouselType: string;
   charities: Entry<any>[];
-  mobile: boolean = false;
+  mobile = false;
 
   constructor(private contentfulService: ContentfulService, private config: NgbCarouselConfig) {
     config.interval = 15000;

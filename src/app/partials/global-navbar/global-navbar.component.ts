@@ -11,14 +11,14 @@ export class GlobalNavbarComponent implements OnInit {
 
   user: Observable<firebase.User>;
   authState;
-  menuState: boolean = false;
+  menuState = false;
 
   constructor(public authService: AuthService) {
     this.authState = this.authService.authState;
   }
 
   ngOnInit() {
-    // 
+    //
   }
 
   logout() {

@@ -14,7 +14,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     NgbModule.forRoot(),
     CommonModule,
     UserRoutingModule,
-    HighchartsChartModule 
+    HighchartsChartModule
   ],
   declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent]
 })

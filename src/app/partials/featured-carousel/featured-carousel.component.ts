@@ -15,9 +15,9 @@ export class FeaturedCarouselComponent implements OnInit {
   showNavigationArrows = false;
   showNavigationIndicators = false;
 
-  constructor(config: NgbCarouselConfig, private contentfulService: ContentfulService) { 
+  constructor(config: NgbCarouselConfig, private contentfulService: ContentfulService) {
     config.interval = 10000;
-    
+
   }
 
   ngOnInit() {

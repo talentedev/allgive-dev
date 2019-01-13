@@ -9,18 +9,18 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
-    data: { title: "Small Sacrifice, Big Difference"}
+    data: { title: 'Small Sacrifice, Big Difference'}
   },
   {
     path: 'faqs',
     component: FaqsComponent,
-    data: {title: "FAQs"},
+    data: {title: 'FAQs'},
     canActivate: [AuthGuard]
   },
   {
     path: '**',
     component: PageNotFoundComponent,
-    data: {title: "Page not found"}
+    data: {title: 'Page not found'}
   }
 ];
 

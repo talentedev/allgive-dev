@@ -19,12 +19,17 @@ export class TitleService {
     private titleService: Title
   ) { }
 
+  static ucFirst(string) {
+    if (!string) { return string; }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   init() {
     this.router.events
       .filter((event) => event instanceof NavigationEnd)
       .map(() => {
         let route = this.activatedRoute;
-        while (route.firstChild) route = route.firstChild;
+        while (route.firstChild) { route = route.firstChild; }
         return route;
       })
       .filter((route) => route.outlet === 'primary')
@@ -40,11 +45,6 @@ export class TitleService {
         }
       })
       .subscribe((pathString) => this.titleService.setTitle(`${pathString} ${SEPARATOR} ${APP_TITLE}`));
-  }
-
-  static ucFirst(string) {
-    if (!string) { return string; }
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
 }

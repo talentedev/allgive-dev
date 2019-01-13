@@ -14,7 +14,7 @@ import { PaymentConfirmationComponent } from './payment-confirmation/payment-con
   ],
   declarations: [
     PaymentComponent,
-    SubscriptionPaymentComponent, 
+    SubscriptionPaymentComponent,
     PaymentConfirmationComponent
   ]
 })

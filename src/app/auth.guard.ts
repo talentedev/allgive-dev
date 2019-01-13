@@ -7,11 +7,11 @@ import { AuthService } from './auth.service';
 export class AuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) { }
-  
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    let url: string = state.url;
+    const url: string = state.url;
 
     return this.checkLogin(url);
   }
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.authState) { 
+    if (this.authService.authState) {
       return true;
     }
 

@@ -13,9 +13,9 @@ import { AuthService } from '../../auth.service';
 export class DashboardComponent implements OnInit {
 
   user;
-  title: string = 'Dashboard | Allgive.org';
-  showCharityManageView: boolean = false;
-  showPaymentDetail: boolean = false;
+  title = 'Dashboard | Allgive.org';
+  showCharityManageView = false;
+  showPaymentDetail = false;
   Highcharts = Highcharts;
   chartOptions = {
     chart: {

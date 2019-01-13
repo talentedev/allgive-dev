@@ -14,9 +14,9 @@ export class CharitiesListComponent implements OnInit {
   categories: Entry<any>[] = [];
   activeCategory;
   featuredCharity;
-  showAll: boolean = true;
+  showAll = true;
   coverStyle: {};
-  title: string = 'All Charities | Allgive.org';
+  title = 'All Charities | Allgive.org';
 
   constructor(private titleService: Title, private contentfulService: ContentfulService) { }
 
@@ -25,14 +25,14 @@ export class CharitiesListComponent implements OnInit {
     .then(res => {
       this.coverStyle = {
         'background-image': 'url(' + this.featuredCharity.fields.coverImage.fields.file.url + ')'
-      }
+      };
     });
 
     this.setTitle(this.title);
-    
+
     this.contentfulService.getCategories()
       .then(res => this.categories = res);
-    
+
     this.activeCategory = 'Category';
   }
 
@@ -47,7 +47,7 @@ export class CharitiesListComponent implements OnInit {
         this.charities = res;
         this.showAll = true;
         this.activeCategory = 'Category';
-        this.featuredCharity = res[Math.floor(Math.random() * res.length)]
+        this.featuredCharity = res[Math.floor(Math.random() * res.length)];
       });
   }
 

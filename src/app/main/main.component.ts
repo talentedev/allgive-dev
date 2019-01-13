@@ -11,9 +11,9 @@ import { Entry } from 'contentful';
 })
 export class MainComponent implements OnInit {
 
-  title: string = 'Small Sacrifice, Big Difference | Allgive.org'
+  title = 'Small Sacrifice, Big Difference | Allgive.org';
   charities: Entry<any>[] = [];
-  carouselType: string = 'Available Charities';
+  carouselType = 'Available Charities';
 
   constructor(private titleService: Title, private contentfulService: ContentfulService) { }
 

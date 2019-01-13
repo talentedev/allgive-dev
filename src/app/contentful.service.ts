@@ -10,7 +10,7 @@ const CONFIG = {
     category: 'category',
     page: 'page'
   }
-}
+};
 
 @Injectable()
 export class ContentfulService {

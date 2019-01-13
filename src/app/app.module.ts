@@ -1,6 +1,5 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpClient, HttpHeaders, HttpClientJsonpModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -47,7 +46,6 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
   ],
   imports: [
     BrowserModule,
-    HttpModule,
     HttpClientModule,
     HttpClientJsonpModule,
     ReactiveFormsModule,
@@ -65,10 +63,12 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
     PagesModule,
     AppRoutingModule,
   ],
-  providers: [ HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService, AuthService, AuthGuard, PaymentsService, MailChimpService ],
+  providers: [
+    HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService,
+    AuthService, AuthGuard, PaymentsService, MailChimpService ],
   bootstrap: [ AppComponent ],
-  entryComponents: [ 
-    SubscriptionPaymentComponent, 
+  entryComponents: [
+    SubscriptionPaymentComponent,
     PaymentComponent,
     PaymentConfirmationComponent
   ]

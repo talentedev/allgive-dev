@@ -34,7 +34,7 @@ const routes: Routes = [
     ],
     canActivate: [AuthGuard]
   }
-]
+];
 
 @NgModule({
   imports: [
