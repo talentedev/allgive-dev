@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { AuthService } from '../../auth.service';
 import { MailChimpService } from '../../mailchimp.service';
 
@@ -39,6 +40,7 @@ export class SignupComponent implements OnInit {
   });
 
   onSubmit() {
+
     this.authService.emailSignUp(
       this.signupForm.value.firstName,
       this.signupForm.value.lastName,
@@ -48,9 +50,12 @@ export class SignupComponent implements OnInit {
       .then((res) => {
         this.router.navigate(['/charities'])
 
-        // Subscribe user
-        this.mailchimpService.subscribeUser()
-          .subscribe(res => console.log(res));
+        // Subscribe user to mailchimp
+        this.mailchimpService.subscribeUser(
+          this.signupForm.value.firstName,
+          this.signupForm.value.lastName,
+          this.signupForm.value.email
+        );
       })
       .catch(error => {
         console.log(error);

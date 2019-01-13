@@ -1,7 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HttpHeaders, HttpClientJsonpModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from 'angularfire2';
@@ -49,6 +49,7 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
     BrowserModule,
     HttpModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     ReactiveFormsModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),

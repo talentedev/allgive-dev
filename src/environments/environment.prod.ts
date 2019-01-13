@@ -13,5 +13,8 @@ export const environment = {
     url: 'https://allgive.herokuapp.com/link-login', 
     handleCodeInApp: true,
   },
-  mailchimpKey: 'c58f25891f8aa88f801a5a3faefaf2d6-us7'
+  mailchimpKey: {
+    endpoint: 'https://allgive.us7.list-manage.com/subscribe/post-json?u=94c3b7b1bdd619a78d3d14f71&amp;id=b3bce19994&',
+    hiddenName: 'b_94c3b7b1bdd619a78d3d14f71_b3bce19994'
+  }
 };
