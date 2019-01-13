@@ -15,8 +15,10 @@ export class DashboardComponent implements OnInit {
   user;
   title = 'Dashboard | Allgive.org';
   showCharityManageView = false;
-  showPaymentDetail = false;
+  showPaymentDetail = [false, false];
   Highcharts = Highcharts;
+  donationOrgs = [];
+  selectedOrg = null;
   chartOptions = {
     chart: {
         plotBackgroundColor: null,
@@ -38,32 +40,37 @@ export class DashboardComponent implements OnInit {
             dataLabels: {
                 enabled: false
             },
-            showInLegend: false
+            showInLegend: false,
+            events: {
+              click: function(e) {
+                this.clickChart(e);
+              }.bind(this)
+            }
         }
     },
     series: [{
         name: 'Brands',
         colorByPoint: true,
-        data: [{
-            name: 'ASPCA',
-            y: 61.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'NATIONAL COALITION AGAINST DOME',
-            y: 11.84
-        }, {
-            name: 'MOMA',
-            y: 10.85
-        }, {
-            name: 'ALZEIMERS ASSOCIATION',
-            y: 4.67
-        }]
+        data: []
     }],
     credits: {
       enabled: false
     }
   };
+  updateChart = false;
+  payments = [
+    {
+      type: 'Visa',
+      expire: '04/2021',
+      default: true,
+      icon: '../../../assets/images/visa.png'
+    },
+    {
+      type: 'Master Card',
+      expire: '02/2019',
+      icon: '../../../assets/images/master-card.png'
+    }
+  ];
 
   constructor(
     private titleService: Title,
@@ -74,18 +81,44 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.setTitle(this.title);
+
+    // To Do : get data from api
+    this.donationOrgs = [{
+            name: 'ASPCA',
+            y: 61.41,
+            amount: 1281
+        }, {
+            name: 'NATIONAL COALITION AGAINST DOMESTIC VIOLENCE',
+            y: 11.84,
+            amount: 414
+        }, {
+            name: 'MOMA',
+            y: 10.85,
+            amount: 625
+        }, {
+            name: 'ALZEIMERS ASSOCIATION',
+            y: 4.67,
+            amount: 1070
+        }];
+
+    this.chartOptions.series[0].data = this.donationOrgs;
+    this.updateChart = true;
   }
 
   setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
   }
 
+  clickChart(e) {
+    this.selectedOrg = (e.point.selected === undefined || e.point.selected === false) ? e.point.index : -1;
+  }
+
   setShowCharityManage(value) {
     this.showCharityManageView = value;
   }
 
-  togglePaymentDetail() {
-    this.showPaymentDetail = !this.showPaymentDetail;
+  togglePaymentDetail(index) {
+    this.showPaymentDetail[index] = !this.showPaymentDetail[index];
   }
 
 }

@@ -35,25 +35,28 @@
         <highcharts-chart 
           [Highcharts]="Highcharts"
           [options]="chartOptions"
+          [(update)]="updateChart"
           style="width: 100%; height: 400px; display: block;"
         ></highcharts-chart>
       </div>
       <div class="col-6 col-md-4">
-        <div class="donation-item">
-          <h3>$1281</h3>
-          <p>ASPCA</p>
-        </div>
-        <div class="donation-item">
-          <h3>$414</h3>
-          <p>NATIONAL COALITION AGAINST DOME</p>
-        </div>
-        <div class="donation-item">
-          <h3>$625</h3>
-          <p>MOMA</p>
-        </div>
-        <div class="donation-item">
-          <h3>$1070</h3>
-          <p>ALZEIMERS ASSOCIATION</p>
+        <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}">
+          <div *ngIf="i !== selectedOrg">
+            <h3>${{ donationOrg.amount }}</h3>
+            <p>{{ donationOrg.name }}</p>
+          </div>
+          <div *ngIf="i === selectedOrg">
+            <div class="row">
+              <div class="col-6 bg-color-{{i}}">
+                <h3 class="text-white">${{ donationOrg.amount }}</h3>
+                <p class="text-white">{{ donationOrg.name }}</p>
+              </div>
+              <div class="col-6 bg-color-{{i}} opacity-5">
+                <h3 class="text-white">${{ donationOrg.amount }}</h3>
+                <p class="text-white">by end of 2018</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -195,7 +198,7 @@
   </section>
 
   <section class="section hero-payments">
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-9">
         <h3 class="section-title">Payment Settings</h3>
       </div>
@@ -203,47 +206,50 @@
         <button class="btn btn-add-charity">ADD PAYMENT METHOD</button>
       </div>
     </div>
-    <div class="row card-info">
-      <div class="col-3">Visa ending in 3456</div>
-      <div class="col-3">Expires 04/2021</div>
-      <div class="col-3">Used for 03 charities</div>
-      <div class="col-3">
-        <button class="btn btn-manage-charity" (click)="togglePaymentDetail()">{{ showPaymentDetail? 'CLOSE DETAILS': 'MORE DETAILS' }}</button>
-      </div>
-    </div>
-    <div [ngbCollapse]="!showPaymentDetail" class="row collapse expand-payment-details" id="payment-details-one">
-      <div class="col-4">
-        <div class="row card-name">
-          <div class="col">
-            <div class="name-title">Name on Card</div>
-            <div class="name-info">John Smith</div>
-          </div>
+    <div *ngFor="let payment of payments let i = index" [attr.data-index]="i" class="payment-methods">
+      <div *ngIf="payment.default" class="default-payment"><strong>Default Payment Method</strong></div>
+      <div class="row card-info">
+        <div class="col-3"><img [src]="payment.icon" class="pr-2">{{ payment.type }} ending in 3456</div>
+        <div class="col-3">Expires {{ payment.expire }}</div>
+        <div class="col-3">Used for 03 charities</div>
+        <div class="col-3">
+          <button class="btn btn-manage-charity" (click)="togglePaymentDetail(i)">{{ showPaymentDetail[i]? 'CLOSE DETAILS': 'MORE DETAILS' }}</button>
         </div>
-        <div class="row card-address">
-          <div class="col">
-            <div class="address-title">Billing Address</div>
-            <div class="address-info">
-              <span class="street">1234 Main St</span>
-              <span class="city-state-zip">Atlanta, GA 30318</span>
+      </div>
+      <div [ngbCollapse]="!showPaymentDetail[i]" class="row collapse expand-payment-details" id="payment-details-one">
+        <div class="col-4">
+          <div class="row card-name">
+            <div class="col">
+              <div class="name-title">Name on Card</div>
+              <div class="name-info">John Smith</div>
+            </div>
+          </div>
+          <div class="row card-address">
+            <div class="col">
+              <div class="address-title">Billing Address</div>
+              <div class="address-info">
+                <span class="street">1234 Main St</span>
+                <span class="city-state-zip">Atlanta, GA 30318</span>
+              </div>
+            </div>
+          </div>
+          <div class="row card-options">
+            <div class="col">
+              <div class="edit">Edit Information</div>
+              <div class="lost-or-stolen">Lost or Stolen?</div>
+              <div class="delete-card">Delete</div>
             </div>
           </div>
         </div>
-        <div class="row card-options">
-          <div class="col">
-            <div class="edit">Edit Information</div>
-            <div class="lost-or-stolen">Lost or Stolen?</div>
-            <div class="delete-card">Delete</div>
-          </div>
+        <div class="col-8">
+          <h5>Supporting Charities</h5>
+          <ul class="payment-charities">
+            <li>MOMA</li>
+            <li>ASPCA</li>
+            <li>Atlanta Humane Society</li>
+            <li>National Coalition Against Domestic Violence</li>
+          </ul>
         </div>
-      </div>
-      <div class="col-8">
-        <h5>Supporting Charities</h5>
-        <ul class="payment-charities">
-          <li>MOMA</li>
-          <li>ASPCA</li>
-          <li>Atlanta Humane Society</li>
-          <li>National Coalition Against Domestic Violence</li>
-        </ul>
       </div>
     </div>
   </section>

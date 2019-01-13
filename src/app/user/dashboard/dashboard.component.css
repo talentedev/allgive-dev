@@ -63,9 +63,38 @@
     border-left: 5px solid #074C7C;
     text-align: left;
     padding-left: 15px;
+    margin-bottom: 10px;
 }
 .donation-item p {
     color: #074C7C;
+    margin: 0;
+}
+.border-color-0 {
+    border-color: rgb(124, 181, 236) !important;
+}
+.border-color-1 {
+    border-color: rgb(67, 67, 72) !important;
+}
+.border-color-2 {
+    border-color: rgb(144, 237, 125) !important;
+}
+.border-color-3 {
+    border-color: rgb(247, 163, 92) !important;
+}
+.bg-color-0 {
+    background-color: rgb(124, 181, 236) !important;
+}
+.bg-color-1 {
+    background-color: rgb(67, 67, 72) !important;
+}
+.bg-color-2 {
+    background-color: rgb(144, 237, 125) !important;
+}
+.bg-color-3 {
+    background-color: rgb(247, 163, 92) !important;
+}
+.opacity-5 {
+    opacity: 0.5;
 }
 /* Manage contributions */
 .btn-add-charity {
@@ -180,8 +209,16 @@
 /* Payment Settings */
 .hero-payments .card-info {
     background-color: #f4f3f3;
-    margin: 15px 0;
-    padding: 20px 10px;
+    margin: 0 0 5px 0;
+    padding: 30px 10px;
+}
+.hero-payments .payment-methods {
+    position: relative;
+}
+.hero-payments .default-payment {
+    position: absolute;
+    top: 10px;
+    left: 25px;
 }
 .hero-payments .card-info button {
     background-color: white;
