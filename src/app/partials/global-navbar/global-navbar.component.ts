@@ -21,6 +21,10 @@ export class GlobalNavbarComponent implements OnInit {
     //
   }
 
+  collapseMenu() {
+    this.menuState = false;
+  }
+
   logout() {
     this.authService.signOut();
   }
