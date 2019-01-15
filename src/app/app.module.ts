@@ -7,6 +7,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { NgxStripeModule } from 'ngx-stripe';
+import { NgxLoadingModule } from 'ngx-loading';
 
 import { environment } from '../environments/environment';
 
@@ -62,6 +63,7 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
     PaymentsModule,
     PagesModule,
     AppRoutingModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [
     HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService,

@@ -20,7 +20,7 @@
         </div>
         <div class="card pt-3 pb-3">
           <div ngbDropdown>
-            <button class="btn btn-outline-primary" id="donationPeriods" ngbDropdownToggle>2018 Year-End-Projection</button>
+            <button class="btn btn-outline-primary" id="donationPeriods" ngbDropdownToggle>2019 Year-End-Projection</button>
             <div ngbDropdownMenu aria-labelledby="donationPeriods">
               <button class="dropdown-item dropdown-color-1">Daily Giving Total</button>
               <button class="dropdown-item dropdown-color-2">Weekly Giving Total</button>
@@ -53,7 +53,7 @@
               </div>
               <div class="col-6 bg-color-{{i}} opacity-5">
                 <h3 class="text-white">${{ donationOrg.amount }}</h3>
-                <p class="text-white">by end of 2018</p>
+                <p class="text-white">by end of 2019</p>
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@
         <h3 class="section-title">Manage Your Contributions</h3>
       </div>
       <div class="col-3">
-        <button class="btn btn-add-charity">ADD A CHARITY</button>
+        <button class="btn btn-add-charity" (click)="addCharity()">ADD A CHARITY</button>
       </div>
     </div>
     <div *ngIf="!showCharityManageView" class="row active-charities">

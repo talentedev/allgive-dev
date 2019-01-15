@@ -37,6 +37,7 @@
     "highcharts": "^7.0.1",
     "highcharts-angular": "^2.4.0",
     "marked": "^0.4.0",
+    "ngx-loading": "^2.0.1",
     "ngx-stripe": "^0.8.2",
     "ngx-swiper-wrapper": "^6.3.0",
     "path": "^0.12.7",

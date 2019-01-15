@@ -137,15 +137,23 @@ export class AuthService {
 
   confirmSignIn(url) {
     const email = window.localStorage.getItem('emailForSignIn');
-
-    if (this.afAuth.auth.isSignInWithEmailLink(url) && email) {
-        this.afAuth.auth.signInWithEmailLink(email, url)
+    return new Promise((resolve, reject) => {
+      if(this.afAuth.auth.isSignInWithEmailLink(url)) {
+        return this.afAuth.auth.signInWithEmailLink(email, url)
           .then((res) => {
-            window.localStorage.removeItem('emailForSignIn');
+            // window.localStorage.removeItem('emailForSignIn');
             this.authState = res;
             this.router.navigate(['/charities']);
+            resolve('success');
+          })
+          .catch(err => {
+            reject(err);
           });
-    }
+      } else {
+        reject('invalid link');
+      }
+    })
+    
   }
 
   // Sign out

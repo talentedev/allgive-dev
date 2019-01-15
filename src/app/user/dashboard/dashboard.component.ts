@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
         text: ''
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '<b>{point.percentage:.1f}%</b>'
     },
     plotOptions: {
         pie: {
@@ -111,6 +111,10 @@ export class DashboardComponent implements OnInit {
 
   clickChart(e) {
     this.selectedOrg = (e.point.selected === undefined || e.point.selected === false) ? e.point.index : -1;
+  }
+
+  addCharity() {
+    this.router.navigate(['/charities']);
   }
 
   setShowCharityManage(value) {
