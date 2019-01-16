@@ -31,18 +31,10 @@ footer .button {
     text-transform: uppercase;
 }
 
-footer .button:hover {
-    background-color: #5fb9f6;
-}
-
-footer .button.footer {
+footer .btn-allgive-primary {
     width: 100%;
-    margin-bottom: 2rem;
 }
 
-footer .button a {
-    color: #fff;
-}
 @media (max-width: 576px) {
     footer .footer-logo {
         margin-bottom: 1rem;
@@ -52,10 +44,9 @@ footer .button a {
         text-align: center;
         padding: 10px;
     }
-    footer .footer.button {
+    footer .btn-allgive-primary {
         width: 50%;
         margin: 10px auto;
-        padding: 5px;
     }
     footer .copyright {
         text-align: center !important;

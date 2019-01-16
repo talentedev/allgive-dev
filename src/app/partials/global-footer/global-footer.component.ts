@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs/Observable';
+
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -14,11 +17,19 @@ export class GlobalFooterComponent implements OnInit {
   currentDate = new Date();
   currentYear = this.currentDate.getFullYear();
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService, private router: Router) {
     this.authState = this.authService.authState;
   }
 
   ngOnInit() {
+  }
+
+  goToDashboard() {
+    if (this.authService.authState) {
+      this.router.navigate(['/user/dashboard']);
+    } else {
+      this.router.navigate(['/charities']);
+    }
   }
 
 }

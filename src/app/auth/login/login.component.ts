@@ -3,9 +3,12 @@ import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { AuthService } from '../../auth.service';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
 import { Observable } from 'rxjs';
 import { User } from 'firebase';
+
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +19,9 @@ export class LoginComponent implements OnInit {
 
   user;
   title = 'Log In | Allgive.org';
+  failedLogin = false;
+  faSpinner = faSpinner;
+  submitted = false;
 
   constructor(
     private titleService: Title,
@@ -39,7 +45,17 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.emailLogin(this.loginForm.value.email, this.loginForm.value.password);
+    this.failedLogin = false;
+    this.submitted = true;
+    this.authService.emailLogin(this.loginForm.value.email, this.loginForm.value.password)
+      .then(
+        res => {
+          this.submitted = false;
+        },
+        err => {
+          this.failedLogin = true;
+          this.submitted = false;
+      });
   }
 
   goPasswordlessLogin() {

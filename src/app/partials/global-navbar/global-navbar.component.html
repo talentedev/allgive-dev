@@ -30,11 +30,8 @@
           <a class="nav-link" (click)="collapseMenu()" *ngIf="authService.authState" (click)="logout()">Logout</a>
         </li>
       </ul>
-      <div class="navbar-text my-2 my-lg-0 button">
-        <a routerLink="/charities"
-        *ngIf="!authService.authState"
-           class="my-2 my-sm-0">Get Started</a>
-           <a class="my-2 my-sm-0" routerLink="/user/dashboard" *ngIf="authService.authState" (click)="collapseMenu()">My Portfolio</a>
-      </div>
+      <button class="btn btn-allgive-primary" (click)="goToDashboard()">
+        {{ authService.authState ? 'My Portfolio': 'Get Started' }}
+      </button>
     </div>
 </nav>

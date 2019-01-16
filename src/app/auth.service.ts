@@ -114,7 +114,7 @@ export class AuthService {
           this.router.navigate(['/charities']);
         }
       })
-      .catch(error => console.log(error));
+      .catch(error => Promise.reject(error));
   }
 
   // Reset password

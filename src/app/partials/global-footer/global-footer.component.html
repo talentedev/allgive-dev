@@ -21,17 +21,12 @@
       <div class="col-12 col-sm-6">
         <div class="row justify-content-end">
           <div class="col-12 col-md-8">
-            <div class="button footer">
-              <a routerLink="/login"
-              *ngIf="!authService.authState"
-                 class="my-2 my-sm-0">Get Started</a>
-                <a routerLink="/user/dashboard"
-                   *ngIf="authService.authState"
-                   class="my-2 my-sm-0">My Portfolio</a>
-            </div>
+            <button class="btn btn-allgive-primary" (click)="goToDashboard()">
+              {{ authService.authState ? 'My Portfolio': 'Get Started' }}
+            </button>
           </div>
         </div>
-        <div class="row justify-content-end">
+        <div class="row justify-content-end mt-4">
           <div class="col-12 copyright text-right">
             <p id="copyright">&copy; Copyright {{currentYear}} Allgive. All rights reserved.</p>
           </div>

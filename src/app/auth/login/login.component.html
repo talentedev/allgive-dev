@@ -19,7 +19,15 @@
         <div class="forgot">
           <!-- <a href="reset.html">Forgot password?</a> -->
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">
+          <fa-icon *ngIf="submitted" [icon]="faSpinner" [spin]="true" class="mr-2"></fa-icon>
+          <span>Login</span>
+        </button>
+
+         <div *ngIf="failedLogin" class="alert alert-danger" role="alert">
+          <strong>Email or password is invalid.</strong>
+        </div>
+
         <button type="button" class="btn btn-primary" (click)="goPasswordlessLogin()">Email Link Login</button>
 
       </form>
