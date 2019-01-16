@@ -51,7 +51,17 @@ export class DashboardComponent implements OnInit {
     series: [{
         name: 'Brands',
         colorByPoint: true,
-        data: []
+        data: [],
+        point: {
+          events: {
+            mouseOver: function(e) {
+              this.selectedOrg = e.target.index;
+            }.bind(this),
+            mouseOut: function(e) {
+              this.selectedOrg = -1;
+            }.bind(this)
+          }
+        }
     }],
     credits: {
       enabled: false
@@ -110,7 +120,7 @@ export class DashboardComponent implements OnInit {
   }
 
   clickChart(e) {
-    this.selectedOrg = (e.point.selected === undefined || e.point.selected === false) ? e.point.index : -1;
+    // this.selectedOrg = (e.point.selected === undefined || e.point.selected === false) ? e.point.index : -1;
   }
 
   addCharity() {
