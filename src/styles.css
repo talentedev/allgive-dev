@@ -127,7 +127,9 @@ h1 {
 }
 
 /* ########## Global: End ########## */
-
+.color-primary {
+    color: #0872BA;
+}
 /* ########## Homepage: Start ########## */
 
 .hero-charity {

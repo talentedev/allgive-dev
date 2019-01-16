@@ -138,7 +138,7 @@ export class AuthService {
   confirmSignIn(url) {
     const email = window.localStorage.getItem('emailForSignIn');
     return new Promise((resolve, reject) => {
-      if(this.afAuth.auth.isSignInWithEmailLink(url)) {
+      if (this.afAuth.auth.isSignInWithEmailLink(url)) {
         return this.afAuth.auth.signInWithEmailLink(email, url)
           .then((res) => {
             // window.localStorage.removeItem('emailForSignIn');
@@ -152,8 +152,8 @@ export class AuthService {
       } else {
         reject('invalid link');
       }
-    })
-    
+    });
+
   }
 
   // Sign out

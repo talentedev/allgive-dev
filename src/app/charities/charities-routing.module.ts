@@ -31,8 +31,7 @@ const routes: Routes = [
         path: '',
         component: CharitiesListComponent
       }
-    ],
-    canActivate: [AuthGuard]
+    ]
   }
 ];
 

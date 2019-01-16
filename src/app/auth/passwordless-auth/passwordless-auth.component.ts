@@ -2,25 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { AuthService } from '../../auth.service';
 import { environment } from '../../../environments/environment';
-
-@Component({
-  selector: 'custom-modal', 
-  template: `
-    <div class="modal-body text-center">
-      <h3 class="modal-title text-danger">Invalid Link!</h3>
-      <p>The link is expired.</p>
-      <p>Please try to get link again.</p>
-      <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">OK</button>
-    </div>
-  `
-})
-export class CustomModal {
-  constructor(public activeModal: NgbActiveModal) {}
-}
 
 @Component({
   selector: 'app-passwordless-auth',
@@ -30,10 +15,14 @@ export class CustomModal {
 export class PasswordlessAuthComponent implements OnInit {
 
   public loading = false;
+  public isInvalidLink = false;
+  public sendingLink = false;
+  faMagic = faMagic;
+  faSpinner = faSpinner;
   title = 'Log In | Allgive.org';
   emailSent = false;
   loginForm = this.fb.group({
-    email: ['', Validators.required]
+    email: ['', Validators.email]
   });
 
   constructor(
@@ -41,22 +30,23 @@ export class PasswordlessAuthComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private modalService: NgbModal
    ) { }
 
   ngOnInit() {
     this.setTitle(this.title);
     const url = this.router.url;
-    if(url !== '/link-login') {
+    if (url !== '/link-login') {
       this.confirmSignIn(url);
     }
   }
 
   sendEmailLink() {
+    this.sendingLink = true;
     const actionCodeSettings = environment.actionCodeSettings;
     this.authService.emailLinkLogin(this.loginForm.value.email)
       .then((res) => {
         this.emailSent = true;
+        this.sendingLink = false;
       });
   }
 
@@ -66,7 +56,7 @@ export class PasswordlessAuthComponent implements OnInit {
       .then(res => { this.loading = false; },
             err => {
               this.loading = false;
-              this.modalService.open(CustomModal, { centered: true, size: "lg" });
+              this.isInvalidLink = true;
             });
   }
 
