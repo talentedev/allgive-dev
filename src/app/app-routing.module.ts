@@ -14,8 +14,7 @@ const routes: Routes = [
   {
     path: 'faqs',
     component: FaqsComponent,
-    data: {title: 'FAQs'},
-    canActivate: [AuthGuard]
+    data: {title: 'FAQs'}
   },
   {
     path: '**',

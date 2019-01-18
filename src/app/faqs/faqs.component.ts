@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import * as marked from 'marked';
+
+import { ContentfulService } from '../contentful.service';
 
 @Component({
   selector: 'app-faqs',
@@ -9,11 +12,16 @@ import { Title } from '@angular/platform-browser';
 export class FaqsComponent implements OnInit {
 
   title = 'FAQ | Allgive.org';
+  content = '';
 
-  constructor( private titleService: Title ) { }
+  constructor( private titleService: Title, private contentfullService: ContentfulService ) { }
 
   ngOnInit() {
     this.setTitle(this.title);
+
+    this.contentfullService.getTextOnlyPage('faq').then(res => {
+      this.content = marked(res.fields.textContent);
+    });
   }
 
   setTitle(newTitle: string) {
