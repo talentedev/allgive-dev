@@ -1,0 +1,14 @@
+{
+  "user": "ben@varfaj.com",
+  "fullName" : "Ben de Vera",
+  "charities": [
+    "UNICEF",
+    "ASPCA",
+    "MOMA"
+  ],
+  "contributions":  [
+    {"charitie":"UNICEF", "daily":20, "total":2345, "projection":3455},
+    {"charitie":"ASPCA", "daily":20, "total":2345, "projection":3455},
+    {"charitie":"MOMA", "daily":20, "total":2345, "projection":3455}
+  ]
+}

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 
 import { AuthService } from '../../auth.service';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -86,13 +87,18 @@ export class DashboardComponent implements OnInit {
     private titleService: Title,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
     this.setTitle(this.title);
 
     // To Do : get data from api
+    this.userService.getUserInfo().subscribe(res => {
+      console.log(res);
+    });
+
     this.donationOrgs = [{
             name: 'ASPCA',
             y: 61.41,
