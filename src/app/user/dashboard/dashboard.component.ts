@@ -5,6 +5,8 @@ import * as Highcharts from 'highcharts';
 
 import { AuthService } from '../../auth.service';
 import { UserService } from '../../core/services/user.service';
+import { ChartService } from '../../core/services/chart.service';
+import { ContentfulService } from '../../contentful.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,55 +22,11 @@ export class DashboardComponent implements OnInit {
   Highcharts = Highcharts;
   donationOrgs = [];
   selectedOrg = null;
-  chartOptions = {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie',
-        backgroundColor: '#e9ecef'
-    },
-    title: {
-        text: ''
-    },
-    tooltip: {
-        pointFormat: '<b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: false
-            },
-            showInLegend: false,
-            events: {
-              click: function(e) {
-                this.clickChart(e);
-              }.bind(this)
-            }
-        }
-    },
-    series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: [],
-        point: {
-          events: {
-            mouseOver: function(e) {
-              this.selectedOrg = e.target.index;
-            }.bind(this),
-            mouseOut: function(e) {
-              this.selectedOrg = -1;
-            }.bind(this)
-          }
-        }
-    }],
-    credits: {
-      enabled: false
-    }
-  };
+  chartOptions: object;
   updateChart = false;
+  totalDonation = 0;
+  totalProjection = 0;
+  charityLogos = [];
   payments = [
     {
       type: 'Visa',
@@ -88,37 +46,25 @@ export class DashboardComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private contentfullService: ContentfulService,
+    private chartService: ChartService
   ) { }
 
   ngOnInit() {
+
     this.setTitle(this.title);
 
-    // To Do : get data from api
     this.userService.getUserInfo().subscribe(res => {
-      console.log(res);
+
+      this.totalDonation = this.chartService.calTotalDonation(res.contributions);
+      this.totalProjection = this.chartService.calTotalProjection(res.contributions);
+      this.donationOrgs = this.chartService.processSeries(res.contributions);
+      this.chartOptions = this.chartService.getChartOptions(this.donationOrgs, this);
+      this.updateChart = true;
+
+      this.getCharityLogos(res.contributions);
     });
-
-    this.donationOrgs = [{
-            name: 'ASPCA',
-            y: 61.41,
-            amount: 1281
-        }, {
-            name: 'NATIONAL COALITION AGAINST DOMESTIC VIOLENCE',
-            y: 11.84,
-            amount: 414
-        }, {
-            name: 'MOMA',
-            y: 10.85,
-            amount: 625
-        }, {
-            name: 'ALZEIMERS ASSOCIATION',
-            y: 4.67,
-            amount: 1070
-        }];
-
-    this.chartOptions.series[0].data = this.donationOrgs;
-    this.updateChart = true;
   }
 
   setTitle(newTitle: string) {
@@ -131,6 +77,14 @@ export class DashboardComponent implements OnInit {
 
   addCharity() {
     this.router.navigate(['/charities']);
+  }
+
+  getCharityLogos(data) {
+    this.chartService.getCharityLogo(data).subscribe(res => {
+      for (var i = 0; i < res.length; ++i) {
+        this.charityLogos.push(res[i].fields.logo.fields.file.url);
+      }
+    });
   }
 
   setShowCharityManage(value) {

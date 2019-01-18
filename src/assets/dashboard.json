@@ -3,12 +3,14 @@
   "fullName" : "Ben de Vera",
   "charities": [
     "UNICEF",
-    "ASPCA",
-    "MOMA"
+    "Alzheimers Association",
+    "ACLU",
+    "PETA"
   ],
   "contributions":  [
     {"charitie":"UNICEF", "daily":20, "total":2345, "projection":3455},
-    {"charitie":"ASPCA", "daily":20, "total":2345, "projection":3455},
-    {"charitie":"MOMA", "daily":20, "total":2345, "projection":3455}
+    {"charitie":"Alzheimers Association", "daily":15, "total":1256, "projection":3524},
+    {"charitie":"ACLU", "daily":16, "total":1369, "projection":2568},
+    {"charitie":"PETA", "daily":8, "total":985, "projection":1254}
   ]
 }

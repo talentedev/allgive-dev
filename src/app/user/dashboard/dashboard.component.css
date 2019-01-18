@@ -110,7 +110,7 @@
 }
 .active-charities .card {
     border-radius: 0;
-    border: none;
+    border: 1px solid #ddd;
     overflow: hidden;
     margin-top: 5px;
 }
