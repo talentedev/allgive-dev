@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 
 import { ContentfulService } from '../../contentful.service';
@@ -65,12 +65,12 @@ export class ChartService {
 
   // Process data to adopt highchart options.
   processSeries(data) {
-    var totalDonation = this.calTotalDonation(data);
-    var series = [];
-    for (var i = 0; i < data.length; ++i) {
-      var section = {};
+    const totalDonation = this.calTotalDonation(data);
+    const series = [];
+    for (let i = 0; i < data.length; ++i) {
+      const section = {};
       section['name'] = data[i].charitie;
-      section['y'] = data[i].total/totalDonation*100;
+      section['y'] = data[i].total / totalDonation * 100;
       section['amount'] = data[i].total;
       section['projection'] = data[i].projection;
       section['daily'] = data[i].daily;
@@ -81,8 +81,8 @@ export class ChartService {
 
   // Calculate total donation amount.
   calTotalDonation(data) {
-    var totalDonation = 0;
-    for (var i = 0; i < data.length; ++i) {
+    let totalDonation = 0;
+    for (let i = 0; i < data.length; ++i) {
       totalDonation += data[i].total;
     }
     return totalDonation;
@@ -90,8 +90,8 @@ export class ChartService {
 
   // Calculate total year projection.
   calTotalProjection(data) {
-    var total = 0;
-    for (var i = 0; i < data.length; ++i) {
+    let total = 0;
+    for (let i = 0; i < data.length; ++i) {
       total += data[i].projection;
     }
     return total;
@@ -99,9 +99,9 @@ export class ChartService {
 
   // Get charitiy logo
   getCharityLogo(data): Observable<any[]> {
-    var responses = [];
-    for (var i = 0; i < data.length; ++i) {
-      let slug = data[i].charitie.toLowerCase().split(' ').join('-');
+    const responses = [];
+    for (let i = 0; i < data.length; ++i) {
+      const slug = data[i].charitie.toLowerCase().split(' ').join('-');
       responses.push(this.contentfullService.getCharityDetail(slug));
     }
     return Observable.forkJoin(responses);

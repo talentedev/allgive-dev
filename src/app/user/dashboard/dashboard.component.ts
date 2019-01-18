@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
 
   getCharityLogos(data) {
     this.chartService.getCharityLogo(data).subscribe(res => {
-      for (var i = 0; i < res.length; ++i) {
+      for (let i = 0; i < res.length; ++i) {
         this.charityLogos.push(res[i].fields.logo.fields.file.url);
       }
     });

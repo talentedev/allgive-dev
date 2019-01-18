@@ -6,9 +6,9 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UserService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getUserInfo(): Observable<any> {
-    return this.http.get("../../assets/dashboard.json");
+    return this.http.get('../../assets/dashboard.json');
   }
 }
