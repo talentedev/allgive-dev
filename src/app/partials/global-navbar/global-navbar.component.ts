@@ -35,6 +35,10 @@ export class GlobalNavbarComponent implements OnInit {
 
   collapseMenu() {
     this.menuState = false;
+    const url = this.router.url;
+    if (url === '/charities') {
+      location.reload();
+    }
   }
 
   logout() {

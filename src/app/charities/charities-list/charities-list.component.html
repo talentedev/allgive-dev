@@ -2,17 +2,17 @@
   <!-- ##################################################
             Hero: Featured Charities
         ################################################## -->
-  <div id="featured-charity" class="hero-charity jumbotron jumbotron-fluid" [ngStyle]="coverStyle">
+  <section id="featured-charity" class="hero-charity" [ngStyle]="coverStyle">
     <div class="container">
       <h1 class="display-4">Help the world a little at a time.</h1>
       <p class="lead">Micro-donating makes giving easy.</p>
       <span class="featured" [routerLink]="['/charities', featuredCharity.fields.slug]">Featured Organization: {{ featuredCharity.fields.charityName }}</span>
     </div>
-  </div>
+  </section>
   <!-- ##################################################
             Filter Charities (TODO)
         ################################################## -->
-  <div class="charity-filters">
+  <section class="charity-filters">
     <div class="container-fluid">
       <div class="row">
         <div class="col align-items-center">
@@ -26,24 +26,26 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <!-- ##################################################
             Charity Grid
         ################################################## -->
-  <div class="charity-grid">
-    <div class="card-columns">
-      <div class="card medium" *ngFor="let charity of charities">
-        <div class="card-image" [routerLink]="['/charities', charity.fields.slug]">
-          <div class="card-cover" [style.backgroundImage]="'url(' + charity?.fields.coverImage.fields.file.url +')'"></div>
-          <div class="card-charity-text">
-            <div class="card-urgent" *ngIf="charity?.fields.urgent">Urgent help is needed!</div>
-            <div class="charity-name">{{ charity?.fields.charityName }}</div>
-            <div class="charity-brief-description">{{ charity?.fields.briefDescription }}</div>
-            <div class="card-cta">Learn more or take action</div>
+  <section class="charity-grid">
+    <div class="row">
+      <div class="card-wrapper col-sm-4" *ngFor="let charity of charities">
+        <div class="card">
+          <div class="card-image" [routerLink]="['/charities', charity.fields.slug]">
+            <div class="card-cover" [style.backgroundImage]="'url(' + charity?.fields.coverImage.fields.file.url +')'"></div>
+            <div class="card-charity-text">
+              <div class="card-urgent" *ngIf="charity?.fields.urgent">Urgent help is needed!</div>
+              <div class="charity-name">{{ charity?.fields.charityName }}</div>
+              <div class="charity-brief-description">{{ charity?.fields.briefDescription }}</div>
+              <div class="card-cta">Learn more or take action</div>
+            </div>
+            <img class="logo" src="{{ charity?.fields.logo.fields.file.url }}">
           </div>
-          <img class="logo" src="{{ charity?.fields.logo.fields.file.url }}">
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </main>
