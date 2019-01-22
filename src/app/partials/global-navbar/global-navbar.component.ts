@@ -37,7 +37,7 @@ export class GlobalNavbarComponent implements OnInit {
     this.menuState = false;
     const url = this.router.url;
     if (url === '/charities') {
-      location.reload();
+      window.location.reload();
     }
   }
 
