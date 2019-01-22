@@ -42,6 +42,7 @@ export class PasswordlessAuthComponent implements OnInit {
 
   sendEmailLink() {
     this.sendingLink = true;
+    this.emailSent = false;
     const actionCodeSettings = environment.actionCodeSettings;
     this.authService.emailLinkLogin(this.loginForm.value.email)
       .then((res) => {
