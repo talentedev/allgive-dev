@@ -1,17 +1,5 @@
-#featured-charity.hero-charity {
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-#featured-charity h1,
-#featured-charity .lead,
-#featured-charity .featured {
-    text-shadow: 1px 1px 2px #000000;
-}
-
-#featured-charity.hero-charity .container {
-    padding: 150px 50px;
+button.dropdown-toggle {
+    width: 200px;
 }
 
 .charity-grid .card-wrapper {
@@ -19,7 +7,7 @@
 }
 
 .charity-grid .card-image {
-    height: 30vw;
+    height: 23vw;
 }
 
 .card div.card-image .card-cover {
@@ -93,25 +81,8 @@ div.card-image:hover .card-charity-text {
     border: 1px solid #000000;
 }
 @media (max-width: 768px) {
-    #featured-charity.hero-charity {
-        height: 100%;
-        width: 100%;
-        padding: 20px;
-    }
-    #featured-charity.hero-charity .container {
-        padding: 40px 15px;
+    .jumbotron {
         text-align: center;
-    }
-    .hero-charity h1 {
-        font-size: 28px;
-        text-align: center;
-    }
-    .hero-charity p {
-        font-size: 22px;
-        text-align: center;
-    }
-    .hero-charity .featured {
-        position: relative;
     }
     .charity-grid .card-image {
         height: 45vw;
