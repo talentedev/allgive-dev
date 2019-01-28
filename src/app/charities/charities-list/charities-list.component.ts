@@ -11,6 +11,7 @@ import { EntryCollection, Entry } from 'contentful';
 export class CharitiesListComponent implements OnInit {
 
   charities: Entry<any>[] = [];
+  filteredCharities: Entry<any>[] = [];
   categories: Entry<any>[] = [];
   filteredCategories: Entry<any>[] = [];
   activeCategory;
@@ -49,6 +50,7 @@ export class CharitiesListComponent implements OnInit {
     return this.contentfulService.getCharities()
       .then(res => {
         this.charities = res;
+        this.filteredCharities = res;
         this.showAll = true;
         this.activeCategory = 'Category';
         this.featuredCharity = res[Math.floor(Math.random() * res.length)];
@@ -68,10 +70,17 @@ export class CharitiesListComponent implements OnInit {
     this.titleService.setTitle(newTitle);
   }
 
-  onSearchChange(searchValue: string ) {
+  onSearchChange(searchValue: string) {
     const categories = this.categories.filter(function (category) {
       return category.fields.categoryName.toLowerCase().includes(searchValue);
     });
     this.filteredCategories = categories;
+  }
+
+  onSearchCharity(searchValue: string) {
+    const charities = this.charities.filter(function (charity) {
+      return charity.fields.charityName.toLowerCase().includes(searchValue);
+    });
+    this.filteredCharities = charities;
   }
 }
