@@ -13,7 +13,6 @@ export class CharitiesListComponent implements OnInit {
   charities: Entry<any>[] = [];
   filteredCharities: Entry<any>[] = [];
   categories: Entry<any>[] = [];
-  filteredCategories: Entry<any>[] = [];
   activeCategory;
   featuredCharity;
   showAll = true;
@@ -35,7 +34,6 @@ export class CharitiesListComponent implements OnInit {
     this.contentfulService.getCategories()
       .then(res => {
         this.categories = res;
-        this.filteredCategories = res;
       });
 
     this.activeCategory = 'Category';
@@ -61,6 +59,7 @@ export class CharitiesListComponent implements OnInit {
     return this.contentfulService.getCharitiesByCategory(category)
       .then(res => {
         this.charities = res;
+        this.filteredCharities = res;
         this.showAll = false;
         this.getCategory(category);
       });
@@ -68,13 +67,6 @@ export class CharitiesListComponent implements OnInit {
 
   setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
-  }
-
-  onSearchChange(searchValue: string) {
-    const categories = this.categories.filter(function (category) {
-      return category.fields.categoryName.toLowerCase().includes(searchValue);
-    });
-    this.filteredCategories = categories;
   }
 
   onSearchCharity(searchValue: string) {

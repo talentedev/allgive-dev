@@ -1,6 +1,9 @@
 button.dropdown-toggle {
     width: 200px;
 }
+.dropdown-menu {
+    width: 100%;
+}
 
 .charity-grid .card-wrapper {
     margin: 15px 0;
