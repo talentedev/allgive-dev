@@ -4,6 +4,10 @@ button.dropdown-toggle {
 .dropdown-menu {
     width: 100%;
 }
+.search-input {
+    width: 350px;
+    margin-left: 30px;
+}
 
 .charity-grid .card-wrapper {
     margin: 15px 0;
@@ -86,6 +90,11 @@ div.card-image:hover .card-charity-text {
 @media (max-width: 768px) {
     .jumbotron {
         text-align: center;
+    }
+    .search-input {
+        width: 280px;
+        margin-left: 0;
+        margin-top: 15px;
     }
     .charity-grid .card-image {
         height: 45vw;
