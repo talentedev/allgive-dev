@@ -52,7 +52,7 @@ export class PaymentComponent implements AfterViewInit, OnDestroy {
 
     this.card.addEventListener('change', this.cardHandler);
 
-    this.authState = this.auth.authState();
+    this.authState = this.auth.authState;
   }
 
   ngOnDestroy() {
@@ -72,17 +72,18 @@ export class PaymentComponent implements AfterViewInit, OnDestroy {
 
   open(form: NgForm) {
     const modalRef = this.modalService.open(PaymentConfirmationComponent);
-    this.payments.checkForCustomerSource(this.authState)
-    .subscribe(source => {
-      if (source) {
-        this.source = source;
-      }
+    // this.payments.checkForCustomerSource(this.authState)
+    // .subscribe(source => {
+    //   if (source) {
+    //     this.source = source;
+    //   }
 
       modalRef.componentInstance.source = this.source;
       modalRef.componentInstance.charity = this.charity;
       modalRef.componentInstance.donation = this.donation;
       modalRef.componentInstance.card = this.card;
-    });
+      modalRef.componentInstance.prevModal = this.activeModal;
+    // });
 
   }
 }

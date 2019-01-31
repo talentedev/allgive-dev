@@ -14,6 +14,7 @@ export class PaymentConfirmationComponent implements OnInit {
   @Input() charity;
   @Input() donation;
   @Input() card;
+  @Input() prevModal;
 
   authState;
 
@@ -25,7 +26,7 @@ export class PaymentConfirmationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authState = this.auth.authState();
+    this.authState = this.auth.authState;
   }
 
   onSubmit() {
@@ -43,8 +44,12 @@ export class PaymentConfirmationComponent implements OnInit {
             user: this.authState,
             charity: this.charity
           };
-          this.payments.processSubscription(result.token.id, data)
-            .subscribe(res => this.router.navigate(['/user/dashboard']));
+          console.log(result);
+          this.activeModal.dismiss();
+          this.prevModal.dismiss();
+          this.router.navigate(['/charities'])
+          // this.payments.processSubscription(result.token.id, data)
+          //   .subscribe(res => this.router.navigate(['/user/dashboard']));
         }
       });
   }
