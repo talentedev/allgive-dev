@@ -60,50 +60,31 @@ export class AuthService {
   // Email & Password Auth //
 
   // Create Stripe customer
-  createStripeCustomer(email): Observable<any> {
-    return this.http.post<any>(this.apiUrl + '/customer', email);
+  createUser(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/users', data);
   }
 
   // Sign up
   emailSignUp(firstName: string, lastName: string, email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((user) => {
-
         // Write user's name and email to Firebase auth
         this.authState = user;
         const authUser = this.afAuth.auth.currentUser;
-
-        const fullName = firstName + ' ' + lastName;
-
+        const data = {
+          authId: authUser.uid,
+          email: authUser.email,
+          firstName: firstName,
+          lastName: lastName
+        }
         // Create Stripe customer
-        this.createStripeCustomer(email)
+        this.createUser(data)
           .subscribe(result => {
-
-            const customer = result;
-            // Write user's info to db
-            const usersRef = this.db.list('users');
-            usersRef.push({
-              authId: authUser.uid,
-              email: authUser.email,
-              firstName: firstName,
-              lastName: lastName,
-              fullName: fullName,
-            })
-              .then(function (newUserRef) {
-                // Write user's id to customer ref in db
-                console.log(newUserRef);
-                const updates = {};
-                updates[`/customers/${customer.id}/authId`] = authUser.uid;
-                updates[`/users/${newUserRef.key}/customerId`] = customer.id;
-                firebase.database().ref().update(updates);
-              });
+            console.log(result);
           });
-
-
       })
       .catch(error => console.log(error));
   }
-
 
   // Log in with email
   emailLogin(email: string, password: string) {

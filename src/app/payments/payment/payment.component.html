@@ -6,8 +6,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <input type="text" id="name" name="name" placeholder="Jane Doe">
-    <input type="email" id="email" name="email" placeholder="your@email.com">
+    <input type="text" id="name" name="name" placeholder="Jane Doe" [(ngModel)]="name">
+    <input type="email" id="email" name="email" placeholder="your@email.com" [(ngModel)]="email">
     <div id="card-element" class="field"></div>
     <div id="donation-details-amount">Charge amount: {{ donation.donationAmount | currency }}</div>
     <div id="donation-details-frequency">Charge frequency: {{ donation.donationFrequency }}</div>

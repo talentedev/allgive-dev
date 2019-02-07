@@ -17,6 +17,7 @@ export class PaymentConfirmationComponent implements OnInit {
   @Input() donation;
   @Input() card;
   @Input() prevModal;
+  @Input() name;
 
   authState;
 
@@ -33,24 +34,25 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   onSubmit() {
-    const name = 'name';
     this.stripeService
-      .createToken(this.card, { name })
+      .createToken(this.card, { name: this.name })
       .subscribe(result => {
         if (result.token) {
           // Convert charge amount to pennies for Stripe
           const stripeAmount = this.donation.donationAmount * 100;
           const data = {
             donation: stripeAmount,
-            frequency: this.donation.donationFrequency,
+            frequency: this.donation.stripeFrequency,
             user: this.authState,
-            charity: this.charity
+            charity: this.charity,
+            token: result.token.id
           };
           this.activeModal.dismiss();
           this.prevModal.dismiss();
-          this.router.navigate(['/user/dashboard']);
-          // this.payments.processSubscription(result.token.id, data)
-          //   .subscribe(res => this.router.navigate(['/user/dashboard']));
+          this.payments.processSubscription(data)
+            .subscribe(res => {
+              this.router.navigate(['/user/dashboard']);
+            });
         } else if (result.error) {
           console.log(result.error.message);
         }

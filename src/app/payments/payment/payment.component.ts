@@ -73,6 +73,8 @@ export class PaymentComponent implements OnInit {
       modalRef.componentInstance.donation = this.donation;
       modalRef.componentInstance.card = this.card;
       modalRef.componentInstance.prevModal = this.activeModal;
+      modalRef.componentInstance.name = this.name;
+      modalRef.componentInstance.email = this.email;
     // });
   }
 }

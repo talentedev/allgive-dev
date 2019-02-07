@@ -40,7 +40,7 @@ export class PaymentsService {
     return this.http.post<any>(this.apiUrl + '/charge', data);
   }
 
-  processSubscription(token: string, data: Object): Observable<any> {
+  processSubscription(data: Object): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/subscription', data);
   }
 
