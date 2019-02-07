@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 export class AuthService {
 
   stripeCustomer;
-  apiUrl = 'http://localhost:3000';
+  apiUrl = environment.apiUrl;
 
   authState: any = null;
 

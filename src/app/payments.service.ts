@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class PaymentsService {
@@ -15,7 +16,7 @@ export class PaymentsService {
   membership: any;
   customer;
   stripe: Observable<any>;
-  apiUrl = 'http://localhost:3000';
+  apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,

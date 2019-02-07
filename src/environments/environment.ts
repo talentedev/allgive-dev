@@ -8,12 +8,12 @@ export const environment = {
   firebase: {
     apiKey: 'AIzaSyBtjCJVVC4Rf0T1jVOJPbxxR0DUSAL_AWA', // "AIzaSyDoFmIQ91-j40s2skTZDhFCmsKEXoYv10M",
     authDomain: 'allgive-app-25240.firebaseapp.com', // "allgive-db679.firebaseapp.com",
-    databaseURL: 'https://allgive-db679.firebaseio.com',
+    databaseURL: 'https://allgive-app-25240.firebaseio.com',
     projectId: 'allgive-app-25240', // "allgive-db679",
     storageBucket: 'allgive-db679.appspot.com',
     messagingSenderId: '856416375337'
   },
-  stripeKey: 'pk_test_A1hL1cLlXqg5ObWRn1eaIgXU',
+  stripeKey: 'pk_test_QdIak0PSr5Owkso8aHgH9JMc',
   actionCodeSettings : {
     url: 'http://localhost:4200/link-login',
     handleCodeInApp: true,
@@ -21,5 +21,6 @@ export const environment = {
   mailchimpKey: {
     endpoint: 'https://allgive.us7.list-manage.com/subscribe/post-json?u=94c3b7b1bdd619a78d3d14f71&amp;id=b3bce19994&',
     hiddenName: 'b_94c3b7b1bdd619a78d3d14f71_b3bce19994'
-  }
+  },
+  apiUrl: 'http://localhost:8080'
 };

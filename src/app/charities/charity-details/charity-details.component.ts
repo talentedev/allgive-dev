@@ -7,6 +7,7 @@ import { Entry } from 'contentful';
 import 'rxjs/add/operator/switchMap';
 import { SubscriptionPaymentComponent } from '../../payments/subscription-payment/subscription-payment.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-charity-details',
@@ -27,7 +28,8 @@ export class CharityDetailsComponent implements OnInit {
     private contenfulPreviewService: ContentfulPreviewService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private auth: AuthService,
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -103,7 +105,11 @@ export class CharityDetailsComponent implements OnInit {
   }
 
   open() {
-    const modalRef = this.modalService.open(SubscriptionPaymentComponent);
-    modalRef.componentInstance.charity = this.charity;
+    if (this.auth.authState) {
+      const modalRef = this.modalService.open(SubscriptionPaymentComponent);
+      modalRef.componentInstance.charity = this.charity;
+    } else {
+      this.router.navigate(['/start']);      
+    }
   }
 }

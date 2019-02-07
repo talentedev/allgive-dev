@@ -1,6 +1,8 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
+
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
 import { AuthService } from '../../auth.service';
 import { PaymentsService } from '../../payments.service';
@@ -10,64 +12,52 @@ import { PaymentsService } from '../../payments.service';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements AfterViewInit, OnDestroy {
+export class PaymentComponent implements OnInit {
 
-  @ViewChild('cardInfo') cardInfo: ElementRef;
   @Input() charity;
   @Input() donation;
 
-  card: any;
-  cardHandler = this.onChange.bind(this);
   error: string;
   name: string;
   email: string;
   authState;
   source;
 
+  elements: Elements;
+  card: StripeElement;
+ 
   constructor(
-    private cd: ChangeDetectorRef,
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
     private auth: AuthService,
-    private payments: PaymentsService
+    private payments: PaymentsService,
+    private stripeService: StripeService
   ) { }
 
-  ngAfterViewInit() {
-    this.card = elements.create('card', {
-      style: {
-        base: {
-          iconColor: '#666EE8',
-          color: '#31325F',
-          lineHeight: '40px',
-          fontWeight: 300,
-          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-          fontSize: '18px',
-          '::placeholder': {
-            color: '#CFD7E0'
-          }
+  ngOnInit() {
+    this.stripeService.elements()
+      .subscribe(elements => {
+        this.elements = elements;
+        if (!this.card) {
+          this.card = this.elements.create('card', {
+            style: {
+              base: {
+                iconColor: '#666EE8',
+                color: '#31325F',
+                lineHeight: '40px',
+                fontWeight: 300,
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSize: '18px',
+                '::placeholder': {
+                  color: '#CFD7E0'
+                }
+              }
+            }
+          });
+          this.card.mount('#card-element');
+          this.authState = this.auth.authState;
         }
-      }
-    });
-    this.card.mount(this.cardInfo.nativeElement);
-
-    this.card.addEventListener('change', this.cardHandler);
-
-    this.authState = this.auth.authState;
-  }
-
-  ngOnDestroy() {
-    this.card.removeEventListener('change', this.cardHandler);
-    this.card.destroy();
-  }
-
-  onChange({ error }) {
-    if (error) {
-      this.error = error.message;
-    } else {
-      this.error = null;
-    }
-
-    this.cd.detectChanges();
+      });
   }
 
   open(form: NgForm) {
@@ -84,6 +74,5 @@ export class PaymentComponent implements AfterViewInit, OnDestroy {
       modalRef.componentInstance.card = this.card;
       modalRef.componentInstance.prevModal = this.activeModal;
     // });
-
   }
 }

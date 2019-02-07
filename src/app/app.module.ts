@@ -57,7 +57,7 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    NgxStripeModule.forRoot('pk_test_A1hL1cLlXqg5ObWRn1eaIgXU'),
+    NgxStripeModule.forRoot(environment.stripeKey),
     NgbModule.forRoot(),
     PartialsModule,
     CharitiesModule,

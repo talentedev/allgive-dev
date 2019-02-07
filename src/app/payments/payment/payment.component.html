@@ -8,11 +8,7 @@
   <div class="modal-body">
     <input type="text" id="name" name="name" placeholder="Jane Doe">
     <input type="email" id="email" name="email" placeholder="your@email.com">
-    <label for="card-info"></label>
-    <div id="card-info" #cardInfo></div>
-
-    <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
-
+    <div id="card-element" class="field"></div>
     <div id="donation-details-amount">Charge amount: {{ donation.donationAmount | currency }}</div>
     <div id="donation-details-frequency">Charge frequency: {{ donation.donationFrequency }}</div>
   </div>
