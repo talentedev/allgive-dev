@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './main/main.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FaqsComponent } from './faqs/faqs.component';
-import { AuthGuard } from './auth.guard';
+
+import { MainComponent } from './core/components/main/main.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+import { FaqsComponent } from './core/components/faqs/faqs.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {

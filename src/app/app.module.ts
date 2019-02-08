@@ -12,16 +12,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { environment } from '../environments/environment';
 
-import { AppComponent } from './app.component';
-import { CharitiesModule } from './charities/charities.module';
+// Modules
 import { AppRoutingModule } from './app-routing.module';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { MainComponent } from './main/main.component';
-import { PartialsModule } from './partials/partials.module';
-import { FaqsComponent } from './faqs/faqs.component';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { AuthGuard } from './auth.guard';
+import { SharedModule } from './shared/shared.module';
+import { UserModule } from './modules/user/user.module';
+import { PagesModule } from './modules/pages/pages.module';
+import { CharitiesModule } from './modules/charities/charities.module';
+import { PaymentsModule } from './modules/payments/payments.module';
+import { AuthModule } from './modules/auth/auth.module';
+
+// Guards
+import { AuthGuard } from './core/guards/auth.guard';
+
+// Services
 import { AuthService } from './core/services/auth.service';
 import { UserService } from './core/services/user.service';
 import { ChartService } from './core/services/chart.service';
@@ -30,13 +33,17 @@ import { PaymentsService } from './core/services/payments.service';
 import { MailChimpService } from './core/services/mailchimp.service';
 import { ContentfulService } from './core/services/contentful.service';
 import { ContentfulPreviewService } from './core/services/contentful-preview.service';
-import { PaymentsModule } from './payments/payments.module';
-import { ContactComponent } from './contact/contact.component';
-import { SubscriptionPaymentComponent } from './payments/subscription-payment/subscription-payment.component';
-import { PaymentComponent } from './payments/payment/payment.component';
-import { PaymentConfirmationComponent } from './payments/payment-confirmation/payment-confirmation.component';
-import { PagesModule } from './pages/pages.module';
-import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless-auth.component';
+
+// Components
+import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './core/components/page-not-found/page-not-found.component';
+import { MainComponent } from './core/components/main/main.component';
+import { FaqsComponent } from './core/components/faqs/faqs.component';
+import { ContactComponent } from './core/components/contact/contact.component';
+import { SubscriptionPaymentComponent } from './modules/payments/subscription-payment/subscription-payment.component';
+import { PaymentComponent } from './modules/payments/payment/payment.component';
+import { PaymentConfirmationComponent } from './modules/payments/payment-confirmation/payment-confirmation.component';
+import { PasswordlessAuthComponent } from './modules/auth/passwordless-auth/passwordless-auth.component';
 
 
 @NgModule({
@@ -59,7 +66,7 @@ import { PasswordlessAuthComponent } from './auth/passwordless-auth/passwordless
     AngularFireAuthModule,
     NgxStripeModule.forRoot(environment.stripeKey),
     NgbModule.forRoot(),
-    PartialsModule,
+    SharedModule,
     CharitiesModule,
     UserModule,
     AuthModule,
