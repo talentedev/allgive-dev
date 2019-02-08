@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 
-import { ContentfulService } from '../../contentful.service';
+import { ContentfulService } from './contentful.service';
 
 @Injectable()
 export class ChartService {
@@ -69,11 +69,11 @@ export class ChartService {
     const series = [];
     for (let i = 0; i < data.length; ++i) {
       const section = {};
-      section['name'] = data[i].charitie;
-      section['y'] = data[i].total / totalDonation * 100;
-      section['amount'] = data[i].total;
+      section['name'] = data[i].charityname;
+      section['y'] = data[i].ytd / totalDonation * 100 || 0;
+      section['amount'] = data[i].ytd;
       section['projection'] = data[i].projection;
-      section['daily'] = data[i].daily;
+      section['daily'] = data[i].amount;
       series.push(section);
     }
     return series;
@@ -83,7 +83,7 @@ export class ChartService {
   calTotalDonation(data) {
     let totalDonation = 0;
     for (let i = 0; i < data.length; ++i) {
-      totalDonation += data[i].total;
+      totalDonation += data[i].ytd;
     }
     return totalDonation;
   }
@@ -101,7 +101,7 @@ export class ChartService {
   getCharityLogo(data): Observable<any[]> {
     const responses = [];
     for (let i = 0; i < data.length; ++i) {
-      const slug = data[i].charitie.toLowerCase().split(' ').join('-');
+      const slug = data[i].charityname.toLowerCase().split(' ').join('-');
       responses.push(this.contentfullService.getCharityDetail(slug));
     }
     return Observable.forkJoin(responses);

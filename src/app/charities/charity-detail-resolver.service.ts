@@ -3,7 +3,7 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
-import { ContentfulService } from '../contentful.service';
+import { ContentfulService } from '../core/services/contentful.service';
 
 @Injectable()
 export class CharityDetailResolverService implements Resolve<Promise<any>> {

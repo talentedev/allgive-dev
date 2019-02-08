@@ -4,8 +4,8 @@ import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
 
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
-import { AuthService } from '../../auth.service';
-import { PaymentsService } from '../../payments.service';
+import { AuthService } from '../../core/services/auth.service';
+import { PaymentsService } from '../../core/services/payments.service';
 
 @Component({
   selector: 'app-payment',

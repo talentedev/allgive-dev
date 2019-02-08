@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import * as marked from 'marked';
 
-import { ContentfulService } from '../contentful.service';
+import { ContentfulService } from '../core/services/contentful.service';
 
 @Component({
   selector: 'app-faqs',

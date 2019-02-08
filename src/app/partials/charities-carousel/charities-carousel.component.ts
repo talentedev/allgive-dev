@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ContentfulService } from '../../contentful.service';
 import { Entry } from 'contentful';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
+
+import { ContentfulService } from '../../core/services/contentful.service';
 
 @Component({
   selector: 'app-charities-carousel',

@@ -8,7 +8,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { User } from 'firebase';
 
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',

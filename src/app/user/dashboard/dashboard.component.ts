@@ -3,10 +3,10 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
 
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../../core/services/user.service';
 import { ChartService } from '../../core/services/chart.service';
-import { ContentfulService } from '../../contentful.service';
+import { ContentfulService } from '../../core/services/contentful.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,6 +54,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     this.setTitle(this.title);
+    this.chartOptions = this.chartService.getChartOptions([], this);
 
     this.userService.getUserInfo().subscribe(res => {
 

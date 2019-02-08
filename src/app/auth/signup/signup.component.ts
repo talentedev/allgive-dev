@@ -3,8 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../auth.service';
-import { MailChimpService } from '../../mailchimp.service';
+import { AuthService } from '../../core/services/auth.service';
+import { MailChimpService } from '../../core/services/mailchimp.service';
 
 @Component({
   selector: 'app-signup',

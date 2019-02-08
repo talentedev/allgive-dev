@@ -1,8 +1,9 @@
 import { Component, OnInit, setTestabilityGetter } from '@angular/core';
 // import { TitleService } from '../title.service';
 import { Title } from '@angular/platform-browser';
-import { ContentfulService } from '../contentful.service';
 import { Entry } from 'contentful';
+
+import { ContentfulService } from '../core/services/contentful.service';
 
 @Component({
   selector: 'app-main',

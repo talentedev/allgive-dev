@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ContentfulService } from '../../contentful.service';
 import { Entry } from 'contentful';
+
+import { ContentfulService } from '../../core/services/contentful.service';
 
 @Component({
   selector: 'app-featured-carousel',

@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
-import { Observable } from '../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { PaymentsService } from './payments.service';
-import { environment } from '../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthService {

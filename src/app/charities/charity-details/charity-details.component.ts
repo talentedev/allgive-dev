@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { ContentfulService } from '../../contentful.service';
-import { ContentfulPreviewService } from '../../contentful-preview.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Entry } from 'contentful';
 import 'rxjs/add/operator/switchMap';
+
+import { AuthService } from '../../core/services/auth.service';
+import { ContentfulService } from '../../core/services/contentful.service';
+import { ContentfulPreviewService } from '../../core/services/contentful-preview.service';
 import { SubscriptionPaymentComponent } from '../../payments/subscription-payment/subscription-payment.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-charity-details',

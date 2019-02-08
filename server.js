@@ -5,17 +5,11 @@ const path = require('path');
 const firebase = require('firebase');
 const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
 
+const fbConfig = require('./firebase.json');
+
 const app = express();
 
 // Initialize Firebase
-let fbConfig = {
-    apiKey: "AIzaSyBtjCJVVC4Rf0T1jVOJPbxxR0DUSAL_AWA",
-    authDomain: "allgive-app-25240.firebaseapp.com",
-    databaseURL: "https://allgive-app-25240.firebaseio.com",
-    projectId: "allgive-app-25240",
-    storageBucket: "allgive-app-25240.appspot.com",
-    messagingSenderId: "856416375337"
-};
 firebase.initializeApp(fbConfig);
 
 let database = firebase.database();
@@ -46,6 +40,18 @@ app.use(express.static(__dirname + '/dist'));
 
 app.get('/', function(req,res) {
     res.sendFile(path.join(__dirname+'/dist/index.html'));
+});
+
+// Get user's general informations
+app.post('/getUserInfo', function(req, res) {
+    const userId = req.body.uid;
+    getUser(userId).then(user => {
+        getSubscription(userId).then(subscriptions => {
+            let response = user.val();
+            response.contributions = Object.values(subscriptions.val());
+            res.send(response);
+        });
+    });
 });
 
 // Create a new Stripe customer
@@ -122,7 +128,18 @@ app.post('/subscription', function(req, res) {
                     if (err) {
                         res.send(err);
                     }
-                    res.send(subscription);
+
+                    stripe.products.retrieve(subscription.plan.product).then(product => {
+                        database.ref('subscriptions/' + authUser.uid).push({
+                            charityname: product.name,
+                            schedule: subscription.plan.interval,
+                            amount: subscription.plan.amount / 100,
+                            ytd: subscription.plan.amount / 100,
+                            projection: subscription.plan.amount / 100,
+                        }, function(response) {
+                            res.send(response);
+                        });
+                    });
                 });
             });
         });
@@ -135,6 +152,10 @@ function updateCustomer(id, data) {
 
 function getUser(id) {
     return database.ref('/users/' + id).once('value');
+}
+
+function getSubscription(id) {
+    return database.ref('/subscriptions/' + id).once('value');
 }
 
 // Start the app by listening on the default Heroku port

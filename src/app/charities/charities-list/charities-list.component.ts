@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ContentfulService } from '../../contentful.service';
 import { EntryCollection, Entry } from 'contentful';
+
+import { ContentfulService } from '../../core/services/contentful.service';
 
 @Component({
   selector: 'app-charities-list',
