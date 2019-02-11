@@ -27,19 +27,7 @@ export class DashboardComponent implements OnInit {
   totalDonation = 0;
   totalProjection = 0;
   charityLogos = [];
-  payments = [
-    {
-      type: 'Visa',
-      expire: '04/2021',
-      default: true,
-      icon: '../../../assets/images/visa.png'
-    },
-    {
-      type: 'Master Card',
-      expire: '02/2019',
-      icon: '../../../assets/images/master-card.png'
-    }
-  ];
+  payments = [];
 
   constructor(
     private titleService: Title,
@@ -66,14 +54,14 @@ export class DashboardComponent implements OnInit {
 
       this.getCharityLogos(res.contributions);
     });
+
+    this.userService.getUserCards().subscribe(res => {
+      this.payments = res.data;
+    });
   }
 
   setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
-  }
-
-  clickChart(e) {
-    // this.selectedOrg = (e.point.selected === undefined || e.point.selected === false) ? e.point.index : -1;
   }
 
   addCharity() {
@@ -88,12 +76,28 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  setShowCharityManage(value) {
+  setShowCharityManage(value, chartity=null) {
     this.showCharityManageView = value;
+    this.selectedOrg = chartity;
   }
 
   togglePaymentDetail(index) {
     this.showPaymentDetail[index] = !this.showPaymentDetail[index];
+  }
+
+  endDate(month, year) {
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+    let todayStr = mm + '/' + dd + '/' + yyyy;
+    let endDate = month + '/30/' + year
+
+    let date1 = new Date(todayStr);
+    let date2 = new Date(endDate);
+    let timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+    return diffDays;
   }
 
 }

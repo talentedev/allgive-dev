@@ -46,11 +46,49 @@ app.get('/', function(req,res) {
 app.post('/getUserInfo', function(req, res) {
     const userId = req.body.uid;
     getUser(userId).then(user => {
-        getSubscription(userId).then(subscriptions => {
-            let response = user.val();
-            response.contributions = Object.values(subscriptions.val());
-            res.send(response);
-        });
+        let userData = user.val();
+        stripe.subscriptions.list(
+            { 
+                customer: userData.customerId,
+                billing: "charge_automatically"
+            },
+            function(err, subscriptions) {
+                let contributions = [];
+                let productIds = [];
+                let getInvoicesPromises = [];
+                let getProductPromises = [];
+                for (var i = 0; i < subscriptions.data.length; i++) {
+                    getInvoicesPromises.push(getInvoices(subscriptions.data[i].id, userData.customerId));
+                    getProductPromises.push(getProduct(subscriptions.data[i].plan.product));
+                }
+                Promise.all(getProductPromises)
+                    .then((products) => {
+                        for (var i = 0; i < products.length; i++) {
+                            let product = {
+                                charityname: products[i].name
+                            }
+                            contributions.push(product);
+                        }
+                        Promise.all(getInvoicesPromises)
+                            .then((invoices) => {
+                                for (var i = 0; i < invoices.length; i++) {
+                                    let totalAmount = 0;
+                                    for (var j = 0; j < invoices[i].data.length; j++) {
+                                        totalAmount += invoices[i].data[j].total;
+                                    }
+                                    contributions[i]['ytd'] = totalAmount/100;
+                                    contributions[i]['amount'] =  invoices[i].data[0].amount_paid/100;
+                                    contributions[i]['schedule'] = subscriptions.data[i].plan.interval;
+                                    contributions[i]['projection'] = calYearProjection(contributions[i]);
+                                }
+                                userData.contributions = contributions;
+                                res.send(userData);
+                            })
+                            .catch(err => res.send(err));
+                    })
+                    .catch(err => res.send(err));
+            }
+        );
     });
 });
 
@@ -103,45 +141,107 @@ app.post('/subscription', function(req, res) {
     // Create a new Stripe plan and product
     getUser(authUser.uid).then(snapshot => {
         let user = snapshot.val();
-        updateCustomer(user.customerId, {source: token}).then(customer => {
-            stripe.plans.create({
-                currency: 'usd',
-                amount: donationAmount,
-                interval: donationFrequency,
-                product: {
-                    name: charity.fields.charityName,
-                    type: 'service',
-                    statement_descriptor: `Donation subscription`
-                }
-            }, function(err, plan) {
-                if (err) {
-                    res.send(err);
-                }
-                stripe.subscriptions.create({
-                    customer: user.customerId,
-                    items: [
-                        {
-                            plan: plan.id,
-                        }
-                    ]
-                }, function(err, subscription) {
-                    if (err) {
-                        res.send(err);
-                    }
-
-                    stripe.products.retrieve(subscription.plan.product).then(product => {
-                        database.ref('subscriptions/' + authUser.uid).push({
-                            charityname: product.name,
-                            schedule: subscription.plan.interval,
-                            amount: subscription.plan.amount / 100,
-                            ytd: subscription.plan.amount / 100,
-                            projection: subscription.plan.amount / 100,
-                        }, function(response) {
-                            res.send(response);
+        // Update user's payments method
+        // updateUserPayments(authUser.uid, token.card);
+        // Update customer and create subcription
+        updateCustomer(user.customerId, {source: token.id}).then(customer => {
+            // Check if same product exist already
+            stripe.products.list(
+                { limit: 100 },
+                function(err, products) {
+                    let existProduct = getProductByName(products.data, charity.fields.charityName);
+                    if (!existProduct) {
+                        stripe.plans.create({
+                            currency: 'usd',
+                            amount: donationAmount,
+                            interval: donationFrequency,
+                            product:  {
+                                name: charity.fields.charityName,
+                                type: 'service',
+                                statement_descriptor: `Donation subscription`
+                            }
+                        }, function(err, plan) {
+                            if (err) {
+                                res.send(err);
+                            }
+                            stripe.subscriptions.create({
+                                customer: user.customerId,
+                                items: [
+                                    {
+                                        plan: plan.id,
+                                    }
+                                ]
+                            }, function(err, subscription) {
+                                if (err) {
+                                    res.send(err);
+                                }
+                                res.send(subscription);
+                            });
                         });
-                    });
-                });
-            });
+                    } else {
+                        product = existProduct.id;
+                        // Check if same price plan exist on same product.
+                        stripe.plans.list(
+                            { product: product, interval: donationFrequency },
+                            function(err, plans) {
+                                if (plans.data.length > 0) {
+                                    stripe.subscriptions.create({
+                                        customer: user.customerId,
+                                        items: [
+                                            {
+                                                plan: plans.data[0].id,
+                                            }
+                                        ]
+                                    }, function(err, subscription) {
+                                        if (err) {
+                                            res.send(err);
+                                        }
+                                        res.send(subscription);
+                                    });
+                                } else {
+                                    stripe.plans.create({
+                                        currency: 'usd',
+                                        amount: donationAmount,
+                                        interval: donationFrequency,
+                                        product:  product
+                                    }, function(err, plan) {
+                                        if (err) {
+                                            res.send(err);
+                                        }
+                                        stripe.subscriptions.create({
+                                            customer: user.customerId,
+                                            items: [
+                                                {
+                                                    plan: plan.id,
+                                                }
+                                            ]
+                                        }, function(err, subscription) {
+                                            if (err) {
+                                                res.send(err);
+                                            }
+                                            res.send(subscription);
+                                        });
+                                    });
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        });
+    });
+});
+
+// Get stripe card info
+app.post('/user-cards', function(req, res) {
+    const userId = req.body.uid;
+    getUser(userId).then(user => {
+        let response = user.val();
+        stripe.customers.listCards(response.customerId, function(err, cards) {
+            if (err) {
+                res.send(err);
+            }
+            res.send(cards);
         });
     });
 });
@@ -154,8 +254,92 @@ function getUser(id) {
     return database.ref('/users/' + id).once('value');
 }
 
+function updateUserPayments(id, data) {
+    return database.ref('/users/' + id).once('value', function(snapshot) {
+        let obj = Object.values(snapshot.val().payments || {});
+        for (var i = 0; i < obj.length; i++){
+            if (obj[i].id == data.id){
+                // 
+            } else {
+                return database.ref('/users/' + id + '/payments').push(data);
+            }
+        }
+    });
+}
+
 function getSubscription(id) {
     return database.ref('/subscriptions/' + id).once('value');
+}
+
+// Check if some value exist on array of object.
+function getProductByName(products, name) {
+    for (var i = 0; i < products.length; i++){
+        if (products[i].name == name){
+            return products[i]
+        }
+    }
+    return false;
+}
+
+// Get user's invoices for a subscription.
+function getInvoices(subscriptionId, customerId) {
+    return new Promise(function(resolve, reject) {
+         stripe.invoices.list(
+            { 
+                customer: customerId,
+                billing: "charge_automatically",
+                paid: true,
+                subscription: subscriptionId
+            },
+            function(err, invoices) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(invoices);
+            }
+        );
+    });
+}
+
+// Get a product by id.
+function getProduct(productId) {
+    return new Promise(function(resolve, reject) {
+        stripe.products.retrieve(
+            productId,
+            function(err, product) {
+                if (err) {
+                    reject(err);
+                }
+                resolve(product);
+            }
+        );
+    });
+}
+
+// Calculate the projection amount for a year
+function calYearProjection(data) {
+    let projection = data.ytd;
+    const today = new Date();
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1;
+    const yyyy = today.getFullYear();
+    const todayStr = mm + '/' + dd + '/' + yyyy;
+    const endDate = '12/31/' + yyyy;
+
+    const date1 = new Date(todayStr);
+    const date2 = new Date(endDate);
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    const diffWeek = Math.ceil(diffDays / 7);
+    const diffMonth = Math.ceil(diffDays / 30);
+    const diffYear = Math.ceil(diffDays / 365);
+    switch(data.schedule) {
+        case "day": projection += data.amount * diffDays; break;
+        case "week": projection += data.amount * diffWeek; break;
+        case "month": projection += data.amount * diffMonth; break;
+        case "year": projection += data.amount * diffYear; break;
+    }
+    return projection;
 }
 
 // Start the app by listening on the default Heroku port

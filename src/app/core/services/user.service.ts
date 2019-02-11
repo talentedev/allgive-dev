@@ -23,4 +23,12 @@ export class UserService {
     }
     return this.http.post(endpoint, requestData);
   }
+
+  getUserCards(): Observable<any> {
+    let endpoint = this.apiUrl + '/user-cards';
+    let requestData = {
+      uid: this.authService.authState.uid
+    }
+    return this.http.post(endpoint, requestData);
+  }
 }

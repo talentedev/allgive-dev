@@ -45,7 +45,7 @@ export class PaymentConfirmationComponent implements OnInit {
             frequency: this.donation.stripeFrequency,
             user: this.authState,
             charity: this.charity,
-            token: result.token.id
+            token: result.token
           };
           this.activeModal.dismiss();
           this.prevModal.dismiss();

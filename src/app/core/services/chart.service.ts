@@ -74,6 +74,7 @@ export class ChartService {
       section['amount'] = data[i].ytd;
       section['projection'] = data[i].projection;
       section['daily'] = data[i].amount;
+      section['schedule'] = data[i].schedule;
       series.push(section);
     }
     return series;
