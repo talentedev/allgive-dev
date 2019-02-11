@@ -17,5 +17,5 @@ export const environment = {
     endpoint: 'https://allgive.us7.list-manage.com/subscribe/post-json?u=94c3b7b1bdd619a78d3d14f71&amp;id=b3bce19994&',
     hiddenName: 'b_94c3b7b1bdd619a78d3d14f71_b3bce19994'
   },
-  apiUrl: 'https://allgive.herokuapp.com:8080'
+  apiUrl: 'https://allgive.herokuapp.com'
 };
