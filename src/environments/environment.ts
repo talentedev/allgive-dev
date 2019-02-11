@@ -15,7 +15,7 @@ export const environment = {
   },
   stripeKey: 'pk_test_QdIak0PSr5Owkso8aHgH9JMc',
   actionCodeSettings : {
-    url: 'http://localhost:4200/link-login',
+    url: 'http://localhost:4200/#/link-login',
     handleCodeInApp: true,
   },
   mailchimpKey: {

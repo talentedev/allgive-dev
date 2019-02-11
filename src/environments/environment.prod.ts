@@ -10,7 +10,7 @@ export const environment = {
   },
   stripeKey: 'pk_test_QdIak0PSr5Owkso8aHgH9JMc',
   actionCodeSettings : {
-    url: 'https://allgive.herokuapp.com/link-login',
+    url: 'https://allgive.herokuapp.com/#/link-login',
     handleCodeInApp: true,
   },
   mailchimpKey: {
