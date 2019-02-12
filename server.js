@@ -79,7 +79,7 @@ app.post('/getUserInfo', function(req, res) {
                                     contributions[i]['ytd'] = totalAmount/100;
                                     contributions[i]['amount'] =  invoices[i].data[0].amount_paid/100;
                                     contributions[i]['schedule'] = subscriptions.data[i].plan.interval;
-                                    contributions[i]['projection'] = calYearProjection(contributions[i]);
+                                    contributions[i]['projection'] = calcYearProjection(contributions[i]);
                                 }
                                 userData.contributions = contributions;
                                 res.send(userData);
@@ -141,10 +141,8 @@ app.post('/subscription', function(req, res) {
     // Create a new Stripe plan and product
     getUser(authUser.uid).then(snapshot => {
         let user = snapshot.val();
-        // Update user's payments method
-        // updateUserPayments(authUser.uid, token.card);
         // Update customer and create subcription
-        updateCustomer(user.customerId, {source: token.id}).then(customer => {
+        updateCards(user.customerId, token).then(card => {
             // Check if same product exist already
             stripe.products.list(
                 { limit: 100 },
@@ -235,9 +233,9 @@ app.post('/subscription', function(req, res) {
 // Get stripe card info
 app.post('/user-cards', function(req, res) {
     const userId = req.body.uid;
-    getUser(userId).then(user => {
-        let response = user.val();
-        stripe.customers.listCards(response.customerId, function(err, cards) {
+    getUser(userId).then(snapshot => {
+        let user = snapshot.val();
+        stripe.customers.listCards(user.customerId, function(err, cards) {
             if (err) {
                 res.send(err);
             }
@@ -246,29 +244,40 @@ app.post('/user-cards', function(req, res) {
     });
 });
 
-function updateCustomer(id, data) {
-    return stripe.customers.update(id, data);
+function updateCards(id, token) {
+    return new Promise(function(resolve, reject) {
+        stripe.customers.listCards(id, function(err, cards) {
+            if (cards.data.length > 0) {
+                for (var i = 0; i < cards.data.length; i++){
+                    if (cards.data[i].id == token.source){
+                        stripe.customers.updateCard(id, cards.data[i].id, token.card, function(err, card) {
+                            if (err) {
+                                reject(err);
+                            }
+                            resolve(card);
+                        });
+                    }
+                }
+                stripe.customers.createSource(id, {source: token.id}, function(err, card) {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(card);
+                });
+            } else {
+                stripe.customers.update(id, {source: token.id}, function(err, card) {
+                    if (err) {
+                        reject(err);
+                    }
+                    resolve(card);
+                });
+            }
+        });
+    });
 }
 
 function getUser(id) {
     return database.ref('/users/' + id).once('value');
-}
-
-function updateUserPayments(id, data) {
-    return database.ref('/users/' + id).once('value', function(snapshot) {
-        let obj = Object.values(snapshot.val().payments || {});
-        for (var i = 0; i < obj.length; i++){
-            if (obj[i].id == data.id){
-                // 
-            } else {
-                return database.ref('/users/' + id + '/payments').push(data);
-            }
-        }
-    });
-}
-
-function getSubscription(id) {
-    return database.ref('/subscriptions/' + id).once('value');
 }
 
 // Check if some value exist on array of object.
@@ -317,7 +326,7 @@ function getProduct(productId) {
 }
 
 // Calculate the projection amount for a year
-function calYearProjection(data) {
+function calcYearProjection(data) {
     let projection = data.ytd;
     const today = new Date();
     const dd = today.getDate();

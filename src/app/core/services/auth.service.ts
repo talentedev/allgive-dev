@@ -124,6 +124,17 @@ export class AuthService {
           .then((res) => {
             // window.localStorage.removeItem('emailForSignIn');
             this.authState = res;
+            const data = {
+              authId: res.user.uid,
+              email: res.user.email,
+              firstName: res.user.displayName || '',
+              lastName: ''
+            }
+            // Create Stripe customer
+            this.createUser(data)
+              .subscribe(result => {
+                console.log(result);
+              });
             this.router.navigate(['/charities']);
             resolve('success');
           })

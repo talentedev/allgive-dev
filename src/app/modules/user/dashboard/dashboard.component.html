@@ -171,11 +171,11 @@
       <h5 class="text-center">You have not any payment method yet.</h5>
     </div>
     <div *ngFor="let payment of payments let i = index" [attr.data-index]="i" class="payment-methods">
-      <div *ngIf="payment.default" class="default-payment"><strong>Default Payment Method</strong></div>
+      <div *ngIf="i==0" class="default-payment"><strong>Default Payment Method</strong></div>
       <div class="row card-info">
         <div class="col-3"><img src="../../../assets/images/{{ payment.brand.toLowerCase() }}.png" class="pr-2">{{ payment.brand }} ending in {{ endDate(payment.exp_month, payment.exp_year) }}</div>
         <div class="col-3">Expires {{ payment.exp_month }}/{{ payment.exp_year }}</div>
-        <div class="col-3">Used for 03 charities</div>
+        <div class="col-3">Used for {{ i==0 ? donationOrgs.length : '0' }} charities</div>
         <div class="col-3">
           <button class="btn btn-manage-charity" (click)="togglePaymentDetail(i)">{{ showPaymentDetail[i]? 'CLOSE DETAILS': 'MORE DETAILS' }}</button>
         </div>
@@ -208,11 +208,8 @@
         </div>
         <div class="col-8">
           <h5>Supporting Charities</h5>
-          <ul class="payment-charities">
-            <li>MOMA</li>
-            <li>ASPCA</li>
-            <li>Atlanta Humane Society</li>
-            <li>National Coalition Against Domestic Violence</li>
+          <ul *ngIf="i==0" class="payment-charities">
+            <li *ngFor="let donationOrg of donationOrgs">{{ donationOrg.name }}</li>
           </ul>
         </div>
       </div>
