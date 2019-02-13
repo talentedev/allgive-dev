@@ -15,7 +15,7 @@ import { ContentfulService } from '../../../core/services/contentful.service';
 })
 export class DashboardComponent implements OnInit {
 
-  user;
+  firstName = '';
   title = 'Dashboard | Allgive.org';
   showCharityManageView = false;
   showPaymentDetail = [false, false];
@@ -28,6 +28,14 @@ export class DashboardComponent implements OnInit {
   totalProjection = 0;
   charityLogos = [];
   payments = [];
+  projectionPeriods = [
+    'Daily Giving Total',
+    'Weekly Giving Total',
+    'Monthly Giving Total',
+    'Quarterly Giving Total'
+  ];
+  selectedProjection = '2019 Year-End-Projection';
+  averageProjection = '';
 
   constructor(
     private titleService: Title,
@@ -46,8 +54,10 @@ export class DashboardComponent implements OnInit {
 
     this.userService.getUserInfo().subscribe(res => {
 
+      this.firstName = res.firstName;
       this.totalDonation = this.chartService.calTotalDonation(res.contributions);
       this.totalProjection = this.chartService.calTotalProjection(res.contributions);
+      this.averageProjection = this.totalProjection.toString();
       this.donationOrgs = this.chartService.processSeries(res.contributions);
       this.chartOptions = this.chartService.getChartOptions(this.donationOrgs, this);
       this.updateChart = true;
@@ -62,6 +72,27 @@ export class DashboardComponent implements OnInit {
 
   setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
+  }
+
+  setProjectionPeriod(index) {
+    this.selectedProjection = this.projectionPeriods[index];
+    switch (index) {
+      case 0:
+        this.averageProjection = '~$' + (this.totalProjection / 365).toFixed(2) + '/day';
+        break;
+      case 1:
+        this.averageProjection = '~$' + (this.totalProjection / 52).toFixed(2) + '/week';
+        break;
+      case 2:
+        this.averageProjection = '~$' + (this.totalProjection / 12).toFixed(2) + '/month';
+        break;
+      case 3:
+        this.averageProjection = '~$' + (this.totalProjection / 4).toFixed(2) + '/quarter';
+        break;
+      default:
+        this.averageProjection = '';
+        break;
+    }
   }
 
   addCharity() {

@@ -17,9 +17,11 @@ export class PaymentConfirmationComponent implements OnInit {
   @Input() donation;
   @Input() card;
   @Input() prevModal;
-  @Input() name;
+  @Input() token;
 
   authState;
+  invalidCard = false;
+  errorMessage = '';
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -34,27 +36,28 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.stripeService
-      .createToken(this.card, { name: this.name })
-      .subscribe(result => {
-        if (result.token) {
-          // Convert charge amount to pennies for Stripe
-          const stripeAmount = this.donation.donationAmount * 100;
-          const data = {
-            donation: stripeAmount,
-            frequency: this.donation.stripeFrequency,
-            user: this.authState,
-            charity: this.charity,
-            token: result.token
-          };
+    this.invalidCard = false;
+    this.errorMessage = '';
+    // Convert charge amount to pennies for Stripe
+    const stripeAmount = this.donation.donationAmount * 100;
+    const data = {
+      donation: stripeAmount,
+      frequency: this.donation.stripeFrequency,
+      user: this.authState,
+      charity: this.charity,
+      token: this.token
+    };
+
+    this.payments.processSubscription(data)
+      .subscribe(res => {
+        console.log(res);
+        if (res.message) {
+          this.invalidCard = true;
+          this.errorMessage = res.message;
+        } else {
           this.activeModal.dismiss();
           this.prevModal.dismiss();
-          this.payments.processSubscription(data)
-            .subscribe(res => {
-              this.router.navigate(['/user/dashboard']);
-            });
-        } else if (result.error) {
-          console.log(result.error.message);
+          this.router.navigate(['/user/dashboard']);
         }
       });
   }

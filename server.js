@@ -42,6 +42,18 @@ app.get('*', function(req,res) {
     res.sendFile(path.join(__dirname+'/dist/index.html'));
 });
 
+// Check if user is registered on database
+app.post('/check-user', function(req, res) {
+    const email = req.body.email;
+    database.ref('users').orderByChild("email").equalTo(email).on("value", function(snapshot) {
+        if (snapshot.val()) {
+            res.send(snapshot.val());
+        } else {
+            res.send(null);
+        }
+    });
+});
+
 // Get user's general informations
 app.post('/getUserInfo', function(req, res) {
     const userId = req.body.uid;
@@ -226,6 +238,8 @@ app.post('/subscription', function(req, res) {
                     }
                 }
             );
+        }).catch(function(err) {
+            res.send(err);
         });
     });
 });

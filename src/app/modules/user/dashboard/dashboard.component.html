@@ -3,7 +3,7 @@
   <section class="section donation-statistics">
     <div class="row">
       <div class="col-9">
-        <h1 class="section-title">High-Five, Kevin!</h1>
+        <h1 class="section-title">High-Five, {{ firstName }}!</h1>
         <p class="donor-affirmation">You’ve really worked hard to make a difference and it’s showing!</p>
       </div>
       <div class="col-3">
@@ -20,15 +20,16 @@
         </div>
         <div class="card pt-3 pb-3">
           <div ngbDropdown>
-            <button class="btn btn-outline-primary" id="donationPeriods" ngbDropdownToggle>2019 Year-End-Projection</button>
+            <button class="btn btn-outline-primary" id="donationPeriods" ngbDropdownToggle>{{ selectedProjection }}</button>
             <div ngbDropdownMenu aria-labelledby="donationPeriods">
-              <button class="dropdown-item dropdown-color-1">Daily Giving Total</button>
-              <button class="dropdown-item dropdown-color-2">Weekly Giving Total</button>
-              <button class="dropdown-item dropdown-color-3">Monthly Giving Total</button>
-              <button class="dropdown-item dropdown-color-4">Quaterly Giving Total</button>
+              <button
+                *ngFor="let period of projectionPeriods; let i = index" [attr.data-index]="i"
+                class="dropdown-item dropdown-color-{{i}}"
+                (click)="setProjectionPeriod(i)"
+              >{{ period }}</button>
             </div>
           </div>
-          <h2>${{ totalProjection }}</h2>
+          <h2>{{ averageProjection }}</h2>
         </div>
       </div>
       <div class="col-6 col-md-4">
@@ -42,13 +43,13 @@
       <div class="col-6 col-md-4">
         <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}">
           <div *ngIf="i !== selectedOrg">
-            <h3>${{ donationOrg.amount }}</h3>
+            <h3>${{ donationOrg.daily }}/{{ donationOrg.schedule }}</h3>
             <p>{{ donationOrg.name }}</p>
           </div>
           <div *ngIf="i === selectedOrg">
             <div class="row">
               <div class="col-6 bg-color-{{i}}">
-                <h3 class="text-white">${{ donationOrg.amount }}</h3>
+                <h3 class="text-white">${{ donationOrg.daily }}/{{ donationOrg.schedule }}</h3>
                 <p class="text-white">{{ donationOrg.name }}</p>
               </div>
               <div class="col-6 bg-color-{{i}} opacity-5">

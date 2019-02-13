@@ -8,6 +8,9 @@
   <p>Donating to: {{ charity.fields.charityName }}</p>
   <p>Donation Amount: {{ donation.donationAmount | currency }}</p>
   <p>Donation Frequency: {{ donation.donationFrequency }}</p>
+  <div *ngIf="invalidCard" class="alert alert-danger" role="alert">
+    <strong>{{ errorMessage }}</strong>
+  </div>
 </div>
 <div class="modal-footer">
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

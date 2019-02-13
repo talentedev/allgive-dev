@@ -6,9 +6,17 @@
     </button>
   </div>
   <div class="modal-body">
-    <input type="text" id="name" name="name" placeholder="Jane Doe" [(ngModel)]="name">
-    <input type="email" id="email" name="email" placeholder="your@email.com" [(ngModel)]="email">
+    <!-- <input type="text" id="name" name="name" placeholder="Jane Doe" [(ngModel)]="name">
+    <input type="email" id="email" name="email" placeholder="your@email.com" [(ngModel)]="email"> -->
+    <!-- <ul>
+      <li *ngFor="let card of cards">{{ card.brand }} ****{{ card.last4 }}</li>
+    </ul> -->
     <div id="card-element" class="field"></div>
+
+    <div *ngIf="invalidCard" class="alert alert-danger" role="alert">
+      <strong>{{ errorMessage }}</strong>
+    </div>
+
     <div id="donation-details-amount">Charge amount: {{ donation.donationAmount | currency }}</div>
     <div id="donation-details-frequency">Charge frequency: {{ donation.donationFrequency }}</div>
   </div>

@@ -17,6 +17,7 @@ export class PasswordlessAuthComponent implements OnInit {
   public loading = false;
   public isInvalidLink = false;
   public sendingLink = false;
+  invalidUser = false;
   faMagic = faMagic;
   faSpinner = faSpinner;
   title = 'Log In | Allgive.org';
@@ -43,12 +44,21 @@ export class PasswordlessAuthComponent implements OnInit {
   sendEmailLink() {
     this.sendingLink = true;
     this.emailSent = false;
-    const actionCodeSettings = environment.actionCodeSettings;
-    this.authService.emailLinkLogin(this.loginForm.value.email)
-      .then((res) => {
-        this.emailSent = true;
+    this.invalidUser = false;
+    this.authService.checkUser(this.loginForm.value.email).subscribe(user => {
+      if (user) {
+        const actionCodeSettings = environment.actionCodeSettings;
+        this.authService.emailLinkLogin(this.loginForm.value.email)
+          .then((res) => {
+            this.emailSent = true;
+            this.sendingLink = false;
+            this.invalidUser = false;
+          });
+      } else {
         this.sendingLink = false;
-      });
+        this.invalidUser = true;
+      }
+    });
   }
 
   confirmSignIn(url) {
