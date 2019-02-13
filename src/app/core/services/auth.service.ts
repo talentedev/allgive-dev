@@ -85,10 +85,10 @@ export class AuthService {
         // Create Stripe customer
         this.createUser(data)
           .subscribe(result => {
-            console.log(result);
+            // console.log(result);
           });
       })
-      .catch(error => console.log(error));
+      .catch(error => Promise.reject(error));
   }
 
   // Log in with email

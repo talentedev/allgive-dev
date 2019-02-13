@@ -15,6 +15,8 @@ export class SignupComponent implements OnInit {
 
   user;
   title = 'Sign Up | Allgive.org';
+  invalid = false;
+  errorMessage = '';
 
   constructor(
     private titleService: Title,
@@ -40,6 +42,8 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
+    this.invalid = false;
+    this.errorMessage = '';
 
     this.authService.emailSignUp(
       this.signupForm.value.firstName,
@@ -58,7 +62,8 @@ export class SignupComponent implements OnInit {
         );
       })
       .catch(error => {
-        console.log(error);
+        this.invalid = true;
+        this.errorMessage = error.message;
     });
   }
 
