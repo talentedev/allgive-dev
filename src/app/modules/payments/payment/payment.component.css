@@ -1,0 +1,9 @@
+.checkout .form-check-input{
+    top: 10px;
+}
+.checkout .form-check-label {
+    padding-left: 10px;
+}
+.checkout .modal-body {
+    padding: 1rem 3rem;
+}

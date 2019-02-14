@@ -15,7 +15,7 @@ export class PaymentConfirmationComponent implements OnInit {
 
   @Input() charity;
   @Input() donation;
-  @Input() card;
+  @Input() customer;
   @Input() prevModal;
   @Input() token;
 
@@ -45,20 +45,34 @@ export class PaymentConfirmationComponent implements OnInit {
       frequency: this.donation.stripeFrequency,
       user: this.authState,
       charity: this.charity,
-      token: this.token
+      token: this.token,
+      customer: this.customer
     };
 
-    this.payments.processSubscription(data)
-      .subscribe(res => {
-        console.log(res);
-        if (res.message) {
-          this.invalidCard = true;
-          this.errorMessage = res.message;
-        } else {
-          this.activeModal.dismiss();
-          this.prevModal.dismiss();
-          this.router.navigate(['/user/dashboard']);
-        }
-      });
+    if (this.token) {
+      this.payments.processNewSubscription(data)
+        .subscribe(res => {
+          if (res.message) {
+            this.invalidCard = true;
+            this.errorMessage = res.message;
+          } else {
+            this.activeModal.dismiss();
+            this.prevModal.dismiss();
+            this.router.navigate(['/user/dashboard']);
+          }
+        });
+    } else {
+      this.payments.processSubscription(data)
+        .subscribe(res => {
+          if (res.message) {
+            this.invalidCard = true;
+            this.errorMessage = res.message;
+          } else {
+            this.activeModal.dismiss();
+            this.prevModal.dismiss();
+            this.router.navigate(['/user/dashboard']);
+          }
+        });
+    }
   }
 }

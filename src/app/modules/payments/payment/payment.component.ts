@@ -6,7 +6,6 @@ import { StripeService, Elements, Element as StripeElement, ElementsOptions } fr
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { PaymentsService } from '../../../core/services/payments.service';
-import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-payment',
@@ -17,15 +16,16 @@ export class PaymentComponent implements OnInit {
 
   @Input() charity;
   @Input() donation;
+  @Input() cards;
 
   error: string;
   name: string;
   email: string;
   authState;
-  source;
   invalidCard = false;
   errorMessage = '';
-  cards = [];
+  isNewCard = true;
+  selectedCard = null;
 
   elements: Elements;
   card: StripeElement;
@@ -35,8 +35,7 @@ export class PaymentComponent implements OnInit {
     private modalService: NgbModal,
     private auth: AuthService,
     private payments: PaymentsService,
-    private stripeService: StripeService,
-    private userService: UserService,
+    private stripeService: StripeService
   ) { }
 
   ngOnInit() {
@@ -63,39 +62,45 @@ export class PaymentComponent implements OnInit {
           this.authState = this.auth.authState;
         }
       });
-    this.userService.getUserCards().subscribe(res => {
-      console.log(res);
-      this.cards = res.data;
-    });
+  }
+
+  onChangeCard(card) {
+    if (card) {
+      this.isNewCard = false;
+      this.selectedCard = card;
+    } else {
+      this.isNewCard = true;
+    }
   }
 
   open(form: NgForm) {
-
     this.invalidCard = false;
     this.errorMessage = '';
 
-    this.stripeService.createToken(this.card, {}).subscribe(result => {
-      if (result.token) {
-        const modalRef = this.modalService.open(PaymentConfirmationComponent);
-        // this.payments.checkForCustomerSource(this.authState)
-        // .subscribe(source => {
-        //   if (source) {
-        //     this.source = source;
-        //   }
-
+    if (this.isNewCard) {
+      this.stripeService.createToken(this.card, {}).subscribe(result => {
+        if (result.token) {
+          const modalRef = this.modalService.open(PaymentConfirmationComponent);
           modalRef.componentInstance.token = result.token;
-          modalRef.componentInstance.source = this.source;
           modalRef.componentInstance.charity = this.charity;
           modalRef.componentInstance.donation = this.donation;
-          modalRef.componentInstance.card = this.card;
           modalRef.componentInstance.prevModal = this.activeModal;
           modalRef.componentInstance.name = this.name;
           modalRef.componentInstance.email = this.email;
-        // });
-      } else {
-        this.invalidCard = true;
-        this.errorMessage = result.error.message;
-      }
-    });
+        } else {
+          this.invalidCard = true;
+          this.errorMessage = result.error.message;
+        }
+      });
+    } else {
+      const modalRef = this.modalService.open(PaymentConfirmationComponent);
+      modalRef.componentInstance.token = null;
+      modalRef.componentInstance.charity = this.charity;
+      modalRef.componentInstance.donation = this.donation;
+      modalRef.componentInstance.customer = this.selectedCard.customer;
+      modalRef.componentInstance.prevModal = this.activeModal;
+      modalRef.componentInstance.name = this.name;
+      modalRef.componentInstance.email = this.email;
+    }
   }
 }

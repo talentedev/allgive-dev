@@ -209,8 +209,8 @@
         </div>
         <div class="col-8">
           <h5>Supporting Charities</h5>
-          <ul *ngIf="i==0" class="payment-charities">
-            <li *ngFor="let donationOrg of donationOrgs">{{ donationOrg.name }}</li>
+          <ul class="payment-charities">
+            <li *ngFor="let charity of payment.charities">{{ charity.charityname }}</li>
           </ul>
         </div>
       </div>

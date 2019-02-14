@@ -8,9 +8,19 @@
   <div class="modal-body">
     <!-- <input type="text" id="name" name="name" placeholder="Jane Doe" [(ngModel)]="name">
     <input type="email" id="email" name="email" placeholder="your@email.com" [(ngModel)]="email"> -->
-    <!-- <ul>
-      <li *ngFor="let card of cards">{{ card.brand }} ****{{ card.last4 }}</li>
-    </ul> -->
+    <div *ngFor="let card of cards" class="form-check">
+      <input class="form-check-input" type="radio" name="selectedCard" id="{{ card.id }}" value="{{ card.id }}" (click)="onChangeCard(card)">
+      <label class="form-check-label" for="{{ card.id }}">
+        <img src="../../../assets/images/{{ card.brand.toLowerCase() }}.png" class="pr-3">
+        ****{{ card.last4 }}
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="selectedCard" id="newCard" value="newCard" checked (click)="onChangeCard(null)">
+      <label class="form-check-label" for="newCard">
+        New Card
+      </label>
+    </div>
     <div id="card-element" class="field"></div>
 
     <div *ngIf="invalidCard" class="alert alert-danger" role="alert">

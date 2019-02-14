@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { PaymentComponent } from '../payment/payment.component';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-subscription-payment',
@@ -39,7 +41,8 @@ export class SubscriptionPaymentComponent {
 
   constructor(
     private modalService: NgbModal,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private userService: UserService
     ) { }
 
   selectDonationAmount(donation) {
@@ -64,12 +67,13 @@ export class SubscriptionPaymentComponent {
 
   open() {
     if (this.submitActive) {
-      const modalRef = this.modalService.open(PaymentComponent);
-      modalRef.componentInstance.charity = this.charity;
-      modalRef.componentInstance.donation = this.selectedDonation;
-      this.activeModal.close();
+      this.userService.getUserCards().subscribe(cards => {
+        const modalRef = this.modalService.open(PaymentComponent);
+        modalRef.componentInstance.charity = this.charity;
+        modalRef.componentInstance.cards = cards;
+        modalRef.componentInstance.donation = this.selectedDonation;
+        this.activeModal.close();
+      });
     }
-
   }
-
 }

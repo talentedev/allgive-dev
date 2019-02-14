@@ -73,20 +73,20 @@ export class AuthService {
   emailSignUp(firstName: string, lastName: string, email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        // Write user's name and email to Firebase auth
         this.authState = user;
         const authUser = this.afAuth.auth.currentUser;
         const data = {
-          authId: authUser.uid,
+          uid: authUser.uid,
           email: authUser.email,
           firstName: firstName,
           lastName: lastName
         }
-        // Create Stripe customer
-        this.createUser(data)
-          .subscribe(result => {
-            // console.log(result);
-          });
+        // Insert new user to database.
+        this.createUser(data).subscribe(result => {
+            Promise.resolve(result);
+        }, err => {
+          Promise.reject(err);
+        });
       })
       .catch(error => Promise.reject(error));
   }

@@ -61,12 +61,9 @@ export class DashboardComponent implements OnInit {
       this.donationOrgs = this.chartService.processSeries(res.contributions);
       this.chartOptions = this.chartService.getChartOptions(this.donationOrgs, this);
       this.updateChart = true;
+      this.payments = res.cards;
 
       this.getCharityLogos(res.contributions);
-    });
-
-    this.userService.getUserCards().subscribe(res => {
-      this.payments = res.data;
     });
   }
 
