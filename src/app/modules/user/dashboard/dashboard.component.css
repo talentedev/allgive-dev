@@ -260,6 +260,7 @@
 }
 .expand-payment-details .card-options .edit:hover, .expand-payment-details .card-options .edit:active, .expand-payment-details .card-options .lost-or-stolen:hover, .expand-payment-details .card-options .lost-or-stolen:active, .expand-payment-details .card-options .delete-card:hover, .expand-payment-details .card-options .delete-card:active {
     text-decoration: underline;
+    cursor: pointer;
 }
 .expand-payment-details ul.payment-charities {
     width: 100%;

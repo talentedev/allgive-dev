@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighchartsChartModule  } from 'highcharts-angular';
 
@@ -8,14 +9,19 @@ import { UserRoutingModule } from './user-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { EditCardComponent } from './edit-card/edit-card.component';
 
 @NgModule({
   imports: [
     NgbModule.forRoot(),
     CommonModule,
+    ReactiveFormsModule,
     UserRoutingModule,
     HighchartsChartModule
   ],
-  declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent]
+  declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent, EditCardComponent],
+  entryComponents: [
+    EditCardComponent,
+  ]
 })
 export class UserModule { }

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { EditCardComponent } from '../edit-card/edit-card.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ChartService } from '../../../core/services/chart.service';
@@ -44,7 +46,8 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private contentfullService: ContentfulService,
-    private chartService: ChartService
+    private chartService: ChartService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -126,6 +129,11 @@ export class DashboardComponent implements OnInit {
     let timeDiff = Math.abs(date2.getTime() - date1.getTime());
     let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
     return diffDays;
+  }
+
+  editCard(card) {
+    const modalRef = this.modalService.open(EditCardComponent, { centered: true });
+    modalRef.componentInstance.card = card;
   }
 
 }

@@ -176,7 +176,7 @@
       <div class="row card-info">
         <div class="col-3"><img src="../../../assets/images/{{ payment.brand.toLowerCase() }}.png" class="pr-2">{{ payment.brand }} ending in {{ endDate(payment.exp_month, payment.exp_year) }}</div>
         <div class="col-3">Expires {{ payment.exp_month }}/{{ payment.exp_year }}</div>
-        <div class="col-3">Used for {{ i==0 ? donationOrgs.length : '0' }} charities</div>
+        <div class="col-3">Used for {{ payment.charities.length }} charities</div>
         <div class="col-3">
           <button class="btn btn-manage-charity" (click)="togglePaymentDetail(i)">{{ showPaymentDetail[i]? 'CLOSE DETAILS': 'MORE DETAILS' }}</button>
         </div>
@@ -201,7 +201,7 @@
           </div>
           <div class="row card-options">
             <div class="col">
-              <div class="edit">Edit Information</div>
+              <div class="edit" (click)="editCard(payment)">Edit Information</div>
               <div class="lost-or-stolen">Lost or Stolen?</div>
               <div class="delete-card">Delete</div>
             </div>
