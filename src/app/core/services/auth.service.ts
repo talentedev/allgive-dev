@@ -80,7 +80,7 @@ export class AuthService {
           email: authUser.email,
           firstName: firstName,
           lastName: lastName
-        }
+        };
         // Insert new user to database.
         this.createUser(data).subscribe(result => {
             Promise.resolve(result);

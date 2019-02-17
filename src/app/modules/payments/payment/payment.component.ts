@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
+import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
 import { AuthService } from '../../../core/services/auth.service';
@@ -29,7 +29,7 @@ export class PaymentComponent implements OnInit {
 
   elements: Elements;
   card: StripeElement;
- 
+
   constructor(
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,

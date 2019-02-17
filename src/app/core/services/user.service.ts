@@ -17,23 +17,23 @@ export class UserService {
   ) { }
 
   getUserInfo(): Observable<any> {
-    let endpoint = this.apiUrl + '/getUserInfo';
-    let requestData = {
+    const endpoint = this.apiUrl + '/getUserInfo';
+    const requestData = {
       uid: this.authService.authState.uid
-    }
+    };
     return this.http.post(endpoint, requestData);
   }
 
   getUserCards(): Observable<any> {
-    let endpoint = this.apiUrl + '/user-cards';
-    let requestData = {
+    const endpoint = this.apiUrl + '/user-cards';
+    const requestData = {
       email: this.authService.authState.email
-    }
+    };
     return this.http.post(endpoint, requestData);
   }
 
   updateCard(data): Observable<any> {
-    let endpoint = this.apiUrl + '/update-card';
+    const endpoint = this.apiUrl + '/update-card';
     return this.http.post(endpoint, data);
   }
 }

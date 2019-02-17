@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
+import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 import { PaymentsService } from '../../../core/services/payments.service';
 import { AuthService } from '../../../core/services/auth.service';

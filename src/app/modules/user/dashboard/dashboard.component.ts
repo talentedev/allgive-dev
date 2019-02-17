@@ -115,7 +115,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  setShowCharityManage(value, chartity=null) {
+  setShowCharityManage(value, chartity= null) {
     this.showCharityManageView = value;
     this.selectedOrg = chartity;
   }
@@ -125,17 +125,17 @@ export class DashboardComponent implements OnInit {
   }
 
   endDate(month, year) {
-    let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
-    let yyyy = today.getFullYear();
-    let todayStr = mm + '/' + dd + '/' + yyyy;
-    let endDate = month + '/30/' + year
+    const today = new Date();
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1;
+    const yyyy = today.getFullYear();
+    const todayStr = mm + '/' + dd + '/' + yyyy;
+    const endDate = month + '/30/' + year;
 
-    let date1 = new Date(todayStr);
-    let date2 = new Date(endDate);
-    let timeDiff = Math.abs(date2.getTime() - date1.getTime());
-    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+    const date1 = new Date(todayStr);
+    const date2 = new Date(endDate);
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return diffDays;
   }
 
@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit {
     modalRef.result.then(result => {
       console.log('open');
     }, reason => {
-      if (reason == 'success') {
+      if (reason === 'success') {
         this.init();
       }
     });

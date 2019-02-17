@@ -13,8 +13,8 @@ export class EditCardComponent implements OnInit {
 
   @Input() card;
 
-  private months = [];
-  private years = [];
+  months = [];
+  years = [];
 
   constructor(
     private fb: FormBuilder,
@@ -44,16 +44,16 @@ export class EditCardComponent implements OnInit {
     });
 
     this.months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    let today = new Date();
+    const today = new Date();
     let yyyy = today.getFullYear();
-    for (var i = 0; i < 20; ++i) {
+    for (let i = 0; i < 20; ++i) {
       this.years.push(yyyy);
       yyyy++;
     }
   }
 
   submit() {
-    var data = {
+    const data = {
       id: this.card.id,
       customer: this.card.customer,
       expMonth: this.editCardForm.value.expMonth,
