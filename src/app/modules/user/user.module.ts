@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighchartsChartModule  } from 'highcharts-angular';
+import { NgxLoadingModule } from 'ngx-loading';
 
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -17,7 +18,8 @@ import { EditCardComponent } from './edit-card/edit-card.component';
     CommonModule,
     ReactiveFormsModule,
     UserRoutingModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    NgxLoadingModule.forRoot({}),
   ],
   declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent, EditCardComponent],
   entryComponents: [

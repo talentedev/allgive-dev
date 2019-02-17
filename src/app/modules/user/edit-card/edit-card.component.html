@@ -1,10 +1,19 @@
-<form id="editCardForm" [formGroup]="editCardForm">
+<form id="editCardForm" [formGroup]="editCardForm" (ngSubmit)="submit()">
  <div class="form-group">
     <label for="name">Card Number</label>
     <div class="card-wrapper">
       <img src="../../../assets/images/{{ card.brand.toLowerCase() }}.png" class="pr-3">
       ****{{ card.last4 }}
     </div>
+  </div>
+  <div class="form-group">
+    <label for="name">Expire Date</label>
+    <select formControlName="expMonth">
+      <option *ngFor="let month of months" value="{{month}}" [selected]="month==card.exp_month">{{ month }}</option>
+    </select>
+    <select formControlName="expYear">
+      <option *ngFor="let year of years" value="{{year}}" [selected]="card.exp_year==year">{{ year }}</option>
+    </select>
   </div>
   <div class="form-group">
     <label for="name">Name</label>
@@ -35,4 +44,5 @@
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Save</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
 </form>

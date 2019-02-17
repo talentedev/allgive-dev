@@ -31,4 +31,9 @@ export class UserService {
     }
     return this.http.post(endpoint, requestData);
   }
+
+  updateCard(data): Observable<any> {
+    let endpoint = this.apiUrl + '/update-card';
+    return this.http.post(endpoint, data);
+  }
 }

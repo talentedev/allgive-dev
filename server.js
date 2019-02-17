@@ -238,6 +238,35 @@ app.post('/user-cards', function(req, res) {
     .catch(err => { res.send(err); });
 });
 
+/***************************************************************************
+ *                                                                         *
+ *    Update user's card                                                   *   
+ *                                                                         *
+ ***************************************************************************/
+app.post('/update-card', function(req, res) {
+    const cardId = req.body.id;
+    const customerId = req.body.customer;
+    const data = {
+        name: req.body.name,
+        address_city: req.body.city,
+        address_line1: req.body.address,
+        address_state: req.body.state,
+        address_zip: req.body.zip,
+        exp_month: req.body.expMonth,
+        exp_year: req.body.expYear
+    };
+    stripe.customers.updateCard(
+        customerId,
+        cardId,
+        data,
+        function(err, card) {
+            if (err) { res.send(err); }
+            res.send(card);
+        }
+    );
+});
+
+
 
 /***************************************************************************
  *                                                                         *

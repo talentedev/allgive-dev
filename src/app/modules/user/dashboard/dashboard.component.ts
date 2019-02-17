@@ -17,6 +17,8 @@ import { ContentfulService } from '../../../core/services/contentful.service';
 })
 export class DashboardComponent implements OnInit {
 
+  public loading = false;
+
   firstName = '';
   title = 'Dashboard | Allgive.org';
   showCharityManageView = false;
@@ -55,6 +57,11 @@ export class DashboardComponent implements OnInit {
     this.setTitle(this.title);
     this.chartOptions = this.chartService.getChartOptions([], this);
 
+    this.init();
+  }
+
+  init() {
+    this.loading = true;
     this.userService.getUserInfo().subscribe(res => {
 
       this.firstName = res.firstName;
@@ -65,6 +72,7 @@ export class DashboardComponent implements OnInit {
       this.chartOptions = this.chartService.getChartOptions(this.donationOrgs, this);
       this.updateChart = true;
       this.payments = res.cards;
+      this.loading = false;
 
       this.getCharityLogos(res.contributions);
     });
@@ -134,6 +142,13 @@ export class DashboardComponent implements OnInit {
   editCard(card) {
     const modalRef = this.modalService.open(EditCardComponent, { centered: true });
     modalRef.componentInstance.card = card;
+    modalRef.result.then(result => {
+      console.log('open');
+    }, reason => {
+      if (reason == 'success') {
+        this.init();
+      }
+    });
   }
 
 }
