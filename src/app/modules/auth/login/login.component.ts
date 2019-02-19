@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   failedLogin = false;
   faSpinner = faSpinner;
   submitted = false;
+  errorMessage = '';
 
   constructor(
     private titleService: Title,
@@ -55,6 +56,7 @@ export class LoginComponent implements OnInit {
         err => {
           this.failedLogin = true;
           this.submitted = false;
+          this.errorMessage = err.message;
       });
   }
 
