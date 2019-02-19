@@ -5,6 +5,7 @@ import * as Highcharts from 'highcharts';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { EditCardComponent } from '../edit-card/edit-card.component';
+import { DeleteCardComponent } from '../delete-card/delete-card.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ChartService } from '../../../core/services/chart.service';
@@ -149,6 +150,10 @@ export class DashboardComponent implements OnInit {
         this.init();
       }
     });
+  }
+
+  deleteCard(card) {
+    this.modalService.open(DeleteCardComponent, { centered: true });
   }
 
 }

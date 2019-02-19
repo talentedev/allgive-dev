@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
+import { DeleteCardComponent } from './delete-card/delete-card.component';
 
 @NgModule({
   imports: [
@@ -21,9 +22,10 @@ import { EditCardComponent } from './edit-card/edit-card.component';
     HighchartsChartModule,
     NgxLoadingModule.forRoot({}),
   ],
-  declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent, EditCardComponent],
+  declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent, EditCardComponent, DeleteCardComponent],
   entryComponents: [
     EditCardComponent,
+    DeleteCardComponent
   ]
 })
 export class UserModule { }

@@ -113,6 +113,9 @@
                     <span class="h1"><sup>$</sup>{{ selectedOrg.daily }}.00 <span class="text-secondary">|</span> </span><span class="h3"><span class="text-dark">every</span> {{ selectedOrg.schedule }}</span>
                   </button>
                   <div ngbDropdownMenu aria-labelledby="donationByDay">
+                    <button>$2/day</button>
+                    <button>$10/week</button>
+                    <button>$50/month</button>
                   </div>
                 </div>
                 <p>SEE OTHER DONATION SUGGESTIONS</p>
@@ -205,7 +208,7 @@
             <div class="col">
               <div class="edit" (click)="editCard(payment)">Edit Information</div>
               <div class="lost-or-stolen">Lost or Stolen?</div>
-              <div class="delete-card">Delete</div>
+              <div class="delete-card" (click)="deleteCard(payment)">Delete</div>
             </div>
           </div>
         </div>
