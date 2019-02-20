@@ -14,15 +14,15 @@
   </div>
   <div class="container charity-overview">
     <div class="row category justify-content-center">
-      <div class="col-8">{{ charity.fields.category.fields.categoryName }}
-        <span class="divide" *ngIf="charity.fields.urgent">/</span>
-        <span class="highlight" *ngIf="charity.fields.urgent">Urgent help is needed!</span>
+      <div class="col-8">{{ charityCategory }}
+        <span class="divide" *ngIf="charity && charity.fields.urgent">/</span>
+        <span class="highlight" *ngIf="charity && charity.fields.urgent">Urgent help is needed!</span>
         <span class="modal-trigger btn btn-md btn-outline-primary"(click)="open()">Donate</span>
       </div>
     </div>
     <div class="row name justify-content-center">
       <div class="col-8">
-        <h1>{{charity.fields.charityName}}</h1>
+        <h1>{{ charityName }}</h1>
       </div>
     </div>
     <div class="row social justify-content-center">
@@ -35,9 +35,9 @@
   <div class="container charity-text">
     <div class="row justify-content-center">
       <div class="col-8">
-        <div [innerHTML]="charity.fields.description | mdToHtml"></div>
+        <div [innerHTML]="charity && (charity.fields.description | mdToHtml)"></div>
         <div class="media-container">
-          <img src="{{charity.fields.media?.fields.file.url}}">
+          <img src="{{ charity && charity.fields.media?.fields.file.url}}">
         </div>
       </div>
     </div>

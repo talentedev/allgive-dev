@@ -13,6 +13,9 @@ export class FeaturedCarouselComponent implements OnInit {
 
   heroStyle: {};
   charities: Entry<any>[] = [];
+  bgImages: Entry<any>[] = [];
+  slugs: Entry<any>[] = [];
+  charityNames: Entry<any>[] = [];
   showNavigationArrows = false;
   showNavigationIndicators = false;
 
@@ -25,7 +28,11 @@ export class FeaturedCarouselComponent implements OnInit {
     return this.contentfulService.getFeaturedCharities()
       .then(res => {
         this.charities = res;
-        console.log(res);
+        for (var i = 0; i < res.length; ++i) {
+          this.bgImages.push(res[i].fields.coverImage.fields.file.url);
+          this.slugs.push(res[i].fields.slug);
+          this.charityNames.push(res[i].fields.charityName);
+        }
       });
   }
 }

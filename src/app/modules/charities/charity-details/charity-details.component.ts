@@ -22,6 +22,8 @@ export class CharityDetailsComponent implements OnInit {
   coverStyle: {};
   logoStyle: {};
   title: string;
+  charityName = '';
+  charityCategory = '';
 
   constructor(
     private titleService: Title,
@@ -50,6 +52,8 @@ export class CharityDetailsComponent implements OnInit {
         .then(res => {
           console.log('res', res);
           this.charity = res;
+          this.charityName = this.charity.fields.charityName;
+          this.charityCategory = this.charity.fields.category.fields.categoryName;
           this.title = 'Preview | ' + this.charity.fields.charityName + ' | Allgive.org';
           this.setTitle(this.title);
           this.coverStyle = {
@@ -76,6 +80,8 @@ export class CharityDetailsComponent implements OnInit {
       this.contentfulService.getCharityDetail(charityId)
         .then(res => {
           this.charity = res;
+          this.charityName = this.charity.fields.charityName;
+          this.charityCategory = this.charity.fields.category.fields.categoryName;
           this.title = this.charity.fields.charityName + ' | Allgive.org';
           this.setTitle(this.title);
           this.coverStyle = {

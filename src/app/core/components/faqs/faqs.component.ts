@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import * as marked from 'marked';
 
 import { ContentfulService } from '../../../core/services/contentful.service';
 
@@ -20,7 +19,7 @@ export class FaqsComponent implements OnInit {
     this.setTitle(this.title);
 
     this.contentfullService.getTextOnlyPage('faq').then(res => {
-      this.content = marked(res.fields.textContent);
+      this.content = res.fields.textContent;
     });
   }
 
