@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
   init() {
     this.loading = true;
     this.userService.getUserInfo().subscribe(res => {
-
+      console.log(res);
       this.firstName = res.firstName;
       this.totalDonation = this.chartService.calTotalDonation(res.contributions);
       this.totalProjection = this.chartService.calTotalProjection(res.contributions);
@@ -153,7 +153,16 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteCard(card) {
-    this.modalService.open(DeleteCardComponent, { centered: true });
+    const modalRef = this.modalService.open(DeleteCardComponent, { centered: true });
+    modalRef.componentInstance.cards = this.payments;
+    modalRef.componentInstance.selectedCard = card;
+    modalRef.result.then(result => {
+      console.log('open');
+    }, reason => {
+      if (reason === 'success') {
+        this.init();
+      }
+    });
   }
 
 }

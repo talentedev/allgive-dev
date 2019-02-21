@@ -36,4 +36,9 @@ export class UserService {
     const endpoint = this.apiUrl + '/update-card';
     return this.http.post(endpoint, data);
   }
+
+  deleteCard(data): Observable<any> {
+    const endpoint = this.apiUrl + '/delete-card';
+    return this.http.post(endpoint, data);
+  }
 }

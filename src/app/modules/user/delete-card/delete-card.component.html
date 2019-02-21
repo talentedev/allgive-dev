@@ -1,7 +1,36 @@
-<div class="text-center p-3">
-  <h3 class="text-danger">Delete Card</h3>
-  <p>Are you sure to delete the card?</p>
-  <p>All charity donations also will be removed.</p>
-  <button type="button" class="btn btn-primary">Delete</button>
-  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+<div class="p-3">
+  <div class="modal-header">
+    <h4 class="modal-title">Delete Card</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>You need to either assign a new payment method to active donation schedule or delete that donation schedule before deleting the payment method.</p>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="selectedOption" id="deleteAll" value="deleteAll" checked (click)="onDelete()">
+      <label class="form-check-label" for="deleteAll">
+        Delete all donations
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="selectedOption" id="assignCard" value="assignCard" [disabled]="availableCards.length==0" (click)="onAssign()">
+      <label class="form-check-label" for="assignCard">
+        Assign new payment.
+      </label>
+    </div>
+    <div *ngIf="selectedOption=='assignCard'" class="pl-5">
+      <div *ngFor="let card of availableCards" class="form-check">
+        <input class="form-check-input" type="radio" name="selectedCard" id="{{ card.id }}" value="{{ card.id }}" [checked]="assignedCard==card" (click)="onSelectCard(card)">
+        <label class="form-check-label" for="{{ card.id }}">
+          <img src="../../../assets/images/{{ card.brand.toLowerCase() }}.png" class="pr-3">
+          ****{{ card.last4 }}
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submit()">Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Cancel</button>
+  </div>
 </div>

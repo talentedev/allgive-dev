@@ -5,6 +5,14 @@ const path = require('path');
 const firebase = require('firebase');
 const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
 
+const customerService = require('./server/customerServices')(stripe);
+const planService = require('./server/planServices')(stripe);
+const productService = require('./server/productServices')(stripe);
+const subscriptionService = require('./server/subscriptionServices')(stripe);
+const invoiceService = require('./server/invoiceServices')(stripe);
+const cardService = require('./server/cardServices')(stripe);
+const userService = require('./server/userServices')(invoiceService, productService);
+
 const fbConfig = require('./firebase.json');
 
 const app = express();
@@ -67,12 +75,12 @@ app.post('/getUserInfo', function(req, res) {
     const userId = req.body.uid;
     getUser(userId).then(user => {
         let userData = user.val();
-        getCustomersByEmail(userData.email).then(customers => {
+        customerService.getCustomersByEmail(userData.email).then(customers => {
             let subscriptions = [];
             let cards = [];
             let collectUserInfoPromises = [];
             for (var i = 0; i < customers.data.length; i++) {
-                collectUserInfoPromises.push(collectUserInfo(customers.data[i].subscriptions.data));
+                collectUserInfoPromises.push(userService.collectUserInfo(customers.data[i].subscriptions.data));
                 Array.prototype.push.apply(cards, customers.data[i].sources.data);
             }
             userData.cards = cards;
@@ -125,18 +133,18 @@ app.post('/new-subscription', function(req, res) {
     const authUser = req.body.user;
     const token = req.body.token;
 
-    createCustomer(authUser.email, token.id).then(customer => {
-        getProductByName(charity.fields.charityName).then(product => {
+    customerService.createCustomer(authUser.email, token.id).then(customer => {
+        productService.getProductByName(charity.fields.charityName).then(product => {
             if (product) {
-                getPlan(product.id, donationFrequency).then(plan => {
+                planService.getPlan(product.id, donationFrequency).then(plan => {
                     if (plan) {
-                        createSubscription(customer.id, plan.id).then(subscription => {
+                        subscriptionService.createSubscription(customer.id, plan.id).then(subscription => {
                             res.send(subscription);
                         })
                         .catch(err => { res.send(err); });
                     } else {
-                        createPlan(donationAmount, donationFrequency, product.id).then(newPricingPlan => {
-                            createSubscription(customer.id, newPricingPlan.id).then(subscription => {
+                        planService.createPlan(donationAmount, donationFrequency, product.id).then(newPricingPlan => {
+                            subscriptionService.createSubscription(customer.id, newPricingPlan.id).then(subscription => {
                                 res.send(subscription);
                             })
                             .catch(err => { res.send(err); });
@@ -151,8 +159,8 @@ app.post('/new-subscription', function(req, res) {
                     type: 'service',
                     statement_descriptor: `Donation subscription`
                 }
-                createPlan(donationAmount, donationFrequency, newProduct).then(newPlan => {
-                    createSubscription(customer.id, newPlan.id).then(subscription => {
+                planService.createPlan(donationAmount, donationFrequency, newProduct).then(newPlan => {
+                    subscriptionService.createSubscription(customer.id, newPlan.id).then(subscription => {
                         res.send(subscription);
                     })
                     .catch(err => { res.send(err); });
@@ -177,17 +185,17 @@ app.post('/subscription', function(req, res) {
     const authUser = req.body.user;
     const customerId = req.body.customer;
 
-    getProductByName(charity.fields.charityName).then(product => {
+    productService.getProductByName(charity.fields.charityName).then(product => {
         if (product) {
-            getPlan(product.id, donationFrequency).then(plan => {
+            planService.getPlan(product.id, donationFrequency).then(plan => {
                 if (plan) {
-                    createSubscription(customerId, plan.id).then(subscription => {
+                    subscriptionService.createSubscription(customerId, plan.id).then(subscription => {
                         res.send(subscription);
                     })
                     .catch(err => { res.send(err); });
                 } else {
-                    createPlan(donationAmount, donationFrequency, product.id).then(newPricingPlan => {
-                        createSubscription(customerId, newPricingPlan.id).then(subscription => {
+                    planService.createPlan(donationAmount, donationFrequency, product.id).then(newPricingPlan => {
+                        subscriptionService.createSubscription(customerId, newPricingPlan.id).then(subscription => {
                             res.send(subscription);
                         })
                         .catch(err => { res.send(err); });
@@ -202,8 +210,8 @@ app.post('/subscription', function(req, res) {
                 type: 'service',
                 statement_descriptor: `Donation subscription`
             }
-            createPlan(donationAmount, donationFrequency, newProduct).then(newPlan => {
-                createSubscription(customerId, newPlan.id).then(subscription => {
+            planService.createPlan(donationAmount, donationFrequency, newProduct).then(newPlan => {
+                subscriptionService.createSubscription(customerId, newPlan.id).then(subscription => {
                     res.send(subscription);
                 })
                 .catch(err => { res.send(err); });
@@ -221,10 +229,10 @@ app.post('/subscription', function(req, res) {
  ***************************************************************************/
 app.post('/user-cards', function(req, res) {
     const email = req.body.email;
-    getCustomersByEmail(email).then(customers => {
+    customerService.getCustomersByEmail(email).then(customers => {
         let getCardsPromises = [];
         for (var i = 0; i < customers.data.length; i++) {
-            getCardsPromises.push(getCards(customers.data[i].id));
+            getCardsPromises.push(cardService.getCards(customers.data[i].id));
         }
         Promise.all(getCardsPromises).then(cardCollection => {
             let cards = [];
@@ -266,242 +274,49 @@ app.post('/update-card', function(req, res) {
     );
 });
 
+/***************************************************************************
+ *                                                                         *
+ *    Delete user's card                                                   *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/delete-card', function(req, res) {
+    const isDelete = req.body.isDelete;
+    const card = req.body.card;
+    const assignedCard =req.body.assignedCard;
+    const newCustomer = assignedCard.customer;
+    const oldCustomer = card.customer;
 
+    if (isDelete) {
+        customerService.deleteCustomer(oldCustomer).then(confirm => {
+            res.send(confirm);
+        })
+        .catch(err => res.send(err));
+    } else {
+        customerService.getCustomer(oldCustomer).then(customer => {
+            let createSubscriptionPromises = [];
+            const subscriptions = customer.subscriptions.data;
+            for (var i = 0; i < subscriptions.length; i++) {
+                createSubscriptionPromises.push(subscriptionService.createSubscription(newCustomer, subscriptions[i].plan.id));
+            }
+            Promise.all(createSubscriptionPromises).then(response => {
+                customerService.deleteCustomer(oldCustomer).then(confirm => {
+                    res.send(confirm);
+                })
+                .catch(err => res.send(err));
+            });
+        })
+        .catch(err => res.send(err));
+    }
+});
 
 /***************************************************************************
  *                                                                         *
- *    Service functions                                                    *   
+ *    Service functions                                                    *
  *                                                                         *
  ***************************************************************************/
-// Get customers by email
-function getCustomersByEmail(email) {
-    return new Promise(function(resolve, reject) {
-        stripe.customers.list(
-            { email: email },
-            function(err, customers) {
-                if (err) reject(err);
-                resolve(customers);
-            }
-        );
-    });
-}
-
-// Get all cards of a customer
-function getCards(customerId) {
-    return new Promise(function(resolve, reject) {
-        stripe.customers.listCards(customerId, function(err, cards) {
-            if (err) reject(err);
-            resolve(cards);
-        });
-    });
-}
-
-// Create new customer
-function createCustomer(email, token) {
-    return new Promise(function(resolve, reject) {
-        stripe.customers.create({
-            email: email,
-            source: token
-        },
-        function(err, customer) {
-            if (err) reject(err);
-            resolve(customer);
-        });
-    });
-}
-
-// Get exsting customer by card id.
-function getCustomerByCard(cardId) {
-    return new Promise(function(resolve, reject) {
-        stripe.customers.retrieveCard(
-            cardId,
-            function(err, card) {
-                if (err) reject(err);
-                resolve(card.customer);
-            }
-        );
-    });
-}
-
-// Get all products list.
-function getAllProducts() {
-    return new Promise(function(resolve, reject) {
-        stripe.products.list({
-            limit: 100
-        },
-        function(err, products) {
-            if (err) reject(err);
-            resolve(products.data);
-        });
-    });
-}
-
-// Get a product by name. if prodcut dont exist, return false.
-function getProductByName(name) {
-    return new Promise(function(resolve, reject) {
-        getAllProducts().then(products => {
-            for (var i = 0; i < products.length; i++){
-                if (products[i].name == name){
-                    resolve(products[i]);
-                }
-            }
-            resolve(false);
-        })
-        .catch(err => reject(err));
-    });
-}
-
-// Get a plan by product and interval. if plan dont exist, return false.
-function getPlan(productId, interval) {
-    return new Promise(function(resolve, reject) {
-        stripe.plans.list(
-            { product: productId, interval: interval },
-            function(err, plans) {
-                if (err) {
-                    reject(err);
-                } else if (plans.data.length > 0) {
-                    resolve(plans.data[0]);
-                } else {
-                    resolve(false);
-                }
-            }
-        );
-    });
-}
-
-// Create new subscription.
-function createSubscription(customerId, planId) {
-    return new Promise(function(resolve, reject) {
-        stripe.subscriptions.create({
-            customer: customerId,
-            items: [
-                { plan: planId }
-            ]
-        }, function(err, subscription) {
-            if (err) reject(err);
-            resolve(subscription);
-        });
-    });
-}
-
-// Create new plan.
-function createPlan(amount, interval, product) {
-    return new Promise(function(resolve, reject) {
-        stripe.plans.create({
-            currency: 'usd',
-            amount: amount,
-            interval: interval,
-            product: product
-        }, function(err, plan) {
-            if (err) reject(err);
-            resolve(plan);
-        });
-    });
-}
-
 // Get a user by uid.
 function getUser(id) {
     return database.ref('/users/' + id).once('value');
-}
-
-// Collect user informations
-function collectUserInfo(subscriptions) {
-    return new Promise(function(resolve, reject) {
-        let contributions = [];
-        let productIds = [];
-        let getInvoicesPromises = [];
-        let getProductPromises = [];
-        for (var i = 0; i < subscriptions.length; i++) {
-            getInvoicesPromises.push(getInvoices(subscriptions[i].id, subscriptions[i].customer));
-            getProductPromises.push(getProduct(subscriptions[i].plan.product));
-        }
-        Promise.all(getProductPromises)
-            .then((products) => {
-                for (var i = 0; i < products.length; i++) {
-                    let product = {
-                        charityname: products[i].name
-                    }
-                    contributions.push(product);
-                }
-                Promise.all(getInvoicesPromises)
-                    .then((invoices) => {
-                        for (var i = 0; i < invoices.length; i++) {
-                            let totalAmount = 0;
-                            for (var j = 0; j < invoices[i].length; j++) {
-                                totalAmount += invoices[i][j].total;
-                            }
-                            contributions[i]['ytd'] = totalAmount/100;
-                            contributions[i]['amount'] =  invoices[i][0].amount_paid/100;
-                            contributions[i]['schedule'] = subscriptions[i].plan.interval;
-                            contributions[i]['projection'] = calcYearProjection(contributions[i]);
-                        }
-                        resolve(contributions);
-                    })
-                    .catch(err => reject(err));
-            })
-            .catch(err => reject(err));
-    });
-}
-
-// Get user's invoices for a subscription.
-function getInvoices(subscriptionId, customerId) {
-    return new Promise(function(resolve, reject) {
-         stripe.invoices.list(
-            { 
-                customer: customerId,
-                billing: "charge_automatically",
-                paid: true,
-                subscription: subscriptionId
-            },
-            function(err, invoices) {
-                if (err) {
-                    reject(err);
-                }
-                resolve(invoices.data);
-            }
-        );
-    });
-}
-
-// Get a product by id.
-function getProduct(productId) {
-    return new Promise(function(resolve, reject) {
-        stripe.products.retrieve(
-            productId,
-            function(err, product) {
-                if (err) {
-                    reject(err);
-                }
-                resolve(product);
-            }
-        );
-    });
-}
-
-// Calculate the projection amount for a year
-function calcYearProjection(data) {
-    let projection = data.ytd;
-    const today = new Date();
-    const dd = today.getDate();
-    const mm = today.getMonth() + 1;
-    const yyyy = today.getFullYear();
-    const todayStr = mm + '/' + dd + '/' + yyyy;
-    const endDate = '12/31/' + yyyy;
-
-    const date1 = new Date(todayStr);
-    const date2 = new Date(endDate);
-    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    const diffWeek = Math.ceil(diffDays / 7);
-    const diffMonth = Math.ceil(diffDays / 30);
-    const diffYear = Math.ceil(diffDays / 365);
-    switch(data.schedule) {
-        case "day": projection += data.amount * diffDays; break;
-        case "week": projection += data.amount * diffWeek; break;
-        case "month": projection += data.amount * diffMonth; break;
-        case "year": projection += data.amount * diffYear; break;
-    }
-    return projection;
 }
 
 // Start the app by listening on the default Heroku port
