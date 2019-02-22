@@ -44,6 +44,7 @@ import { SubscriptionPaymentComponent } from './modules/payments/subscription-pa
 import { PaymentComponent } from './modules/payments/payment/payment.component';
 import { PaymentConfirmationComponent } from './modules/payments/payment-confirmation/payment-confirmation.component';
 import { PasswordlessAuthComponent } from './modules/auth/passwordless-auth/passwordless-auth.component';
+import { StartComponent } from './core/components/start/start.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { PasswordlessAuthComponent } from './modules/auth/passwordless-auth/pass
     FaqsComponent,
     ContactComponent,
     PasswordlessAuthComponent,
+    StartComponent,
   ],
   imports: [
     BrowserModule,
