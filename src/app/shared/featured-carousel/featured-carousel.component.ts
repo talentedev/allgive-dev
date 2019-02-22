@@ -28,7 +28,7 @@ export class FeaturedCarouselComponent implements OnInit {
     return this.contentfulService.getFeaturedCharities()
       .then(res => {
         this.charities = res;
-        for (var i = 0; i < res.length; ++i) {
+        for (let i = 0; i < res.length; ++i) {
           this.bgImages.push(res[i].fields.coverImage.fields.file.url);
           this.slugs.push(res[i].fields.slug);
           this.charityNames.push(res[i].fields.charityName);

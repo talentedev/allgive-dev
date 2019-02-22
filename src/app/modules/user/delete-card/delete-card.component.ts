@@ -23,7 +23,7 @@ export class DeleteCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.availableCards = this.cards.filter(card => card.id != this.selectedCard.id);
+    this.availableCards = this.cards.filter(card => card.id !== this.selectedCard.id);
     this.assignedCard = this.availableCards[0] || null;
   }
 
