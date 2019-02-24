@@ -6,12 +6,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyBtjCJVVC4Rf0T1jVOJPbxxR0DUSAL_AWA', // "AIzaSyDoFmIQ91-j40s2skTZDhFCmsKEXoYv10M",
-    authDomain: 'allgive-app-25240.firebaseapp.com', // "allgive-db679.firebaseapp.com",
-    databaseURL: 'https://allgive-app-25240.firebaseio.com',
-    projectId: 'allgive-app-25240', // "allgive-db679",
-    storageBucket: 'allgive-db679.appspot.com',
-    messagingSenderId: '856416375337'
+    apiKey: 'AIzaSyBnZgE51ZS7ieYmR9wzhHQ097ZpUhaOkY4',
+    authDomain: 'allgive-6a536.firebaseapp.com',
+    databaseURL: 'https://allgive-6a536.firebaseio.com',
+    projectId: 'allgive-6a536',
+    storageBucket: 'allgive-6a536.appspot.com',
+    messagingSenderId: '263468447800'
   },
   stripeKey: 'pk_test_QdIak0PSr5Owkso8aHgH9JMc',
   actionCodeSettings : {

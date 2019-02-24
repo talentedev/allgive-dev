@@ -64,16 +64,25 @@ export class AuthService {
     return this.http.post<any>(this.apiUrl + '/users', data);
   }
 
-   // Check if user exist already.
+  // Check if user exist already.
   checkUser(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/check-user', {email: data});
+  }
+
+  // Update user activity
+  updateUserActivity(uid): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/update-activity', {uid: uid});
+  }
+
+  // Update user activity
+  updateRecentActivity(uid): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/recent-activity', {uid: uid});
   }
 
   // Sign up
   emailSignUp(firstName: string, lastName: string, email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        this.authState = user;
         const authUser = this.afAuth.auth.currentUser;
         const data = {
           uid: authUser.uid,
@@ -83,7 +92,9 @@ export class AuthService {
         };
         // Insert new user to database.
         this.createUser(data).subscribe(result => {
-            Promise.resolve(result);
+          this.emailLinkLogin(authUser.email).then(res => {
+            Promise.resolve(res);
+          });
         }, err => {
           Promise.reject(err);
         });
@@ -128,8 +139,9 @@ export class AuthService {
         return this.afAuth.auth.signInWithEmailLink(email, url)
           .then((res) => {
             // window.localStorage.removeItem('emailForSignIn');
-            this.authState = res;
+            this.authState = res.user;
             this.router.navigate(['/charities']);
+            this.updateUserActivity(res.user.uid).subscribe();
             resolve('success');
           })
           .catch(err => {

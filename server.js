@@ -11,6 +11,7 @@ const subscriptionService = require('./server/services/stripe/subscription')(str
 const invoiceService = require('./server/services/stripe/invoice')(stripe);
 const cardService = require('./server/services/stripe/card')(stripe);
 const userService = require('./server/services/stripe/user')(invoiceService, productService);
+const dateService = require('./server/services/common/date');
 
 const fbConfig = require('./firebase.json');
 
@@ -112,19 +113,57 @@ app.post('/users', function(req, res) {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
 
-    fbDB.getUserByEmail(email).then(snapshot => {
-        if (snapshot.val()) {
-            res.send({result: 'email-in-use'});
-        } else {
-            let data = {
-                email: email,
-                firstName: firstName,
-                lastName: lastName
-            }
-            fbDB.createUser(uid, data).then(res => {
-                res.send({result: 'success'});
-            }).catch(err => res.send(err));
+    let data = {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        created: dateService.today(),
+        activated: 'null',
+        lastlogin: 'null',
+        logincount: 0,
+        recent: 'null'
+    }
+    fbDB.createUser(uid, data).then(res => {
+        res.send({result: 'success'});
+    }).catch(err => res.send(err));
+});
+
+/***************************************************************************
+ *                                                                         *
+ *     Update user activities                                              *   
+ *                                                                         *
+ ***************************************************************************/
+app.post('/update-activity', function(req, res) {
+    const uid = req.body.uid;
+    fbDB.getUserById(uid).then(snapshot => {
+        var user = snapshot.val();
+        var now = dateService.now();
+        if (user.activated === 'null') {
+            user.activated = now;
         }
+        user.logincount +=1;
+        user.lastlogin = now;
+        user.recent = now;
+        fbDB.updateUser(uid, user).then(snapshot => {
+            res.send(snapshot);
+        });
+    }).catch(err => res.send(err));
+});
+
+/***************************************************************************
+ *                                                                         *
+ *     Update recent activities                                            *   
+ *                                                                         *
+ ***************************************************************************/
+app.post('/recent-activity', function(req, res) {
+    const uid = req.body.uid;
+    fbDB.getUserById(uid).then(snapshot => {
+        var user = snapshot.val();
+        var now = dateService.now();
+        user.recent = now;
+        fbDB.updateUser(uid, user).then(snapshot => {
+            res.send(snapshot);
+        });
     }).catch(err => res.send(err));
 });
 

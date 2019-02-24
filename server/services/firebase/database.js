@@ -6,11 +6,17 @@ module.exports = function(database) {
         },
         // Get a user by email
         getUserByEmail: function(email) {
-            return database.ref('users').orderByChild("email").equalTo(email).on("value");
+            return database.ref('users').orderByChild("email").equalTo(email).once("value");
         },
         // Create new user
         createUser: function(uid, data) {
             return database.ref('users/' + uid).set(data);
+        },
+        // Update user
+        updateUser: function(uid, data) {
+            var updates = {};
+            updates['/users/' + uid] = data;
+            return database.ref().update(updates);
         }
     }
 }

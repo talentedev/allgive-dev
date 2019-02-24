@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
   init() {
     this.loading = true;
     this.userService.getUserInfo().subscribe(res => {
-      console.log(res);
+
       this.firstName = res.firstName;
       this.totalDonation = this.chartService.calTotalDonation(res.contributions);
       this.totalProjection = this.chartService.calTotalProjection(res.contributions);

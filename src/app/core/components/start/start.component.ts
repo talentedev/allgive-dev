@@ -16,6 +16,7 @@ export class StartComponent implements OnInit {
   title = 'Get started | Allgive.org';
   invalid = false;
   errorMessage = '';
+  success = false;
 
   constructor(
     private titleService: Title,
@@ -50,14 +51,7 @@ export class StartComponent implements OnInit {
       '1234567'
     )
       .then((res) => {
-        this.router.navigate(['/charities']);
-
-        // Subscribe user to mailchimp
-        this.mailchimpService.subscribeUser(
-          this.signupForm.value.firstName,
-          this.signupForm.value.lastName,
-          this.signupForm.value.email
-        );
+        this.success = true;
       })
       .catch(error => {
         this.invalid = true;
