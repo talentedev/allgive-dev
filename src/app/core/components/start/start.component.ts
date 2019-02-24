@@ -33,6 +33,12 @@ export class StartComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.router.events.subscribe(val => {
+      if (this.authService.authState && val.constructor.name === 'NavigationEnd') {
+        const uid = this.authService.authState.uid;
+        this.authService.updateRecentActivity(uid).subscribe();
+      }
+    });
     this.setTitle(this.title);
   }
 
