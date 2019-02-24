@@ -16,7 +16,6 @@ export class PaymentConfirmationComponent implements OnInit {
   @Input() charity;
   @Input() donation;
   @Input() customer;
-  @Input() prevModal;
   @Input() token;
 
   authState;
@@ -57,7 +56,6 @@ export class PaymentConfirmationComponent implements OnInit {
             this.errorMessage = res.message;
           } else {
             this.activeModal.dismiss();
-            this.prevModal.dismiss();
             this.router.navigate(['/user/dashboard']);
           }
         });
@@ -69,7 +67,6 @@ export class PaymentConfirmationComponent implements OnInit {
             this.errorMessage = res.message;
           } else {
             this.activeModal.dismiss();
-            this.prevModal.dismiss();
             this.router.navigate(['/user/dashboard']);
           }
         });

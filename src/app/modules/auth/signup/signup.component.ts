@@ -29,8 +29,7 @@ export class SignupComponent implements OnInit {
   signupForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', Validators.email],
-    password: ['', Validators.required]
+    email: ['', Validators.email]
   });
 
   ngOnInit() {
@@ -49,7 +48,7 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.firstName,
       this.signupForm.value.lastName,
       this.signupForm.value.email,
-      this.signupForm.value.password
+      '1234567'
     )
       .then((res) => {
         this.router.navigate(['/charities']);

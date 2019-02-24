@@ -4,23 +4,24 @@ const cors = require('cors');
 const path = require('path');
 const firebase = require('firebase');
 const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
-
-const customerService = require('./server/customerServices')(stripe);
-const planService = require('./server/planServices')(stripe);
-const productService = require('./server/productServices')(stripe);
-const subscriptionService = require('./server/subscriptionServices')(stripe);
-const invoiceService = require('./server/invoiceServices')(stripe);
-const cardService = require('./server/cardServices')(stripe);
-const userService = require('./server/userServices')(invoiceService, productService);
+const customerService = require('./server/services/stripe/customer')(stripe);
+const planService = require('./server/services/stripe/plan')(stripe);
+const productService = require('./server/services/stripe/product')(stripe);
+const subscriptionService = require('./server/services/stripe/subscription')(stripe);
+const invoiceService = require('./server/services/stripe/invoice')(stripe);
+const cardService = require('./server/services/stripe/card')(stripe);
+const userService = require('./server/services/stripe/user')(invoiceService, productService);
 
 const fbConfig = require('./firebase.json');
-
-const app = express();
 
 // Initialize Firebase
 firebase.initializeApp(fbConfig);
 
 let database = firebase.database();
+let fbAuth = firebase.auth();
+const fbDB = require('./server/services/firebase/database')(database);
+
+const app = express();
 
 // Set CORS middleware : Uncomment for production
 let corsOptions = {
@@ -57,13 +58,13 @@ app.get('*', function(req,res) {
  ***************************************************************************/
 app.post('/check-user', function(req, res) {
     const email = req.body.email;
-    database.ref('users').orderByChild("email").equalTo(email).on("value", function(snapshot) {
+    fbDB.getUserByEmail(email).then(snapshot => {
         if (snapshot.val()) {
             res.send(snapshot.val());
         } else {
             res.send(null);
         }
-    });
+    }).catch(err => res.send(err));
 });
 
 /***************************************************************************
@@ -73,7 +74,7 @@ app.post('/check-user', function(req, res) {
  ***************************************************************************/
 app.post('/getUserInfo', function(req, res) {
     const userId = req.body.uid;
-    getUser(userId).then(user => {
+    fbDB.getUserById(userId).then(user => {
         let userData = user.val();
         customerService.getCustomersByEmail(userData.email).then(customers => {
             let subscriptions = [];
@@ -111,14 +112,20 @@ app.post('/users', function(req, res) {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
 
-    database.ref('users/' + uid).set({
-        email: email,
-        firstName: firstName,
-        lastName: lastName
-    }, function(error) {
-        if (error) res.send(error);
-        res.send({result: 'success'});
-    });
+    fbDB.getUserByEmail(email).then(snapshot => {
+        if (snapshot.val()) {
+            res.send({result: 'email-in-use'});
+        } else {
+            let data = {
+                email: email,
+                firstName: firstName,
+                lastName: lastName
+            }
+            fbDB.createUser(uid, data).then(res => {
+                res.send({result: 'success'});
+            }).catch(err => res.send(err));
+        }
+    }).catch(err => res.send(err));
 });
 
 /***************************************************************************
@@ -263,15 +270,10 @@ app.post('/update-card', function(req, res) {
         exp_month: req.body.expMonth,
         exp_year: req.body.expYear
     };
-    stripe.customers.updateCard(
-        customerId,
-        cardId,
-        data,
-        function(err, card) {
-            if (err) { res.send(err); }
-            res.send(card);
-        }
-    );
+    cardService.update(customerId, cardId, data).then(card => {
+        res.send(card);
+    })
+    .catch(err => res.send(err));
 });
 
 /***************************************************************************
@@ -308,16 +310,6 @@ app.post('/delete-card', function(req, res) {
         .catch(err => res.send(err));
     }
 });
-
-/***************************************************************************
- *                                                                         *
- *    Service functions                                                    *
- *                                                                         *
- ***************************************************************************/
-// Get a user by uid.
-function getUser(id) {
-    return database.ref('/users/' + id).once('value');
-}
 
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);

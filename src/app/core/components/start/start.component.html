@@ -6,5 +6,31 @@
     <h3>Step 2: Choose a Charity</h3>
     <p>Visit our ever-growing list of charitable organizations and select the one to which you want to make a regular contribution. Simply click the "Donate" button and AllGive will allow you to choose how much you'd like to contribute and how often. Our system will handle the rest.</p>
     <p>That's all there is to it! You can choose how frequently you'd like emailed reports on your giving, and you can always see how your donations are making a difference by visiting your personal Dashboard page. [links to "My Portfolio" page]</p>
+    <h3>Let's get started!</h3>
+    <div class="row">
+      <form [formGroup]="signupForm"
+            id="signupForm" class="col-md-6" 
+            (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="Email Address" formControlName="email" required>
+        </div>
+
+        <div *ngIf="invalid" class="alert alert-danger" role="alert">
+          <strong>{{ errorMessage }}</strong>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Create Account</button>
+
+      </form>
+    </div>
   </section>
 </main>

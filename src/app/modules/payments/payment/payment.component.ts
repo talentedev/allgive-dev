@@ -84,9 +84,9 @@ export class PaymentComponent implements OnInit {
           modalRef.componentInstance.token = result.token;
           modalRef.componentInstance.charity = this.charity;
           modalRef.componentInstance.donation = this.donation;
-          modalRef.componentInstance.prevModal = this.activeModal;
           modalRef.componentInstance.name = this.name;
           modalRef.componentInstance.email = this.email;
+          this.activeModal.dismiss();
         } else {
           this.invalidCard = true;
           this.errorMessage = result.error.message;
@@ -98,9 +98,9 @@ export class PaymentComponent implements OnInit {
       modalRef.componentInstance.charity = this.charity;
       modalRef.componentInstance.donation = this.donation;
       modalRef.componentInstance.customer = this.selectedCard.customer;
-      modalRef.componentInstance.prevModal = this.activeModal;
       modalRef.componentInstance.name = this.name;
       modalRef.componentInstance.email = this.email;
+      this.activeModal.dismiss();
     }
   }
 }

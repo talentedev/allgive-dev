@@ -31,15 +31,18 @@ module.exports = function(stripe) {
         // Get a product by name. if prodcut dont exist, return false.
         getProductByName: function(name) {
             return new Promise(function(resolve, reject) {
-                this.getAllProducts().then(products => {
-                    for (var i = 0; i < products.length; i++){
-                        if (products[i].name == name){
-                            resolve(products[i]);
+                stripe.products.list({
+                    limit: 100
+                },
+                function(err, products) {
+                    if (err) reject(err);
+                    for (var i = 0; i < products.data.length; i++){
+                        if (products.data[i].name == name){
+                            resolve(products.data[i]);
                         }
                     }
                     resolve(false);
-                })
-                .catch(err => reject(err));
+                });
             });
         }
     }
