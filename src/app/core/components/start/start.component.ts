@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { MailChimpService } from '../../../core/services/mailchimp.service';
@@ -22,7 +21,6 @@ export class StartComponent implements OnInit {
     private titleService: Title,
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router,
     private mailchimpService: MailChimpService
   ) { }
 
@@ -33,12 +31,6 @@ export class StartComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.router.events.subscribe(val => {
-      if (this.authService.authState && val.constructor.name === 'NavigationEnd') {
-        const uid = this.authService.authState.uid;
-        this.authService.updateRecentActivity(uid).subscribe();
-      }
-    });
     this.setTitle(this.title);
   }
 

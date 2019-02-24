@@ -1,9 +1,7 @@
 import { Component, OnInit, setTestabilityGetter } from '@angular/core';
-import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Entry } from 'contentful';
 
-import { AuthService } from '../../../core/services/auth.service';
 import { ContentfulService } from '../../../core/services/contentful.service';
 
 @Component({
@@ -19,20 +17,12 @@ export class MainComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private router: Router,
-    private authService: AuthService,
     private contentfulService: ContentfulService
   ) {
 
   }
 
   ngOnInit() {
-    this.router.events.subscribe(val => {
-      if (this.authService.authState && val.constructor.name === 'NavigationEnd') {
-        const uid = this.authService.authState.uid;
-        this.authService.updateRecentActivity(uid).subscribe();
-      }
-    });
     this.contentfulService.getCharities()
       .then(res => {
         this.charities = res;
