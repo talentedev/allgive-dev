@@ -117,7 +117,7 @@ app.post('/users', function(req, res) {
         email: email,
         firstName: firstName,
         lastName: lastName,
-        created: dateService.today(),
+        created: dateService.now(),
         activated: 'null',
         lastlogin: 'null',
         logincount: 0,
