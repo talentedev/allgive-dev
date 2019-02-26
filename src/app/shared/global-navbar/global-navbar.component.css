@@ -1,7 +1,9 @@
 .navbar-brand {
     cursor: pointer;
 }
-
+.logo {
+    width: 160px;
+}
 .navbar-brand.active {
     cursor: auto;
 }
