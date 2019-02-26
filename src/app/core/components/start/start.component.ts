@@ -53,7 +53,6 @@ export class StartComponent implements OnInit {
       })
       .catch(error => {
         this.invalid = true;
-        this.errorMessage = error.message;
     });
   }
 

@@ -6,8 +6,8 @@
     <h3>Step 2: Choose a Charity</h3>
     <p>Visit our ever-growing list of charitable organizations and select the one to which you want to make a regular contribution. Simply click the "Donate" button and AllGive will allow you to choose how much you'd like to contribute and how often. Our system will handle the rest.</p>
     <p>That's all there is to it! You can choose how frequently you'd like emailed reports on your giving, and you can always see how your donations are making a difference by visiting your <a routerLink="/dashboard">personal Dashboard page</a>.</p>
-    <h3>Let's get started!</h3>
-    <div class="row">
+    <h3 *ngIf="!authService.authState">Let's get started!</h3>
+    <div *ngIf="!authService.authState" class="row">
       <form [formGroup]="signupForm"
             id="signupForm" class="col-md-6" 
             (ngSubmit)="onSubmit()">
@@ -25,7 +25,7 @@
         </div>
 
         <div *ngIf="invalid" class="alert alert-danger" role="alert">
-          <strong>{{ errorMessage }}</strong>
+          <strong>The email address you entered is already associated with an AllGive account. <a routerLink="/link-login">Click Here to Login</a></strong>
         </div>
 
         <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Create Account</button>

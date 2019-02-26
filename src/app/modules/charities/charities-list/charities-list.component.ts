@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { EntryCollection, Entry } from 'contentful';
 
 import { AuthService } from '../../../core/services/auth.service';
@@ -24,18 +23,10 @@ export class CharitiesListComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private router: Router,
     private authService: AuthService,
     private contentfulService: ContentfulService) { }
 
   ngOnInit() {
-    this.router.events.subscribe(val => {
-      if (this.authService.authState && val.constructor.name === 'NavigationEnd') {
-        const uid = this.authService.authState.uid;
-        this.authService.updateRecentActivity(uid).subscribe();
-      }
-    });
-
     this.getAllCharities()
     .then(res => {
       this.coverStyle = {

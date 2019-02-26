@@ -39,6 +39,12 @@ export class PasswordlessAuthComponent implements OnInit {
     if (url !== '/link-login') {
       this.confirmSignIn(url);
     }
+    this.router.events.subscribe(val => {
+      if (this.authService.authState && val.constructor.name === 'NavigationEnd') {
+        const uid = this.authService.authState.uid;
+        this.authService.updateRecentActivity(uid).subscribe();
+      }
+    });
   }
 
   sendEmailLink() {
