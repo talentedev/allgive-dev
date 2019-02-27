@@ -35,7 +35,7 @@
   </section>
   <section *ngIf="success" class="container">
     <h2>Congratulations!</h2>
-    <p>We've sent an email to [the email address entered] with a magic link you can use to log in to your account. Click that from any device and you can get started immediately. Thanks for joining the AllGive community!</p>
+    <p>We've sent an email to {{ signupForm.value.email }} with a magic link you can use to log in to your account. Click that from any device and you can get started immediately. Thanks for joining the AllGive community!</p>
     <p><small>You can close this window.</small></p>
   </section>
 </main>

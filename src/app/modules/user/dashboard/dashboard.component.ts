@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
     '2019 Year-End-Projection'
   ];
   selectedProjection = '2019 Year-End-Projection';
-  averageProjection = '$0';
+  averageProjection = '$0.00';
 
   constructor(
     private titleService: Title,
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
       this.firstName = res.firstName;
       this.totalDonation = this.chartService.calTotalDonation(res.contributions);
       this.totalProjection = this.chartService.calTotalProjection(res.contributions);
-      this.averageProjection = '$' + this.totalProjection;
+      this.averageProjection = '$' + this.totalProjection + '.00';
       this.donationOrgs = this.chartService.processSeries(res.contributions);
       this.chartOptions = this.chartService.getChartOptions(this.donationOrgs, this);
       this.updateChart = true;
@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
         this.averageProjection = '~$' + (this.totalProjection / 4).toFixed(2) + '/quarter';
         break;
       case 4:
-        this.averageProjection = '$' + this.totalProjection;
+        this.averageProjection = '$' + this.totalProjection + '.00';
         break;
       default:
         this.averageProjection = '';
