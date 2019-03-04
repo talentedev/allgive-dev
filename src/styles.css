@@ -378,53 +378,6 @@ h1 {
     transform: rotate(180deg);
 }
 
-.hero-testimonials {
-    background-image: url(./assets/images/home_fourth_girl.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.hero-testimonials .testimonial-card {
-    min-height: 40vw;
-}
-
-.hero-testimonials .card {
-    background-color: #0872ba;
-}
-
-.hero-testimonials .card .card-body {
-    padding: 3.5rem;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 600;
-}
-
-.hero-testimonials .card .card-footer {
-    text-align: center;
-    background-color: transparent;
-}
-
-.hero-testimonials .card .card-footer .testimonial-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    display: block;
-}
-
-.hero-testimonials .card .card-footer .testimonial-city {
-    font-style: italic;
-}
-
-.hero-testimonials .card .card-footer .arrow-right>img,
-.hero-testimonials .card .card-footer .arrow-left>img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-}
-
 .hero-adds {
     background-color: white;
     padding: 3vw 0;
@@ -511,16 +464,6 @@ h1 {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.hero-testimonials .card .card-footer .arrow-right>img,
-.hero-testimonials .card .card-footer .arrow-left>img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
 }
 
 .hero-adds {

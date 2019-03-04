@@ -8,6 +8,7 @@ import { GlobalFooterComponent } from './global-footer/global-footer.component';
 import { MdToHtmlPipe } from './md-to-html.pipe';
 import { ValuesPipe } from './values.pipe';
 import { FeaturedCarouselComponent } from './featured-carousel/featured-carousel.component';
+import { TestimonialCarouselComponent } from './testimonial-carousel/testimonial-carousel.component';
 // import { PaymentModalComponent } from './payment-modal/payment-modal.component';
 
 const routes: Routes = [];
@@ -20,11 +21,11 @@ const routes: Routes = [];
   ],
   declarations: [
     CharitiesCarouselComponent, GlobalNavbarComponent, GlobalFooterComponent,
-    MdToHtmlPipe, FeaturedCarouselComponent, ValuesPipe
+    MdToHtmlPipe, FeaturedCarouselComponent, ValuesPipe, TestimonialCarouselComponent
   ],
   exports: [
     CharitiesCarouselComponent, FeaturedCarouselComponent, GlobalNavbarComponent,
-    GlobalFooterComponent, MdToHtmlPipe, ValuesPipe, RouterModule
+    GlobalFooterComponent, MdToHtmlPipe, ValuesPipe, RouterModule, TestimonialCarouselComponent
   ]
 })
 export class SharedModule { }

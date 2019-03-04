@@ -6,16 +6,16 @@ import { SignupComponent } from './signup/signup.component';
 import { PasswordlessAuthComponent } from './passwordless-auth/passwordless-auth.component';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: { title: 'Login'}
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-    data: { title: 'Sign Up'}
-  },
+  // {
+  //   path: 'login',
+  //   component: LoginComponent,
+  //   data: { title: 'Login'}
+  // },
+  // {
+  //   path: 'signup',
+  //   component: SignupComponent,
+  //   data: { title: 'Sign Up'}
+  // },
   {
     path: 'link-login',
     component: PasswordlessAuthComponent,
