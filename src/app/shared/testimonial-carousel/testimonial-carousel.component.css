@@ -1,9 +1,7 @@
-.hero-testimonials {
-    /*background-image: url(./assets/images/home_fourth_girl.jpg);*/
+.bg-wrapper {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #f7f4f4;
 }
 
 .hero-testimonials .testimonial-card {
