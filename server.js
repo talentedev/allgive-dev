@@ -35,14 +35,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Error handlers
 app.use(function (err, req, res, next) {
+    if (!err) {
+        next();
+    }
     console.log(err.stack);
     res.status(err.status || 500);
-    res.json({
-        'errors': {
-            message: err.message,
-            error: err
-        }
-    });
+    res.send(err);
 });
 
 // Serve only the static files form the dist directory
@@ -65,7 +63,7 @@ app.post('/check-user', function(req, res) {
         } else {
             res.send(null);
         }
-    }).catch(err => res.send(err));
+    });
 });
 
 /***************************************************************************
@@ -94,12 +92,9 @@ app.post('/getUserInfo', function(req, res) {
                 }
                 userData.contributions = contributions;
                 res.send(userData);
-            })
-            .catch(err => res.send(err));
-        })
-        .catch(err => { res.send(err); });
-    })
-    .catch(err => res.send(err));
+            });
+        });
+    });
 });
 
 /***************************************************************************
@@ -125,7 +120,7 @@ app.post('/users', function(req, res) {
     }
     fbDB.createUser(uid, data).then(res => {
         res.send({result: 'success'});
-    }).catch(err => res.send(err));
+    });
 });
 
 /***************************************************************************
@@ -147,7 +142,7 @@ app.post('/update-activity', function(req, res) {
         fbDB.updateUser(uid, user).then(snapshot => {
             res.send(snapshot);
         });
-    }).catch(err => res.send(err));
+    });
 });
 
 /***************************************************************************
@@ -164,7 +159,7 @@ app.post('/recent-activity', function(req, res) {
         fbDB.updateUser(uid, user).then(snapshot => {
             res.send(snapshot);
         });
-    }).catch(err => res.send(err));
+    });
 });
 
 /***************************************************************************
@@ -186,19 +181,15 @@ app.post('/new-subscription', function(req, res) {
                     if (plan) {
                         subscriptionService.createSubscription(customer.id, plan.id).then(subscription => {
                             res.send(subscription);
-                        })
-                        .catch(err => { res.send(err); });
+                        });
                     } else {
                         planService.createPlan(donationAmount, donationFrequency, product.id).then(newPricingPlan => {
                             subscriptionService.createSubscription(customer.id, newPricingPlan.id).then(subscription => {
                                 res.send(subscription);
-                            })
-                            .catch(err => { res.send(err); });
-                        })
-                        .catch(err => { res.send(err); });
+                            });
+                        });
                     }
-                })
-                .catch(err => { res.send(err); });
+                });
             } else {
                 let newProduct = {
                     name: charity.fields.charityName,
@@ -208,15 +199,22 @@ app.post('/new-subscription', function(req, res) {
                 planService.createPlan(donationAmount, donationFrequency, newProduct).then(newPlan => {
                     subscriptionService.createSubscription(customer.id, newPlan.id).then(subscription => {
                         res.send(subscription);
-                    })
-                    .catch(err => { res.send(err); });
-                })
-                .catch(err => { res.send(err); });
+                    });
+                });
             }
-        })
-        .catch(err => { res.send(err); });
-    })
-    .catch(err => { res.send(err); });
+        });
+
+        // Save card information to DB.
+        fbDB.createPayment(authUser.uid, {
+            id: token.id,
+            brand: token.brand,
+            customer: token.customer,
+            exp_month: token.exp_month,
+            exp_year: token.exp_year,
+            last4: token.last4,
+            active: true
+        });
+    });
 });
 
 /***************************************************************************
@@ -237,19 +235,15 @@ app.post('/subscription', function(req, res) {
                 if (plan) {
                     subscriptionService.createSubscription(customerId, plan.id).then(subscription => {
                         res.send(subscription);
-                    })
-                    .catch(err => { res.send(err); });
+                    });
                 } else {
                     planService.createPlan(donationAmount, donationFrequency, product.id).then(newPricingPlan => {
                         subscriptionService.createSubscription(customerId, newPricingPlan.id).then(subscription => {
                             res.send(subscription);
-                        })
-                        .catch(err => { res.send(err); });
-                    })
-                    .catch(err => { res.send(err); });
+                        });
+                    });
                 }
-            })
-            .catch(err => { res.send(err); });
+            });
         } else {
             let newProduct = {
                 name: charity.fields.charityName,
@@ -259,13 +253,10 @@ app.post('/subscription', function(req, res) {
             planService.createPlan(donationAmount, donationFrequency, newProduct).then(newPlan => {
                 subscriptionService.createSubscription(customerId, newPlan.id).then(subscription => {
                     res.send(subscription);
-                })
-                .catch(err => { res.send(err); });
-            })
-            .catch(err => { res.send(err); });
+                });
+            });
         }
-    })
-    .catch(err => { res.send(err); });
+    });
 });
 
 /***************************************************************************
@@ -286,10 +277,8 @@ app.post('/user-cards', function(req, res) {
                 Array.prototype.push.apply(cards, cardCollection[i].data);
             }
             res.send(cards);
-        })
-        .catch(err => { res.send(err); });
-    })
-    .catch(err => { res.send(err); });
+        });
+    });
 });
 
 /***************************************************************************
@@ -311,8 +300,7 @@ app.post('/update-card', function(req, res) {
     };
     cardService.update(customerId, cardId, data).then(card => {
         res.send(card);
-    })
-    .catch(err => res.send(err));
+    });
 });
 
 /***************************************************************************
@@ -330,8 +318,7 @@ app.post('/delete-card', function(req, res) {
     if (isDelete) {
         customerService.deleteCustomer(oldCustomer).then(confirm => {
             res.send(confirm);
-        })
-        .catch(err => res.send(err));
+        });
     } else {
         customerService.getCustomer(oldCustomer).then(customer => {
             let createSubscriptionPromises = [];
@@ -342,11 +329,9 @@ app.post('/delete-card', function(req, res) {
             Promise.all(createSubscriptionPromises).then(response => {
                 customerService.deleteCustomer(oldCustomer).then(confirm => {
                     res.send(confirm);
-                })
-                .catch(err => res.send(err));
+                });
             });
-        })
-        .catch(err => res.send(err));
+        });
     }
 });
 

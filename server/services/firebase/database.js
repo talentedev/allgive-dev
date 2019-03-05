@@ -17,6 +17,10 @@ module.exports = function(database) {
             var updates = {};
             updates['/users/' + uid] = data;
             return database.ref().update(updates);
+        },
+        // Create user's new payment
+        createPayment: function(uid, data) {
+            return database.ref('payments/' + uid).push(data);
         }
     }
 }
