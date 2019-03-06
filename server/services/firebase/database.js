@@ -1,5 +1,9 @@
 module.exports = function(database) {
     return {
+        // Get all users
+        getAllUsers: function(){
+            return database.ref('/users').once('value');
+        },
         // Get a user by uid.
         getUserById: function(uid) {
             return database.ref('/users/' + uid).once('value');

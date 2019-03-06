@@ -335,5 +335,32 @@ app.post('/delete-card', function(req, res) {
     }
 });
 
+/***************************************************************************
+ *                                                                         *
+ *    Manage APIs                                                            *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/sync-payments', function(req, res) {
+    fbDB.getAllUsers().then(function(users){
+        users.forEach(function(user){
+            customerService.getCustomersByEmail(user.val().email).then(function(customers) {
+                for (var i = 0; i < customers.data.length; i++) {
+                    cardService.getCards(customers.data[i].id).then(function(card) {
+                        fbDB.createPayment(user.key, {
+                            id: card.data[0].id,
+                            brand: card.data[0].brand,
+                            customer: card.data[0].customer,
+                            exp_month: card.data[0].exp_month,
+                            exp_year: card.data[0].exp_year,
+                            last4: card.data[0].last4,
+                            active: true
+                        });
+                    });
+                }
+            });
+        });
+    });
+});
+
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
