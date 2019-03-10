@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Entry } from 'contentful';
-import 'rxjs/add/operator/switchMap';
+
 
 import { AuthService } from '../../../core/services/auth.service';
 import { ContentfulService } from '../../../core/services/contentful.service';

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
+import { Observable, forkJoin } from 'rxjs';
 
 import { ContentfulService } from './contentful.service';
 
@@ -105,6 +104,6 @@ export class ChartService {
       const slug = data[i].charityname.toLowerCase().split(' ').join('-');
       responses.push(this.contentfullService.getCharityDetail(slug));
     }
-    return Observable.forkJoin(responses);
+    return forkJoin(responses);
   }
 }
