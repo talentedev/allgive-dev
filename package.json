@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
-    "build": "ng build --prod --source-map",
-    "start": "node server.js",
+    "prod": "ng build --prod --source-map",
+    "build": "node server.js",
     "postinstall": "ng build --aot --prod",
     "test": "ng test",
     "lint": "ng lint",
