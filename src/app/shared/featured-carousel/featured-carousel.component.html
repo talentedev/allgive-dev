@@ -1,25 +1,20 @@
-<section class="hero-charity">
-  <ngb-carousel id="featured-charities"
-                class="carousel">
-    <ng-template ngbSlide
-                 *ngFor="let charity of charities ; let i = index"
-                 class="carousel-fade carousel-item">
-      <div class="carousel-img"
-           [ngStyle]="{'background-image':'url(' + bgImages[i] + ')'}">
-        <div class="container">
-          <div class="row align-items-center">
-            <div id="carousel-text" class="col-md-12 col-lg-6 col-xl-5">
-              <h1>Help the world a little at a time.</h1>
-              <p>Micro-donating makes giving easy.</p>
-              <div class="button" [routerLink]="['/start']">Learn More</div>
-            </div>
-          </div>
-          <div class="featured">
-            Featured Organization:
-            <a [routerLink]="['/charities', slugs[i]]">{{ charityNames[i] }}</a>
-          </div>
+<mdb-carousel [isControls]="false" [animation]="'slide'" [interval]="'10000'">
+  <mdb-carousel-item *ngFor="let charity of charities ; let i = index">
+    <div class="view w-100">
+      <img class="d-block w-100" [src]="bgImages[i]" alt="First slide">
+    </div>
+    <div class="carousel-caption">
+      <div class="row align-items-center">
+        <div id="carousel-text" class="col-md-12 col-lg-6 col-xl-5 text-left">
+          <h1>Help the world a little at a time.</h1>
+          <p>Micro-donating makes giving easy.</p>
+          <div class="button" [routerLink]="['/start']">Learn More</div>
         </div>
       </div>
-    </ng-template>
-  </ngb-carousel>
-</section>
+      <div class="featured">
+        Featured Organization:
+        <a [routerLink]="['/charities', slugs[i]]">{{ charityNames[i] }}</a>
+      </div>
+    </div>
+  </mdb-carousel-item>
+</mdb-carousel>

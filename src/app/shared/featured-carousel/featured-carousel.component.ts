@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Entry } from 'contentful';
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
 
 import { ContentfulService } from '../../core/services/contentful.service';
 
 @Component({
   selector: 'app-featured-carousel',
   templateUrl: './featured-carousel.component.html',
-  styleUrls: ['./featured-carousel.component.css']
+  styleUrls: ['./featured-carousel.component.scss']
 })
 export class FeaturedCarouselComponent implements OnInit {
 
@@ -19,9 +19,7 @@ export class FeaturedCarouselComponent implements OnInit {
   showNavigationArrows = false;
   showNavigationIndicators = false;
 
-  constructor(config: NgbCarouselConfig, private contentfulService: ContentfulService) {
-    config.interval = 10000;
-
+  constructor(private contentfulService: ContentfulService) {
   }
 
   ngOnInit() {

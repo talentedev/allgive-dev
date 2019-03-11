@@ -1,0 +1,71 @@
+mdb-carousel-item {
+    img {
+        min-height: 400px;
+        object-fit: cover;
+    }
+    .carousel-caption {
+        top: 100px;
+        @media (max-width: 1200px) {
+            top: 50px
+        }
+    }
+}
+#carousel-text, .featured {
+    text-shadow: 1px 1px 2px #000000;
+}
+
+.featured {
+    position: absolute;
+    bottom: 1rem;
+    left: auto;
+    font-style: italic;
+}
+
+.featured a {
+    color: #fff;
+    text-decoration: underline;
+    font-style: normal;
+    margin-left: 5px;
+}
+
+.button {
+    width: 10rem;
+    height: 3rem;
+    border: 1px solid white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 3rem;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #058cb3;
+    cursor: pointer;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+}
+
+p {
+    font-size: 1.5rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.75rem;
+}
+
+@media (max-width: 992px) {
+    #carousel-text {
+        text-align: center !important;
+    }
+    #carousel-text .button{
+        margin: 0 auto;
+    }
+}
+@media (max-width: 576px) {
+    #carousel-text h1 {
+        font-size: 28px;
+        text-align: center !important;
+    }
+    #carousel-text p {
+        font-size: 22px;
+    }
+}

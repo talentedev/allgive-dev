@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { NgxStripeModule } from 'ngx-stripe';
 import { NgxLoadingModule } from 'ngx-loading';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { environment } from '../environments/environment';
 
@@ -76,7 +77,8 @@ import { StartComponent } from './core/components/start/start.component';
     PagesModule,
     AppRoutingModule,
     NgxLoadingModule.forRoot({}),
-    FontAwesomeModule
+    FontAwesomeModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [
     HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService,

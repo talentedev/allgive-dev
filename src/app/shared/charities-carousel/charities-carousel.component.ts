@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Entry } from 'contentful';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
 
 import { ContentfulService } from '../../core/services/contentful.service';
@@ -8,30 +7,37 @@ import { ContentfulService } from '../../core/services/contentful.service';
 @Component({
   selector: 'app-charities-carousel',
   templateUrl: './charities-carousel.component.html',
-  styleUrls: ['./charities-carousel.component.css']
+  styleUrls: ['./charities-carousel.component.scss']
 })
 export class CharitiesCarouselComponent implements OnInit {
 
   @Input() carouselType: string;
   charities: Entry<any>[];
-  mobile = false;
+  cardCount;
+  slides: any = [[]];
 
-  constructor(private contentfulService: ContentfulService, private config: NgbCarouselConfig) {
-    config.interval = 15000;
+  constructor(
+    private contentfulService: ContentfulService
+  ) {}
+
+  chunk(arr, chunkSize) {
+    let R = [];
+    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
+      R.push(arr.slice(i, i + chunkSize));
+    }
+    return R;
   }
 
   ngOnInit() {
-    if (window.screen.width < 414) { // 768px portrait
-      this.mobile = true;
+    if (window.screen.width < 576) {
+      this.cardCount = 3;
     } else {
-      this.mobile = false;
+      this.cardCount = 6;
     }
     return this.contentfulService.getCharities()
-      .then(res => this.charities = res);
+      .then(res => {
+        this.charities = res;
+        this.slides = this.chunk(this.charities, this.cardCount);
+      });
   }
-
-  // getCharities() {
-  //   return this.contentfulService.getCharities()
-  //     .then((res) => this.charities = res)
-  // }
 }

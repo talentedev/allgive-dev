@@ -4,7 +4,7 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-testimonial-carousel',
   templateUrl: './testimonial-carousel.component.html',
-  styleUrls: ['./testimonial-carousel.component.css']
+  styleUrls: ['./testimonial-carousel.component.scss']
 })
 export class TestimonialCarouselComponent implements OnInit {
 

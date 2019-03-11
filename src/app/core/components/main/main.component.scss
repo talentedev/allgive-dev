@@ -1,3 +1,31 @@
+.hero-charities {
+    padding: 3vw 0;
+    background-color: white;
+    h1 {
+        color: #0872ba;
+        text-align: center;
+        line-height: 5vw;
+        margin-bottom: 30px;
+    }
+    .view-all {
+        color: #0872ba;
+        text-align: center;
+        width: 100%;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        height: 5vw;
+        margin-top: 40px;
+        a {
+            color: #0872ba;
+            &:hover {
+                color: #0872ba;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
 @media (max-width: 1200px) {
     .hero-works {
         background-position: 100px 30px;

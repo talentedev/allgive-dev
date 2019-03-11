@@ -9,7 +9,7 @@ import { MdToHtmlPipe } from './md-to-html.pipe';
 import { ValuesPipe } from './values.pipe';
 import { FeaturedCarouselComponent } from './featured-carousel/featured-carousel.component';
 import { TestimonialCarouselComponent } from './testimonial-carousel/testimonial-carousel.component';
-// import { PaymentModalComponent } from './payment-modal/payment-modal.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 const routes: Routes = [];
 
@@ -17,7 +17,8 @@ const routes: Routes = [];
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NgbModule
+    NgbModule,
+    MDBBootstrapModule.forRoot()
   ],
   declarations: [
     CharitiesCarouselComponent, GlobalNavbarComponent, GlobalFooterComponent,
