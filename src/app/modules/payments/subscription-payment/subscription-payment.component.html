@@ -1,17 +1,20 @@
-<div class="modal-header">
-  <h4 class="modal-title">Make a Donation Selection:</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <div *ngFor="let donation of donationElements" class="donation-card" [class.active]="donation.active" (click)="selectDonationAmount(donation)">
-    <div class="donation-amount">{{ donation.donationAmount | currency }}</div>
-    <div class="donation-frequency">{{ donation.donationFrequency }}</div>
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title text-center w-100" id="myModalLabel">Choose A Donation Schedule</h4>
   </div>
-
-  <div>{{ selectedDonation?.donationAmount }}</div> <!-- For testing. Remove for production -->
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-light" (click)="open()" [disabled]="!submitActive">Submit</button>
+  <div class="modal-body text-center pt-0 pb-0">
+    <div class="row rgba-brown-slight">
+      <div class="col-md-4 p-4" *ngFor="let donation of donationElements" [class.rgba-blue-strong]="donation.active" (click)="selectDonationAmount(donation)">
+        <h4 [class.color-secondary]="!donation.active" [class.text-white]="donation.active">{{ donation.donationAmount | currency }}</h4>
+        <p [class.text-dark]="!donation.active" [class.text-white]="donation.active" class="m-0">{{ donation.donationFrequency }}</p>
+      </div>
+    </div>
+    <p class="color-secondary m-3"><small>CUSTOM DONATION</small></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" color="primary" class="relative waves-light" mdbWavesEffect (click)="open()">Next</button>
+  </div>
 </div>

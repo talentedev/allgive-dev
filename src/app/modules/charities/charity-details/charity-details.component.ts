@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { Entry } from 'contentful';
-
 
 import { AuthService } from '../../../core/services/auth.service';
 import { ContentfulService } from '../../../core/services/contentful.service';
@@ -24,6 +23,7 @@ export class CharityDetailsComponent implements OnInit {
   title: string;
   charityName = '';
   charityCategory = '';
+  modalRef: MDBModalRef;
 
   constructor(
     private titleService: Title,
@@ -31,7 +31,7 @@ export class CharityDetailsComponent implements OnInit {
     private contenfulPreviewService: ContentfulPreviewService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal,
+    private modalService: MDBModalService,
     private auth: AuthService,
   ) {
     this.router.events.subscribe((event) => {
@@ -113,8 +113,20 @@ export class CharityDetailsComponent implements OnInit {
 
   open() {
     if (this.auth.authState) {
-      const modalRef = this.modalService.open(SubscriptionPaymentComponent);
-      modalRef.componentInstance.charity = this.charity;
+      const modalOptions = {
+        backdrop: true,
+        keyboard: true,
+        focus: true,
+        show: false,
+        ignoreBackdropClick: false,
+        class: '',
+        containerClass: '',
+        animated: true,
+        data: {
+            charity: this.charity
+        }
+      }
+      this.modalRef = this.modalService.show(SubscriptionPaymentComponent, modalOptions);
     } else {
       this.router.navigate(['/start']);
     }

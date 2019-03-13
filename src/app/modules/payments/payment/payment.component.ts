@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
@@ -10,13 +10,13 @@ import { PaymentsService } from '../../../core/services/payments.service';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.css']
+  styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
 
-  @Input() charity;
-  @Input() donation;
-  @Input() cards;
+  charity;
+  donation;
+  cards;
 
   error: string;
   name: string;
@@ -31,8 +31,8 @@ export class PaymentComponent implements OnInit {
   card: StripeElement;
 
   constructor(
-    public activeModal: NgbActiveModal,
-    private modalService: NgbModal,
+    private modalRef: MDBModalRef,
+    private modalService: MDBModalService,
     private auth: AuthService,
     private payments: PaymentsService,
     private stripeService: StripeService
@@ -80,27 +80,51 @@ export class PaymentComponent implements OnInit {
     if (this.isNewCard) {
       this.stripeService.createToken(this.card, {}).subscribe(result => {
         if (result.token) {
-          const modalRef = this.modalService.open(PaymentConfirmationComponent);
-          modalRef.componentInstance.token = result.token;
-          modalRef.componentInstance.charity = this.charity;
-          modalRef.componentInstance.donation = this.donation;
-          modalRef.componentInstance.name = this.name;
-          modalRef.componentInstance.email = this.email;
-          this.activeModal.dismiss();
+          const modalOptions = {
+            backdrop: true,
+            keyboard: true,
+            focus: true,
+            show: false,
+            ignoreBackdropClick: false,
+            class: '',
+            containerClass: '',
+            animated: true,
+            data: {
+                token: result.token,
+                charity: this.charity,
+                donation: this.donation,
+                name: this.name,
+                email: this.email
+            }
+          }
+          this.modalService.show(PaymentConfirmationComponent, modalOptions);
+          this.modalRef.hide();
         } else {
           this.invalidCard = true;
           this.errorMessage = result.error.message;
         }
       });
     } else {
-      const modalRef = this.modalService.open(PaymentConfirmationComponent);
-      modalRef.componentInstance.token = null;
-      modalRef.componentInstance.charity = this.charity;
-      modalRef.componentInstance.donation = this.donation;
-      modalRef.componentInstance.customer = this.selectedCard.customer;
-      modalRef.componentInstance.name = this.name;
-      modalRef.componentInstance.email = this.email;
-      this.activeModal.dismiss();
+      const modalOptions = {
+        backdrop: true,
+        keyboard: true,
+        focus: true,
+        show: false,
+        ignoreBackdropClick: false,
+        class: '',
+        containerClass: '',
+        animated: true,
+        data: {
+            token: null,
+            charity: this.charity,
+            donation: this.donation,
+            customer: this.selectedCard.customer,
+            name: this.name,
+            email: this.email
+        }
+      }
+      this.modalService.show(PaymentConfirmationComponent, modalOptions);
+      this.modalRef.hide();
     }
   }
 }

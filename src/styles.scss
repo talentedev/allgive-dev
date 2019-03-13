@@ -89,6 +89,10 @@
     src: url("./assets/fonts/montserrat/Montserrat-Bold.otf") format("opentype");
 }
 
+// Variables
+$primary-color: #0872BA;
+$secondary-color: #0004d0;
+
 /* ########## Global: Start ########## */
 
 body {
@@ -119,7 +123,10 @@ h1 {
 
 /* ########## Global: End ########## */
 .color-primary {
-    color: #0872BA;
+    color: $primary-color;
+}
+.color-secondary {
+    color: $secondary-color;
 }
 .btn-allgive-primary {
     padding: 15px 30px;
@@ -134,281 +141,6 @@ h1 {
     }
 }
 
-/* ########## Homepage: Start ########## */
-.hero-sacrifice {
-    background-color: white;
-    color: #000;
-    padding: 3vw 0;
-}
-
-.hero-sacrifice .container,
-.hero-sacrifice .row {
-    height: 100%;
-}
-
-.hero-sacrifice h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-}
-
-.hero-sacrifice p {
-    font-size: 1.5rem;
-}
-
-.hero-works {
-    background-color: #058cb3;
-    background-image: url(./assets/images/home_third_ipad.png);
-    background-repeat: no-repeat;
-    background-position: 100px 80px;
-    background-size: 50% auto;
-    padding: 5vw 0;
-}
-
-.hero-works h1 {
-    margin-bottom: 1.5rem;
-}
-
-.hero-works p {
-    font-size: 1.5rem;
-    margin-bottom: 1.75rem;
-    line-height: 1.75rem;
-}
-
-.hero-works .button {
-    width: 10rem;
-    height: 3rem;
-    border: 1px solid white;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    line-height: 3rem;
-    text-align: center;
-    text-transform: capitalize;
-}
-
-.hero-adds {
-    background-color: white;
-    padding: 3vw 0;
-}
-
-.hero-adds h4 {
-    font-weight: 700;
-    font-size: 1.5rem;
-    margin-bottom: 4rem;
-    color: #333;
-    text-align: center;
-}
-
-.hero-adds p {
-    color: #333;
-    font-size: 2rem;
-    font-weight: 800;
-    text-align: center;
-}
-
-/* .hero-charities .carousel-charities .card {
-    background-color: #555;
-} */
-
-.hero-charities .carousel-charities .card span {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    display: block;
-    text-align: center;
-    line-height: 15vw;
-}
-
-.card-body.card-logo {
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.hero-adds {
-    background-color: white;
-}
-
-.hero-adds h4 {
-    font-weight: 700;
-    font-size: 1.5rem;
-    margin-bottom: 4rem;
-    color: #333;
-    text-align: center;
-}
-
-.hero-adds p {
-    color: #333;
-    font-size: 2rem;
-    font-weight: 800;
-    text-align: center;
-}
-
-/* ########## Homepage: End ########## */
-
-/* ########## Charity Details: Start ########## */
-
-#charity-details .hero-charity {
-    height: 25vw;
-    /* background-image: url(./assets/images/charity-details-hero.jpg); */
-    background-position: center 20%;
-    background-size: cover;
-    margin-bottom: 7vw;
-    position: relative;
-}
-
-#charity-details .hero-charity .logo {
-    position: absolute;
-    overflow: hidden;
-    width: 10vw;
-    height: 10vw;
-    /* background-image: url(./assets/images/charity-details_square-logo.png); */
-    background-size: cover;
-    bottom: -5vw;
-    left: 0;
-    right: 0;
-    margin: auto;
-    text-indent: -10rem;
-    filter: drop-shadow(-2px 2px 4px #000000);
-}
-
-#charity-details .charity-overview .category {
-    font-size: 1.25rem;
-    color: #333333;
-    margin-bottom: 1.75rem;
-}
-
-#charity-details .charity-overview .category .divide {
-    margin: auto 0.5rem;
-    color: #b0afaf;
-}
-
-#charity-details .charity-overview .category .highlight {
-    color: #f3052c;
-}
-
-#charity-details .charity-overview .name {
-    color: #0004d0;
-}
-
-#charity-details .charity-text {
-    font-size: 1.25rem;
-    color: #000;
-}
-
-#charity-details .charity-text p:last-of-type {
-    margin-bottom: 4rem;
-}
-
-#charity-details .charity-text .media-container {
-    width: 100%;
-    margin-bottom: 3rem;
-}
-
-#charity-details .charity-text .media-container img {
-    width: 100%;
-    height: auto;
-}
-
-#charity-details .charity-testimonial {
-    height: 20vw;
-    background-color: #faf8f8;
-    color: #0872ba;
-    margin-bottom: 4rem;
-}
-
-#charity-details .charity-testimonial .row {
-    height: 100%;
-}
-
-#charity-details .charity-testimonial p {
-    color: #333;
-    font-size: 2rem;
-    font-weight: 800;
-    text-align: center;
-    color: #0872ba;
-}
-
-#charity-details .charity-testimonial .testimonial-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    display: block;
-    color: #074c7a;
-    text-align: center;
-}
-
-#charity-details .charity-testimonial .testimonial-city {
-    font-style: italic;
-    color: #074c7a;
-    text-align: center;
-    display: block;
-}
-
-#charity-details .news .row.justify-content-center {
-    margin-bottom: 2rem;
-}
-
-#charity-details .news h3 {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-#charity-details .news img {
-    width: 100%;
-    height: auto;
-}
-
-#charity-details .news p {
-    font-size: 1.25rem;
-    color: #333;
-}
-
-#charity-details .news a.read-more {
-    color: #074c7a;
-    font-size: 1.25rem;
-    font-weight: 800;
-}
-
-#charity-details .news div.row:last-of-type {
-    margin-bottom: 6rem;
-}
-
-#charity-details .hero-charities {
-    background-color: #faf8f8;
-}
-
-/* ########## Charity Details: End ########## */
-
-/* ######### Subscription/Payment Modal: Start ######### */
-
-.modal {
-    color: #000000;
-    color: #31325F;
-    line-height: 40px;
-    font-weight: 300;
-    font-family: "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 18px;
-}
-
-.modal::placeholder {
-    color: #CFD7E0;
-}
-
-#name, #email {
-    outline: none;
-    line-height: 1rem;
-    margin-bottom: 10px;
-}
-
-/* ######### Subscription/Payment Modal: End ######### */
-
-/* ######### Page Wrapper: Start ######### */
-
 #page-wrapper .text.page-text {
     font-size: 1.25rem;
     color: #000;
@@ -418,4 +150,20 @@ h1 {
     color: #000000;
 }
 
-/* ######### Page Wrapper: End ######### */
+// Payment Modal Styles
+.modal {
+    font-family: 'Nunito', sans-serif;
+    .modal-title {
+        color: $secondary-color;
+    }
+    .modal-footer {
+        padding: 0;
+        button {
+            width: 100%;
+            background-color: $primary-color;
+            border: none;
+            padding: 15px;
+            color: white;
+        }
+    }
+}

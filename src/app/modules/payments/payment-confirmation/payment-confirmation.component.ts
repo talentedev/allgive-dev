@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MDBModalRef } from 'angular-bootstrap-md';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 import { PaymentsService } from '../../../core/services/payments.service';
@@ -13,17 +13,17 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class PaymentConfirmationComponent implements OnInit {
 
-  @Input() charity;
-  @Input() donation;
-  @Input() customer;
-  @Input() token;
+  charity;
+  donation;
+  customer;
+  token;
 
   authState;
   invalidCard = false;
   errorMessage = '';
 
   constructor(
-    public activeModal: NgbActiveModal,
+    private modalRef: MDBModalRef,
     private payments: PaymentsService,
     private router: Router,
     private auth: AuthService,
@@ -55,7 +55,7 @@ export class PaymentConfirmationComponent implements OnInit {
             this.invalidCard = true;
             this.errorMessage = res.message;
           } else {
-            this.activeModal.dismiss();
+            this.modalRef.hide();
             this.router.navigate(['/user/dashboard']);
           }
         });
@@ -66,7 +66,7 @@ export class PaymentConfirmationComponent implements OnInit {
             this.invalidCard = true;
             this.errorMessage = res.message;
           } else {
-            this.activeModal.dismiss();
+            this.modalRef.hide();
             this.router.navigate(['/user/dashboard']);
           }
         });

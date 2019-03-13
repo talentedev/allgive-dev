@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 import { PaymentComponent } from '../payment/payment.component';
 import { UserService } from '../../../core/services/user.service';
@@ -11,7 +11,7 @@ import { UserService } from '../../../core/services/user.service';
 })
 export class SubscriptionPaymentComponent {
 
-  @Input() charity;
+  charity: any;
 
   donationElements = [
     {
@@ -24,7 +24,7 @@ export class SubscriptionPaymentComponent {
       donationAmount: 10,
       donationFrequency: 'every week',
       stripeFrequency: 'week',
-      active: false
+      active: true
     },
     {
       donationAmount: 50,
@@ -36,12 +36,11 @@ export class SubscriptionPaymentComponent {
 
   donationAmount: string;
   donationFrequency: string;
-  selectedDonation;
-  submitActive = false;
+  selectedDonation = this.donationElements[1];
 
   constructor(
-    private modalService: NgbModal,
-    public activeModal: NgbActiveModal,
+    private modalRef: MDBModalRef,
+    private modalService: MDBModalService,
     private userService: UserService
     ) { }
 
@@ -62,18 +61,27 @@ export class SubscriptionPaymentComponent {
 
     this.selectedDonation = donation;
     this.selectedDonation.active = true;
-    this.submitActive = true;
   }
 
   open() {
-    if (this.submitActive) {
-      this.userService.getUserCards().subscribe(cards => {
-        const modalRef = this.modalService.open(PaymentComponent);
-        modalRef.componentInstance.charity = this.charity;
-        modalRef.componentInstance.cards = cards;
-        modalRef.componentInstance.donation = this.selectedDonation;
-        this.activeModal.close();
-      });
-    }
+    this.userService.getUserCards().subscribe(cards => {
+      const modalOptions = {
+        backdrop: true,
+        keyboard: true,
+        focus: true,
+        show: false,
+        ignoreBackdropClick: false,
+        class: '',
+        containerClass: '',
+        animated: true,
+        data: {
+            charity: this.charity,
+            cards: cards,
+            donation: this.selectedDonation
+        }
+      }
+      this.modalService.show(PaymentComponent, modalOptions);
+      this.modalRef.hide();
+    });
   }
 }
