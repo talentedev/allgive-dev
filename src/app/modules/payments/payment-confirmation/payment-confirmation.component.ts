@@ -23,7 +23,7 @@ export class PaymentConfirmationComponent implements OnInit {
   errorMessage = '';
 
   constructor(
-    private modalRef: MDBModalRef,
+    public modalRef: MDBModalRef,
     private payments: PaymentsService,
     private router: Router,
     private auth: AuthService,

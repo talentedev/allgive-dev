@@ -39,7 +39,7 @@ export class SubscriptionPaymentComponent {
   selectedDonation = this.donationElements[1];
 
   constructor(
-    private modalRef: MDBModalRef,
+    public modalRef: MDBModalRef,
     private modalService: MDBModalService,
     private userService: UserService
     ) { }

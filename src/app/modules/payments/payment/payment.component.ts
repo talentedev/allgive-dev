@@ -31,7 +31,7 @@ export class PaymentComponent implements OnInit {
   card: StripeElement;
 
   constructor(
-    private modalRef: MDBModalRef,
+    public modalRef: MDBModalRef,
     private modalService: MDBModalService,
     private auth: AuthService,
     private payments: PaymentsService,
