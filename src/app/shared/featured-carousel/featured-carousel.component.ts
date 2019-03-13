@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Entry } from 'contentful';
-import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
+import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
 
 import { ContentfulService } from '../../core/services/contentful.service';
 

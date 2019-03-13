@@ -73,7 +73,7 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  open(form: NgForm) {
+  open() {
     this.invalidCard = false;
     this.errorMessage = '';
 
@@ -96,7 +96,7 @@ export class PaymentComponent implements OnInit {
                 name: this.name,
                 email: this.email
             }
-          }
+          };
           this.modalService.show(PaymentConfirmationComponent, modalOptions);
           this.modalRef.hide();
         } else {
@@ -122,7 +122,7 @@ export class PaymentComponent implements OnInit {
             name: this.name,
             email: this.email
         }
-      }
+      };
       this.modalService.show(PaymentConfirmationComponent, modalOptions);
       this.modalRef.hide();
     }

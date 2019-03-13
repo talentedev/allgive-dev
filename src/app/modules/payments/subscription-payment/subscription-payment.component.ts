@@ -79,7 +79,7 @@ export class SubscriptionPaymentComponent {
             cards: cards,
             donation: this.selectedDonation
         }
-      }
+      };
       this.modalService.show(PaymentComponent, modalOptions);
       this.modalRef.hide();
     });
