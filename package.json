@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "start": "node server.js",
     "test": "ng test",
     "lint": "ng lint",
@@ -77,6 +77,5 @@
   "engines": {
     "node": "8.12.0",
     "npm": "6.4.1"
-  },
-  "heroku-run-build-script": true
+  }
 }
