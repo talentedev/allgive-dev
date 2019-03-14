@@ -12,7 +12,7 @@
         <p [class.text-dark]="!donation.active" [class.text-white]="donation.active" class="m-0">{{ donation.donationFrequency }}</p>
       </div>
     </div>
-    <p class="color-secondary m-3"><small>CUSTOM DONATION</small></p>
+    <p class="color-secondary m-3" (click)="customizeDonation()"><small>CUSTOM DONATION</small></p>
   </div>
   <div class="modal-footer">
     <button type="button" color="primary" class="relative waves-light" mdbWavesEffect (click)="open()">Next</button>

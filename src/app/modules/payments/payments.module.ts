@@ -7,6 +7,7 @@ import { PaymentsRouterModule } from './payments-router.module';
 import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionPaymentComponent } from './subscription-payment/subscription-payment.component';
 import { PaymentConfirmationComponent } from './payment-confirmation/payment-confirmation.component';
+import { CustomDonationComponent } from './custom-donation/custom-donation.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,11 @@ import { PaymentConfirmationComponent } from './payment-confirmation/payment-con
   declarations: [
     PaymentComponent,
     SubscriptionPaymentComponent,
-    PaymentConfirmationComponent
+    PaymentConfirmationComponent,
+    CustomDonationComponent
+  ],
+  entryComponents: [
+    CustomDonationComponent
   ]
 })
 export class PaymentsModule { }

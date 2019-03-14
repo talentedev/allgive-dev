@@ -2,6 +2,7 @@ import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetec
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 import { PaymentComponent } from '../payment/payment.component';
+import { CustomDonationComponent } from '../custom-donation/custom-donation.component';
 import { UserService } from '../../../core/services/user.service';
 
 @Component({
@@ -83,5 +84,23 @@ export class SubscriptionPaymentComponent {
       this.modalService.show(PaymentComponent, modalOptions);
       this.modalRef.hide();
     });
+  }
+
+  customizeDonation() {
+    const modalOptions = {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: '',
+      animated: true,
+      data: {
+          charity: this.charity,
+      }
+    };
+    this.modalService.show(CustomDonationComponent, modalOptions);
+    this.modalRef.hide();
   }
 }
