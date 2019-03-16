@@ -126,7 +126,7 @@ export class CharityDetailsComponent implements OnInit {
             charity: this.charity
         }
       };
-      this.modalRef = this.modalService.show(SubscriptionPaymentComponent, modalOptions);
+      this.modalService.show(SubscriptionPaymentComponent, modalOptions);
     } else {
       this.router.navigate(['/start']);
     }

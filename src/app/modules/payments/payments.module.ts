@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InputsModule, ButtonsModule } from 'angular-bootstrap-md';
+import { InputsModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
 
 import { PaymentsRouterModule } from './payments-router.module';
 import { PaymentComponent } from './payment/payment.component';
@@ -15,7 +15,8 @@ import { CustomDonationComponent } from './custom-donation/custom-donation.compo
     FormsModule,
     PaymentsRouterModule,
     InputsModule,
-    ButtonsModule
+    ButtonsModule,
+    IconsModule
   ],
   declarations: [
     PaymentComponent,
@@ -24,6 +25,9 @@ import { CustomDonationComponent } from './custom-donation/custom-donation.compo
     CustomDonationComponent
   ],
   entryComponents: [
+    PaymentComponent,
+    SubscriptionPaymentComponent,
+    PaymentConfirmationComponent,
     CustomDonationComponent
   ]
 })

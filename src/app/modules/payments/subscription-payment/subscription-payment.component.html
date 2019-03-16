@@ -5,14 +5,14 @@
     </button>
     <h4 class="modal-title text-center w-100" id="myModalLabel">Choose A Donation Schedule</h4>
   </div>
-  <div class="modal-body text-center pt-0 pb-0">
+  <div class="modal-body text-center pt-3 pb-3">
     <div class="row rgba-brown-slight">
-      <div class="col-md-4 p-4" *ngFor="let donation of donationElements" [class.rgba-blue-strong]="donation.active" (click)="selectDonationAmount(donation)">
-        <h4 [class.color-secondary]="!donation.active" [class.text-white]="donation.active">{{ donation.donationAmount | currency }}</h4>
-        <p [class.text-dark]="!donation.active" [class.text-white]="donation.active" class="m-0">{{ donation.donationFrequency }}</p>
+      <div class="col-md-4 p-4" *ngFor="let donation of donationElements; let i = index" [class.rgba-blue-strong]="donation.active" (click)="selectDonationAmount(donation, i)">
+        <h5 *ngIf="i==2" [class.color-secondary]="!donation.active" [class.text-white]="donation.active">Or, Choose Your Own Amount</h5>
+        <h4 *ngIf="i!==2" [class.color-secondary]="!donation.active" [class.text-white]="donation.active">{{ donation.donationAmount | currency }}</h4>
+        <p *ngIf="i!==2" [class.text-dark]="!donation.active" [class.text-white]="donation.active" class="m-0">{{ donation.donationFrequency }}</p>
       </div>
     </div>
-    <p class="color-secondary m-3" (click)="customizeDonation()"><small>CUSTOM DONATION</small></p>
   </div>
   <div class="modal-footer">
     <button type="button" color="primary" class="relative waves-light" mdbWavesEffect (click)="open()">Next</button>

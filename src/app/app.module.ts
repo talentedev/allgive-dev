@@ -84,10 +84,6 @@ import { StartComponent } from './core/components/start/start.component';
     HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService,
     AuthService, AuthGuard, PaymentsService, MailChimpService, UserService, ChartService ],
   bootstrap: [ AppComponent ],
-  entryComponents: [
-    SubscriptionPaymentComponent,
-    PaymentComponent,
-    PaymentConfirmationComponent
-  ]
+  entryComponents: []
 })
 export class AppModule { }

@@ -17,6 +17,7 @@ export class PaymentComponent implements OnInit {
   charity;
   donation;
   cards;
+  modals = [];
 
   error: string;
   name: string;
@@ -62,6 +63,7 @@ export class PaymentComponent implements OnInit {
           this.authState = this.auth.authState;
         }
       });
+    this.modals.push(this.modalRef)
   }
 
   onChangeCard(card) {
@@ -94,7 +96,8 @@ export class PaymentComponent implements OnInit {
                 charity: this.charity,
                 donation: this.donation,
                 name: this.name,
-                email: this.email
+                email: this.email,
+                modals: this.modals
             }
           };
           this.modalService.show(PaymentConfirmationComponent, modalOptions);
@@ -120,7 +123,8 @@ export class PaymentComponent implements OnInit {
             donation: this.donation,
             customer: this.selectedCard.customer,
             name: this.name,
-            email: this.email
+            email: this.email,
+            modals: this.modals
         }
       };
       this.modalService.show(PaymentConfirmationComponent, modalOptions);

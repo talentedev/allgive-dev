@@ -9,7 +9,7 @@ import { AuthService } from '../../../core/services/auth.service';
 @Component({
   selector: 'app-payment-confirmation',
   templateUrl: './payment-confirmation.component.html',
-  styleUrls: ['./payment-confirmation.component.css']
+  styleUrls: ['./payment-confirmation.component.scss']
 })
 export class PaymentConfirmationComponent implements OnInit {
 
@@ -17,7 +17,7 @@ export class PaymentConfirmationComponent implements OnInit {
   donation;
   customer;
   token;
-
+  modals = [];
   authState;
   invalidCard = false;
   errorMessage = '';
@@ -32,9 +32,11 @@ export class PaymentConfirmationComponent implements OnInit {
 
   ngOnInit() {
     this.authState = this.auth.authState;
+    this.modals.push(this.modalRef)
   }
 
   onSubmit() {
+
     this.invalidCard = false;
     this.errorMessage = '';
     // Convert charge amount to pennies for Stripe
@@ -55,7 +57,7 @@ export class PaymentConfirmationComponent implements OnInit {
             this.invalidCard = true;
             this.errorMessage = res.message;
           } else {
-            this.modalRef.hide();
+            this.closeAllModals();
             this.router.navigate(['/user/dashboard']);
           }
         });
@@ -66,10 +68,17 @@ export class PaymentConfirmationComponent implements OnInit {
             this.invalidCard = true;
             this.errorMessage = res.message;
           } else {
-            this.modalRef.hide();
+            this.closeAllModals();
             this.router.navigate(['/user/dashboard']);
           }
         });
+    }
+
+  }
+
+  closeAllModals() {
+    for (var i = 0; i < this.modals.length; ++i) {
+      this.modals[i].hide();
     }
   }
 }

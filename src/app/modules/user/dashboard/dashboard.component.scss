@@ -32,16 +32,27 @@
     border: none;
     border-radius: 0;
     padding: 1rem;
-    color: #323232;
+    color: #323232 !important;
 }
 .btn-outline-primary:hover,
 .show>.btn-outline-primary.dropdown-toggle {
     color: white !important;
 }
-.dropdown-menu {
-    padding: 0;
-    width: 100%;
-    text-align: center;
+.dropdown {
+    .dropdown-toggle {
+        margin: 0;
+        border: none !important;
+        box-shadow: none;
+        &:hover {
+            background-color: #2fa4f3 !important;
+        }
+    }
+    .dropdown-menu {
+        padding: 0;
+        width: 100%;
+        text-align: center;
+        opacity: 1 !important;
+    }
 }
 .donation-statistics .dropdown-menu button {
     margin-top: 2px;

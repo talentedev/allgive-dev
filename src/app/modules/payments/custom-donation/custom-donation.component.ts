@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
-import { Subject } from 'rxjs';
 
 import { PaymentComponent } from '../payment/payment.component';
 import { UserService } from '../../../core/services/user.service';
@@ -12,10 +11,10 @@ import { UserService } from '../../../core/services/user.service';
 })
 export class CustomDonationComponent implements OnInit {
 
-  action: Subject<any> = new Subject();
   donationAmount = 10;
   donationSchedule = 'week';
   charity;
+  modals = [];
 
   constructor(
     public modalRef: MDBModalRef,
@@ -24,6 +23,7 @@ export class CustomDonationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.modals.push(this.modalRef);
   }
 
   next() {
@@ -43,13 +43,13 @@ export class CustomDonationComponent implements OnInit {
         containerClass: '',
         animated: true,
         data: {
-            charity: this.charity,
-            cards: cards,
-            donation: selectedDonation
+          charity: this.charity,
+          cards: cards,
+          donation: selectedDonation,
+          modals: this.modals
         }
       };
       this.modalService.show(PaymentComponent, modalOptions);
-      this.modalRef.hide();
     });
   }
 

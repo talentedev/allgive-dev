@@ -8,7 +8,7 @@ import { UserService } from '../../../core/services/user.service';
 @Component({
   selector: 'app-subscription-payment',
   templateUrl: './subscription-payment.component.html',
-  styleUrls: ['./subscription-payment.component.css']
+  styleUrls: ['./subscription-payment.component.scss']
 })
 export class SubscriptionPaymentComponent {
 
@@ -45,23 +45,27 @@ export class SubscriptionPaymentComponent {
     private userService: UserService
     ) { }
 
-  selectDonationAmount(donation) {
-    this.donationAmount = donation.donationAmount;
-    this.donationFrequency = donation.stripeFrequency;
+  selectDonationAmount(donation, index) {
+    if (index !== 2) {
+      this.donationAmount = donation.donationAmount;
+      this.donationFrequency = donation.stripeFrequency;
 
-    this.donationElements.forEach(element => {
-      if (element !== donation) {
-        element.active = false;
-      }
+      this.donationElements.forEach(element => {
+        if (element !== donation) {
+          element.active = false;
+        }
 
-      if (this.selectedDonation && element === this.selectedDonation) {
-        element.active = false;
-        this.selectedDonation = null;
-      }
-    });
+        if (this.selectedDonation && element === this.selectedDonation) {
+          element.active = false;
+          this.selectedDonation = null;
+        }
+      });
 
-    this.selectedDonation = donation;
-    this.selectedDonation.active = true;
+      this.selectedDonation = donation;
+      this.selectedDonation.active = true;
+    } else {
+      this.customizeDonation();
+    }
   }
 
   open() {
@@ -76,13 +80,13 @@ export class SubscriptionPaymentComponent {
         containerClass: '',
         animated: true,
         data: {
-            charity: this.charity,
-            cards: cards,
-            donation: this.selectedDonation
+          charity: this.charity,
+          cards: cards,
+          donation: this.selectedDonation,
+          modals: [this.modalRef]
         }
       };
       this.modalService.show(PaymentComponent, modalOptions);
-      this.modalRef.hide();
     });
   }
 
@@ -97,10 +101,10 @@ export class SubscriptionPaymentComponent {
       containerClass: '',
       animated: true,
       data: {
-          charity: this.charity,
+        charity: this.charity,
+        modals: [this.modalRef]
       }
     };
     this.modalService.show(CustomDonationComponent, modalOptions);
-    this.modalRef.hide();
   }
 }
