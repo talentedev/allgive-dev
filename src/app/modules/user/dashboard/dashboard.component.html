@@ -35,12 +35,7 @@
         </div>
       </div>
       <div class="col-6 col-md-4">
-        <highcharts-chart 
-          [Highcharts]="Highcharts"
-          [options]="chartOptions"
-          [(update)]="updateChart"
-          style="width: 100%; height: 400px; display: block;"
-        ></highcharts-chart>
+        <app-stacked-chart *ngIf="updateChart" [dataset]="chartData"></app-stacked-chart>
       </div>
       <div class="col-6 col-md-4">
         <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}">
@@ -219,6 +214,41 @@
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section hero-payments">
+    <div class="row mb-3">
+      <div class="col-9">
+        <h3 class="section-title">Your Profile</h3>
+      </div>
+    </div>
+    <div class="row">
+      <form class="col-md-6" [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+        <div class="form-group row">
+          <label for="firstName" class="col-sm-4 col-form-label">First name</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First Name">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="lastName" class="col-sm-4 col-form-label">Last Name</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email" class="col-sm-4 col-form-label">Email</label>
+          <div class="col-sm-8">
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-8">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 </main>

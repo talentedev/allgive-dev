@@ -147,6 +147,25 @@ app.post('/update-activity', function(req, res) {
 
 /***************************************************************************
  *                                                                         *
+ *     Update user profile                                                 *   
+ *                                                                         *
+ ***************************************************************************/
+app.post('/update-profile', function(req, res) {
+    const uid = req.body.uid;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    fbDB.getUserById(uid).then(snapshot => {
+        var user = snapshot.val();
+        user.firstName = firstName;
+        user.lastName = lastName;
+        fbDB.updateUser(uid, user).then(snapshot => {
+            res.send(snapshot);
+        });
+    });
+});
+
+/***************************************************************************
+ *                                                                         *
  *     Update recent activities                                            *   
  *                                                                         *
  ***************************************************************************/

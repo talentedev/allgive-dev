@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as Highcharts from 'highcharts';
+import { FormGroup, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { EditCardComponent } from '../edit-card/edit-card.component';
@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit {
   title = 'Dashboard | Allgive.org';
   showCharityManageView = false;
   showPaymentDetail = [false, false];
-  Highcharts = Highcharts;
   donationOrgs = [];
   selectedOrg = null;
   chartOptions: object;
@@ -42,6 +41,12 @@ export class DashboardComponent implements OnInit {
   ];
   selectedProjection = '2019 Year-End-Projection';
   averageProjection = '$0.00';
+  chartData;
+  profileForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl({value: '', disabled: true})
+  });
 
   constructor(
     private titleService: Title,
@@ -75,6 +80,13 @@ export class DashboardComponent implements OnInit {
       this.updateChart = true;
       this.payments = res.cards;
       this.loading = false;
+      this.chartData = res.contributions;
+
+      this.profileForm.patchValue({
+        firstName: res.firstName,
+        lastName: res.lastName,
+        email: res.email
+      });
 
       this.getCharityLogos(res.contributions);
     });
@@ -166,6 +178,17 @@ export class DashboardComponent implements OnInit {
       if (reason === 'success') {
         this.init();
       }
+    });
+  }
+
+  updateProfile() {
+    const data = {
+      uid: this.authService.authState.uid,
+      firstName: this.profileForm.value.firstName,
+      lastName: this.profileForm.value.lastName
+    }
+    this.userService.updateProfile(data).subscribe(res => {
+      this.init();
     });
   }
 

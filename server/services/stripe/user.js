@@ -30,6 +30,7 @@ module.exports = function(invoiceService, productService) {
                                     contributions[i]['amount'] =  invoices[i][0].amount_paid/100;
                                     contributions[i]['schedule'] = subscriptions[i].plan.interval;
                                     contributions[i]['projection'] = calcYearProjection(contributions[i]);
+                                    contributions[i]['invoices'] = invoices[i];
                                 }
                                 resolve(contributions);
                             })
