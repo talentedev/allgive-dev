@@ -63,7 +63,7 @@ export class PaymentComponent implements OnInit {
           this.authState = this.auth.authState;
         }
       });
-    this.modals.push(this.modalRef)
+    this.modals.push(this.modalRef);
   }
 
   onChangeCard(card) {

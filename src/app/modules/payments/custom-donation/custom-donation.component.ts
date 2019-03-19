@@ -31,7 +31,7 @@ export class CustomDonationComponent implements OnInit {
       donationAmount: this.donationAmount,
       stripeFrequency: this.donationSchedule,
       donationFrequency: 'every ' + this.donationSchedule
-    }
+    };
     this.userService.getUserCards().subscribe(cards => {
       const modalOptions = {
         backdrop: true,

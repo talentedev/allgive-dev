@@ -68,7 +68,7 @@ import { StartComponent } from './core/components/start/start.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgxStripeModule.forRoot(environment.stripeKey),
-    NgbModule.forRoot(),
+    NgbModule,
     SharedModule,
     CharitiesModule,
     UserModule,

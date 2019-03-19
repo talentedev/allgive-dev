@@ -186,7 +186,7 @@ export class DashboardComponent implements OnInit {
       uid: this.authService.authState.uid,
       firstName: this.profileForm.value.firstName,
       lastName: this.profileForm.value.lastName
-    }
+    };
     this.userService.updateProfile(data).subscribe(res => {
       this.init();
     });

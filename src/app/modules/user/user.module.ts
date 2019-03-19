@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighchartsChartModule  } from 'highcharts-angular';
 import { NgxLoadingModule } from 'ngx-loading';
-import { ChartsModule, WavesModule } from 'angular-bootstrap-md'
+import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -17,7 +17,7 @@ import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
 
 @NgModule({
   imports: [
-    NgbModule.forRoot(),
+    NgbModule,
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -27,7 +27,15 @@ import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
     ChartsModule,
     WavesModule
   ],
-  declarations: [UserComponent, DashboardComponent, ProfileComponent, EditProfileComponent, EditCardComponent, DeleteCardComponent, StackedChartComponent],
+  declarations: [
+    UserComponent,
+    DashboardComponent,
+    ProfileComponent,
+    EditProfileComponent,
+    EditCardComponent,
+    DeleteCardComponent,
+    StackedChartComponent
+  ],
   entryComponents: [
     EditCardComponent,
     DeleteCardComponent

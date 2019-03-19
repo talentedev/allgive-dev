@@ -11,7 +11,7 @@ export class StackedChartComponent implements OnInit {
 
   @Input() dataset: any;
 
-  public chartType: string = 'bar';
+  public chartType = 'bar';
   public chartDatasets: Array<any> = [];
   public chartLabels: Array<any> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   public chartColors: Array<any> = [
@@ -59,9 +59,9 @@ export class StackedChartComponent implements OnInit {
   }
 
   convertChartData(data) {
-    let chartData = [];
+    const chartData = [];
     for (let i = 0; i < data.length; ++i) {
-      let item = {
+      const item = {
         label: data[i].charityname,
         data: this.getDataset(data[i].invoices)
       };
@@ -71,11 +71,11 @@ export class StackedChartComponent implements OnInit {
   }
 
   getDataset(data) {
-    let dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    for (var i = 0; i < data.length; ++i) {
-      let date = new Date(data[i].status_transitions.paid_at*1000);
-      let month = date.getMonth();
-      dataset[month] += data[i].amount_paid/100;
+    const dataset = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < data.length; ++i) {
+      const date = new Date(data[i].status_transitions.paid_at * 1000);
+      const month = date.getMonth();
+      dataset[month] += data[i].amount_paid / 100;
     }
     return dataset;
   }

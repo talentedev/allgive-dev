@@ -32,7 +32,7 @@ export class PaymentConfirmationComponent implements OnInit {
 
   ngOnInit() {
     this.authState = this.auth.authState;
-    this.modals.push(this.modalRef)
+    this.modals.push(this.modalRef);
   }
 
   onSubmit() {
@@ -77,7 +77,7 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   closeAllModals() {
-    for (var i = 0; i < this.modals.length; ++i) {
+    for (let i = 0; i < this.modals.length; ++i) {
       this.modals[i].hide();
     }
   }
