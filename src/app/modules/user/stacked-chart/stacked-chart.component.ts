@@ -47,7 +47,8 @@ export class StackedChartComponent implements OnInit {
           stacked: true
         }
       ]
-    }
+    },
+    maintainAspectRatio: false
   };
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }

@@ -38,7 +38,7 @@
         <app-stacked-chart *ngIf="updateChart" [dataset]="chartData"></app-stacked-chart>
       </div>
       <div class="col-6 col-md-4">
-        <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}">
+        <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}" (mouseenter)="selectedOrg=i" (mouseleave)="selectedOrg=null">
           <div *ngIf="i !== selectedOrg">
             <h3>${{ donationOrg.daily }}/{{ donationOrg.schedule }}</h3>
             <p>{{ donationOrg.name }}</p>
