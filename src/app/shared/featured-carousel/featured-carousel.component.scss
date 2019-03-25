@@ -10,13 +10,17 @@ mdb-carousel-item {
         }
     }
 }
-#carousel-text, .featured {
-    text-shadow: 1px 1px 2px #000000;
+#carousel-text {
+    text-shadow: 2px 2px 2px #000;
+    border: 1px solid #000;
+    padding: 1.5em;
+    background-color: rgba(105,105,105,.5);
+    border-radius: 1em;
 }
-
 .featured {
+    text-shadow: 1px 1px 2px #000000;
     position: absolute;
-    bottom: 1rem;
+    bottom: 0;
     left: auto;
     font-style: italic;
 }

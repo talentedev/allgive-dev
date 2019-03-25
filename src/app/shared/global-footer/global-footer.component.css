@@ -49,8 +49,8 @@ footer .btn-allgive-primary {
         padding: 10px;
     }
     footer .btn-allgive-primary {
-        width: 50%;
-        margin: 10px auto;
+        width: 70%;
+        text-align: center;
     }
     footer .copyright {
         text-align: center !important;

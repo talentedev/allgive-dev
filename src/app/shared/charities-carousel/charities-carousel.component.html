@@ -14,7 +14,7 @@
       <mdb-carousel-item *ngFor="let item of slides; let i = index">
         <div class="col-md-2 col-sm-4" [ngClass]="{'d-none d-md-block': cardIndex !== 0}" *ngFor="let card of item; let cardIndex = index">
           <mdb-card class="my-1">
-            <mdb-card-img [src]="card?.fields.logo?.fields.file.url" [routerLink]="['/charities', charity?.fields.slug]" alt="Card image cap"></mdb-card-img>
+            <mdb-card-img [src]="card?.fields.logo?.fields.file.url" [routerLink]="['/charities', card?.fields.slug]" alt="Card image cap"></mdb-card-img>
           </mdb-card>
         </div>
       </mdb-carousel-item>
