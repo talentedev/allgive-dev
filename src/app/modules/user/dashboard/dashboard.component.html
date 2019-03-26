@@ -34,10 +34,10 @@
           <h2>{{ averageProjection }}</h2>
         </div>
       </div>
-      <div class="col-6 col-md-4">
+      <div class="col-12 col-md-5">
         <app-stacked-chart *ngIf="updateChart" [dataset]="chartData"></app-stacked-chart>
       </div>
-      <div class="col-6 col-md-4">
+      <div class="col-12 col-md-3">
         <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}" (mouseenter)="selectedOrg=i" (mouseleave)="selectedOrg=null">
           <div *ngIf="i !== selectedOrg">
             <h3>${{ donationOrg.daily }}/{{ donationOrg.schedule }}</h3>
@@ -243,11 +243,10 @@
             <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
           </div>
         </div>
-        <div class="form-group row">
-          <div class="col-sm-8">
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </div>
+        <button type="submit" class="btn btn-primary float-right m-0">
+          <fa-icon *ngIf="isSavingProfile" [icon]="faSpinner" [spin]="true" class="mr-2"></fa-icon>
+          <span>{{ isSavingProfile ? 'Saving...' : 'Save' }}</span>
+        </button>
       </form>
     </div>
   </section>

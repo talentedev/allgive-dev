@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HighchartsChartModule  } from 'highcharts-angular';
 import { NgxLoadingModule } from 'ngx-loading';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -25,7 +26,8 @@ import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
     HighchartsChartModule,
     NgxLoadingModule.forRoot({}),
     ChartsModule,
-    WavesModule
+    WavesModule,
+    FontAwesomeModule
   ],
   declarations: [
     UserComponent,

@@ -5,7 +5,7 @@ mdb-carousel-item {
     }
     .carousel-caption {
         top: 100px;
-        @media (max-width: 1200px) {
+        @media (max-width: 1460px) {
             top: 50px
         }
     }
@@ -16,6 +16,14 @@ mdb-carousel-item {
     padding: 1.5em;
     background-color: rgba(105,105,105,.5);
     border-radius: 1em;
+    @media (max-width: 1360px) {
+        h1 {
+            font-size: 40px;
+        }
+        p {
+            font-size: 20px;
+        }
+    }
 }
 .featured {
     text-shadow: 1px 1px 2px #000000;
@@ -44,6 +52,9 @@ mdb-carousel-item {
     text-transform: uppercase;
     background-color: #058cb3;
     cursor: pointer;
+    @media (max-width: 1360px) {
+        font-size: 15px;
+    }
 }
 
 h1 {

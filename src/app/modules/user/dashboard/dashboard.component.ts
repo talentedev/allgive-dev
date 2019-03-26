@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { EditCardComponent } from '../edit-card/edit-card.component';
 import { DeleteCardComponent } from '../delete-card/delete-card.component';
@@ -47,6 +48,9 @@ export class DashboardComponent implements OnInit {
     lastName: new FormControl(''),
     email: new FormControl({value: '', disabled: true})
   });
+  faMagic = faMagic;
+  faSpinner = faSpinner;
+  isSavingProfile = false;
 
   constructor(
     private titleService: Title,
@@ -182,12 +186,14 @@ export class DashboardComponent implements OnInit {
   }
 
   updateProfile() {
+    this.isSavingProfile = true;
     const data = {
       uid: this.authService.authState.uid,
       firstName: this.profileForm.value.firstName,
       lastName: this.profileForm.value.lastName
     };
     this.userService.updateProfile(data).subscribe(res => {
+      this.isSavingProfile = false;
       this.init();
     });
   }
