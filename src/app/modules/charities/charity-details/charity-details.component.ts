@@ -12,7 +12,7 @@ import { SubscriptionPaymentComponent } from '../../payments/subscription-paymen
 @Component({
   selector: 'app-charity-details',
   templateUrl: './charity-details.component.html',
-  styleUrls: ['./charity-details.component.css']
+  styleUrls: ['./charity-details.component.scss']
 })
 export class CharityDetailsComponent implements OnInit {
 

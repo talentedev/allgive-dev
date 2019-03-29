@@ -5,7 +5,7 @@
     width: 160px;
 }
 .navbar-brand.active {
-    cursor: auto;
+    cursor: pointer;
 }
 
 .fixed-height-nav {

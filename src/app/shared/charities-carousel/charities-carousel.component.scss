@@ -10,6 +10,7 @@
 }
 .carousel-item.active {
     display: flex;
+    cursor: pointer;
 }
 .carousel-control-prev-icon, .carousel-control-next-icon {
     width: 22px;
