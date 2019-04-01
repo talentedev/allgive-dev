@@ -6,6 +6,7 @@ import { HighchartsChartModule  } from 'highcharts-angular';
 import { NgxLoadingModule } from 'ngx-loading';
 import { ChartsModule, WavesModule } from 'angular-bootstrap-md';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { InputsModule, ButtonsModule, IconsModule } from 'angular-bootstrap-md';
 
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -15,6 +16,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditCardComponent } from './edit-card/edit-card.component';
 import { DeleteCardComponent } from './delete-card/delete-card.component';
 import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
+import { CustomDonationComponent } from './custom-donation/custom-donation.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,10 @@ import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
     NgxLoadingModule.forRoot({}),
     ChartsModule,
     WavesModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    InputsModule,
+    ButtonsModule,
+    IconsModule
   ],
   declarations: [
     UserComponent,
@@ -36,11 +41,13 @@ import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
     EditProfileComponent,
     EditCardComponent,
     DeleteCardComponent,
-    StackedChartComponent
+    StackedChartComponent,
+    CustomDonationComponent
   ],
   entryComponents: [
     EditCardComponent,
-    DeleteCardComponent
+    DeleteCardComponent,
+    CustomDonationComponent
   ]
 })
 export class UserModule { }

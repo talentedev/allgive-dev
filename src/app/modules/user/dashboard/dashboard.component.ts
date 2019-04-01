@@ -4,9 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { MDBModalService } from 'angular-bootstrap-md';
 
 import { EditCardComponent } from '../edit-card/edit-card.component';
 import { DeleteCardComponent } from '../delete-card/delete-card.component';
+import { CustomDonationComponent } from '../custom-donation/custom-donation.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ChartService } from '../../../core/services/chart.service';
@@ -60,7 +62,8 @@ export class DashboardComponent implements OnInit {
     private userService: UserService,
     private contentfullService: ContentfulService,
     private chartService: ChartService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private mdbModalService: MDBModalService,
   ) { }
 
   ngOnInit() {
@@ -139,6 +142,15 @@ export class DashboardComponent implements OnInit {
   setShowCharityManage(value, chartity= null) {
     this.showCharityManageView = value;
     this.selectedOrg = chartity;
+  }
+
+  openCustomDonationModal() {
+    const modalRef = this.mdbModalService.show(CustomDonationComponent);
+    modalRef.content.action.subscribe( (result: any) => {
+      console.log(result);
+      this.selectedOrg.daily = result.amount;
+      this.selectedOrg.schedule = result.schedule;
+    });
   }
 
   togglePaymentDetail(index) {

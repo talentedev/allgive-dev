@@ -12,6 +12,12 @@
         padding: 50px;
     }
 }
+.pointer {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
 /* Donation Statistics */
 .donation-statistics {
     background-color: #e9ecef;
