@@ -87,6 +87,10 @@ div.card-image:hover .card-charity-text {
     height: 5vh;
     border: 1px solid #000000;
 }
+
+.dropdown.show .dropdown-menu {
+    opacity: 1;
+}
 @media (max-width: 768px) {
     .jumbotron {
         text-align: center;
@@ -98,5 +102,9 @@ div.card-image:hover .card-charity-text {
     }
     .charity-grid .card-image {
         height: 45vw;
+    }
+
+    .card-charity-text {
+        display: none;
     }
 }

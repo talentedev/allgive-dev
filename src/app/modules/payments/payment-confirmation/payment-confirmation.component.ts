@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { MDBModalRef } from 'angular-bootstrap-md';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 import { PaymentsService } from '../../../core/services/payments.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { PaymentComponent } from '../payment/payment.component';
 
 @Component({
   selector: 'app-payment-confirmation',
@@ -21,13 +24,24 @@ export class PaymentConfirmationComponent implements OnInit {
   authState;
   invalidCard = false;
   errorMessage = '';
+  card_id;
+  isSubmitting = false;
+  faMagic = faMagic;
+  faSpinner = faSpinner;
+  cards = [];
+  selectedDonation;
+  selectedCard;
+  isNewCard;
+  donationElements;
 
   constructor(
     public modalRef: MDBModalRef,
     private payments: PaymentsService,
     private router: Router,
     private auth: AuthService,
-    private stripeService: StripeService
+    private modalService: MDBModalService,
+    private stripeService: StripeService,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -36,6 +50,8 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   onSubmit() {
+
+    if(this.isSubmitting) return;
 
     this.invalidCard = false;
     this.errorMessage = '';
@@ -47,12 +63,16 @@ export class PaymentConfirmationComponent implements OnInit {
       user: this.authState,
       charity: this.charity,
       token: this.token,
-      customer: this.customer
+      customer: this.customer,
+      card_id: this.selectedCard ? this.selectedCard.id : null
     };
 
-    if (this.token) {
+    this.isSubmitting = true;
+
+    if (this.token != null) {
       this.payments.processNewSubscription(data)
         .subscribe(res => {
+          this.isSubmitting = false;
           if (res.message) {
             this.invalidCard = true;
             this.errorMessage = res.message;
@@ -64,21 +84,56 @@ export class PaymentConfirmationComponent implements OnInit {
     } else {
       this.payments.processSubscription(data)
         .subscribe(res => {
+          this.isSubmitting = false;
           if (res.message) {
             this.invalidCard = true;
             this.errorMessage = res.message;
           } else {
-            this.closeAllModals();
-            this.router.navigate(['/user/dashboard']);
+            this.ngZone.run(_ => {
+              this.closeAllModals();
+              this.router.navigate(['/user/dashboard']);
+            });
           }
         });
     }
 
   }
 
+  back() {
+
+    const modalOptions = {
+      backdrop: false,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: '',
+      animated: true,
+      data: {
+        charity: this.charity,
+        cards: this.cards,
+        donation: this.donation,
+        selectedCard: this.selectedCard,
+        isNewCard: this.isNewCard,
+        donationElements: this.donationElements
+
+        //modals: [this.modalRef]
+      }
+    };
+    this.modalService.show(PaymentComponent, modalOptions);
+    this.modalRef.hide();
+  }
+
   closeAllModals() {
     for (let i = 0; i < this.modals.length; ++i) {
       this.modals[i].hide();
     }
+    setTimeout(() => {
+      const elements: any = document.getElementsByTagName('mdb-modal-container');
+      for(let i = 0; i < elements.length; i++) {
+        elements[0].style.display = 'none';
+      }
+    }, 500);
   }
 }

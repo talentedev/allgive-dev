@@ -1,5 +1,8 @@
-<app-global-navbar></app-global-navbar>
+<app-global-navbar [menuState]="menuState" 
+  (onHide)="onHide($event)"></app-global-navbar>
+<div (click)="onClickWrapper()">
+  <router-outlet></router-outlet>
+</div>
 
-<router-outlet></router-outlet>
 
 <app-global-footer></app-global-footer>

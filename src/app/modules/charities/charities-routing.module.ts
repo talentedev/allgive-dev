@@ -23,15 +23,19 @@ const routes: Routes = [
     path: 'charities',
     component: CharitiesComponent,
     children: [
-      {
-        path: ':slug',
-        component: CharityDetailsComponent,
-      },
+      // {
+      //   path: ':slug',
+      //   component: CharityDetailsComponent,
+      // },
       {
         path: '',
         component: CharitiesListComponent
       }
     ]
+  },
+  {
+    path: 'charities/:slug',
+    component: CharityDetailsComponent
   }
 ];
 

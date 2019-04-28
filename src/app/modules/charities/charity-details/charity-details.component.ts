@@ -8,6 +8,8 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ContentfulService } from '../../../core/services/contentful.service';
 import { ContentfulPreviewService } from '../../../core/services/contentful-preview.service';
 import { SubscriptionPaymentComponent } from '../../payments/subscription-payment/subscription-payment.component';
+import { UserService } from '../../../core/services/user.service';
+import { ChangeSubscriptionComponent } from '../../payments/change-subscription/change-subscription.component';
 
 @Component({
   selector: 'app-charity-details',
@@ -24,6 +26,11 @@ export class CharityDetailsComponent implements OnInit {
   charityName = '';
   charityCategory = '';
   modalRef: MDBModalRef;
+  isDonate = false;
+  contributions: any[] = [];
+  choosedOrg: any;
+  initialized = false;
+  modals = [];
 
   constructor(
     private titleService: Title,
@@ -33,24 +40,39 @@ export class CharityDetailsComponent implements OnInit {
     private router: Router,
     private modalService: MDBModalService,
     private auth: AuthService,
+    private userService: UserService,
   ) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.ngOnInit();
-        window.scroll(0, 0);
-      }
-    });
+    // const subscriber = this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     this.ngOnInit();
+    //     //window.scroll(0, 0);
+    //     const body: any = document.getElementsByTagName("body")[0];
+    //     body.scrollTop = 0;
+    //   }
+    //   subscriber.unsubscribe();
+    // });
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
+    const handler = setInterval(() => {
+      if (this.auth.authState) {
+        clearInterval(handler);
+        const subscriber = this.userService.getUserInfo().subscribe(res => {
+          this.contributions = res.contributions;
+          this.checkIsDonate();
+          subscriber.unsubscribe();
+          this.initialized = true;
+        });
+      }
+    }, 1000);
     const pathSegment = this.route.snapshot.pathFromRoot[1].url[0].path;
     const charityId = this.route.snapshot.paramMap.get('slug');
     if (pathSegment === 'preview') {
-      console.log('this is the preview view');
-      console.log('charityId', charityId);
       this.contenfulPreviewService.previewCharityDetail(charityId)
         .then(res => {
-          console.log('res', res);
+
+          alert('preview');
           this.charity = res;
           this.charityName = this.charity.fields.charityName;
           this.charityCategory = this.charity.fields.category.fields.categoryName;
@@ -75,10 +97,15 @@ export class CharityDetailsComponent implements OnInit {
             'margin': 'auto',
             'text-indent': '-10rem'
           };
+
+          this.checkIsDonate();
         });
     } else {
       this.contentfulService.getCharityDetail(charityId)
         .then(res => {
+
+          if(res == undefined) return this.router.navigate(['not-find-page']);
+
           this.charity = res;
           this.charityName = this.charity.fields.charityName;
           this.charityCategory = this.charity.fields.category.fields.categoryName;
@@ -103,7 +130,23 @@ export class CharityDetailsComponent implements OnInit {
             'margin': 'auto',
             'text-indent': '-10rem'
           };
+          this.checkIsDonate();
         });
+    }
+  }
+
+  checkIsDonate() {
+    this.isDonate = true;
+    if(this.auth.isAuthenticated()) {
+        this.contributions.forEach(contribution => {
+        if(contribution.charityname === this.charityName) {
+          this.isDonate = false;
+          this.choosedOrg = contribution;
+        }
+      });
+    } else {
+      this.isDonate = true;
+      this.initialized = true;
     }
   }
 
@@ -122,11 +165,49 @@ export class CharityDetailsComponent implements OnInit {
         class: '',
         containerClass: '',
         animated: true,
+        modals: this.modals,
         data: {
             charity: this.charity
         }
       };
       this.modalService.show(SubscriptionPaymentComponent, modalOptions);
+    } else {
+      this.router.navigate(['/start']);
+    }
+  }
+
+  closeAllModals() {
+    for (let i = 0; i < this.modals.length; ++i) {
+      this.modals[i].hide();
+    }
+    setTimeout(() => {
+      const elements: any = document.getElementsByTagName('mdb-modal-container');
+      for(let i = 0; i < elements.length; i++) {
+        elements[0].style.display = 'none';
+      }
+    }, 500);
+  }
+
+  openManager() {
+    if (this.auth.authState) {
+      const modalOptions = {
+        backdrop: true,
+        keyboard: true,
+        focus: true,
+        show: false,
+        ignoreBackdropClick: false,
+        class: '',
+        containerClass: '',
+        animated: true,
+        data: {
+            charity: this.charity,
+            choosedOrg: this.choosedOrg,
+            callback: () => {
+              this.ngOnInit();
+            }
+        }
+      };
+      this.modalService.show(ChangeSubscriptionComponent, modalOptions);
     } else {
       this.router.navigate(['/start']);
     }

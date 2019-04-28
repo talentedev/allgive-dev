@@ -4,6 +4,7 @@ import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { PaymentComponent } from '../payment/payment.component';
 import { CustomDonationComponent } from '../custom-donation/custom-donation.component';
 import { UserService } from '../../../core/services/user.service';
+import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-subscription-payment',
@@ -13,7 +14,12 @@ import { UserService } from '../../../core/services/user.service';
 export class SubscriptionPaymentComponent {
 
   charity: any;
-
+  isLoading = false;
+  faMagic = faMagic;
+  faSpinner = faSpinner;
+  modals = [];
+  selectedCard = null;
+  isNewCard = false;
   donationElements = [
     {
       donationAmount: 2,
@@ -25,7 +31,7 @@ export class SubscriptionPaymentComponent {
       donationAmount: 10,
       donationFrequency: 'every week',
       stripeFrequency: 'week',
-      active: true
+      active: false
     },
     {
       donationAmount: 50,
@@ -46,6 +52,13 @@ export class SubscriptionPaymentComponent {
     ) { }
 
   selectDonationAmount(donation, index) {
+
+    if(this.isLoading) return;
+
+    this.donationElements.forEach(element => {
+      element.active = false;
+    });
+
     if (index !== 2) {
       this.donationAmount = donation.donationAmount;
       this.donationFrequency = donation.stripeFrequency;
@@ -63,15 +76,23 @@ export class SubscriptionPaymentComponent {
 
       this.selectedDonation = donation;
       this.selectedDonation.active = true;
+      this.isLoading = true;
+      this.open();
     } else {
+      donation.active = true;
       this.customizeDonation();
     }
   }
 
+  ngOnInit() {
+    this.modals.push(this.modalRef);
+  }
+
   open() {
-    this.userService.getUserCards().subscribe(cards => {
+    this.userService.getUserCards().then(cards => {
+
       const modalOptions = {
-        backdrop: true,
+        backdrop: false,
         keyboard: true,
         focus: true,
         show: false,
@@ -83,10 +104,16 @@ export class SubscriptionPaymentComponent {
           charity: this.charity,
           cards: cards,
           donation: this.selectedDonation,
-          modals: [this.modalRef]
+          selectedCard: this.selectedCard,
+          isNewCard: this.isNewCard,
+          donationElements: this.donationElements
+          //modals: [this.modalRef]
         }
       };
+
       this.modalService.show(PaymentComponent, modalOptions);
+      this.modalRef.hide();
+      this.isLoading = false;
     });
   }
 
@@ -102,9 +129,15 @@ export class SubscriptionPaymentComponent {
       animated: true,
       data: {
         charity: this.charity,
-        modals: [this.modalRef]
+        donation: this.selectedDonation,
+        selectedCard: this.selectedCard,
+        isNewCard: this.isNewCard,
+        donationElements: this.donationElements
+
       }
     };
     this.modalService.show(CustomDonationComponent, modalOptions);
+    this.modalRef.hide();
   }
+
 }

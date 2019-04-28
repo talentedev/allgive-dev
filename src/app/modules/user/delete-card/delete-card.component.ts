@@ -17,6 +17,8 @@ export class DeleteCardComponent implements OnInit {
   availableCards = [];
   assignedCard;
 
+  isProcessing = false;
+
   constructor(
     public activeModal: NgbActiveModal,
     private userService: UserService
@@ -25,6 +27,7 @@ export class DeleteCardComponent implements OnInit {
   ngOnInit() {
     this.availableCards = this.cards.filter(card => card.id !== this.selectedCard.id);
     this.assignedCard = this.availableCards[0] || null;
+    this.isProcessing = false;
   }
 
   onDelete() {
@@ -40,6 +43,9 @@ export class DeleteCardComponent implements OnInit {
   }
 
   submit() {
+
+    if(this.isProcessing) return;
+    this.isProcessing = true;
     const isDelete = this.selectedOption === 'deleteAll' ? true : false;
     const assignedCard = this.selectedOption === 'deleteAll' ? null : this.assignedCard;
     const data = {
@@ -49,6 +55,7 @@ export class DeleteCardComponent implements OnInit {
     };
     this.userService.deleteCard(data).subscribe(res => {
       this.activeModal.dismiss('success');
+      this.isProcessing = false;
     });
   }
 }

@@ -13,6 +13,7 @@ export class EditProfileComponent implements OnInit {
   constructor( private titleService: Title ) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.setTitle(this.title);
   }
 

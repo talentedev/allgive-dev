@@ -27,17 +27,20 @@ export class EditCardComponent implements OnInit {
     expYear: [''],
     name: [''],
     address: [''],
+    address2: [''],
     city: [''],
     state: [''],
     zip: ['']
   });
 
   ngOnInit() {
+
     this.editCardForm.setValue({
       expMonth: this.card.exp_month,
       expYear: this.card.exp_year,
       name: this.card.name,
       address: this.card.address_line1,
+      address2: this.card.address_line2,
       city: this.card.address_city,
       state: this.card.address_state,
       zip: this.card.address_zip
@@ -60,6 +63,7 @@ export class EditCardComponent implements OnInit {
       expYear: this.editCardForm.value.expYear,
       name: this.editCardForm.value.name,
       address: this.editCardForm.value.address,
+      address2: this.editCardForm.value.address2,
       city: this.editCardForm.value.city,
       state: this.editCardForm.value.state,
       zip: this.editCardForm.value.zip

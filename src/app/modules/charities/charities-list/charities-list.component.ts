@@ -27,6 +27,7 @@ export class CharitiesListComponent implements OnInit {
     private contentfulService: ContentfulService) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.getAllCharities()
     .then(res => {
       this.coverStyle = {

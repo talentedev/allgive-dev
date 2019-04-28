@@ -12,4 +12,8 @@ export class CharitiesComponent implements OnInit {
   ngOnInit() {
   }
 
+  onActivate(event) {
+    window.scrollTo(0, 0);
+  }
+
 }

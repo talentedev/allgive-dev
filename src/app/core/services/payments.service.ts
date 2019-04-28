@@ -46,6 +46,14 @@ export class PaymentsService {
     return this.http.post<any>(this.apiUrl + '/new-subscription', data);
   }
 
+  processCancelSubscription(data: Object): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/cancel-subscription', data);
+  }
+
+  processUpdateSubscription(data: Object): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/update-subscription', data);
+  }
+
   checkForCustomerSource(user): Observable<any> {
     return this.http.get<any>(this.apiUrl + '/customer', user);
   }

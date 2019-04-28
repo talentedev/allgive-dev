@@ -4,29 +4,36 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { PaymentsService } from './payments.service';
 import { environment } from '../../../environments/environment';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
 
   stripeCustomer;
   apiUrl = environment.apiUrl;
-
   authState: any = null;
+  authStateChange: Subject<any> = new Subject();
 
   constructor(
     private afAuth: AngularFireAuth,
     private http: HttpClient,
     private router: Router,
     private db: AngularFireDatabase,
-    private pmt: PaymentsService
+    private pmt: PaymentsService,
   ) {
     this.afAuth.authState.subscribe((auth) => {
+
       this.authState = auth;
+      setTimeout(() => {
+        this.authStateChange.next(this.authState);
+      }, 1000);
     });
   }
+
+  
 
   // Returns true if user is authenticated
   isAuthenticated(): boolean {
@@ -126,9 +133,11 @@ export class AuthService {
   // Passwordless Login
   emailLinkLogin(email: string) {
     const actionCodeSettings = environment.actionCodeSettings;
-
     return this.afAuth.auth.sendSignInLinkToEmail(email, actionCodeSettings)
-      .then(() => window.localStorage.setItem('emailForSignIn', email))
+      .then((res) => {
+        console.log('res', res);
+        window.localStorage.setItem('emailForSignIn', email)
+      })
       .catch(err => console.log(err));
   }
 
@@ -158,6 +167,9 @@ export class AuthService {
   signOut(): void {
     this.afAuth.auth.signOut();
     this.router.navigate(['/']);
+  }
+  signOut2(): void {
+    this.afAuth.auth.signOut();
   }
 
 }

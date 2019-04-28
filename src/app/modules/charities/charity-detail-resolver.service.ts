@@ -15,7 +15,6 @@ export class CharityDetailResolverService implements Resolve<Promise<any>> {
 
     return this.cs.getCharityDetail(id)
       .then(charity => {
-        console.log(charity);
       })
       .catch(error => {
         console.log(error);

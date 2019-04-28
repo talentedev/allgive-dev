@@ -6,6 +6,7 @@ import { PageNotFoundComponent } from './core/components/page-not-found/page-not
 import { FaqsComponent } from './core/components/faqs/faqs.component';
 import { StartComponent } from './core/components/start/start.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { CharityDetailsComponent } from './modules/charities/charity-details/charity-details.component';
 
 const routes: Routes = [
   {
@@ -24,8 +25,19 @@ const routes: Routes = [
     data: {title: 'Get started'}
   },
   {
-    path: '**',
+    path: 'not-find-page',
     component: PageNotFoundComponent,
+    data: {title: 'Page not found'}
+  },
+
+  // {
+  //   path: '**',
+  //   component: PageNotFoundComponent,
+  //   data: {title: 'Page not found'}
+  // },
+  {
+    path: ':slug',
+    component: CharityDetailsComponent,
     data: {title: 'Page not found'}
   }
 ];

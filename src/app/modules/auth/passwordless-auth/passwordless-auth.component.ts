@@ -34,6 +34,7 @@ export class PasswordlessAuthComponent implements OnInit {
    ) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.setTitle(this.title);
     const url = this.router.url;
     if (url !== '/link-login') {

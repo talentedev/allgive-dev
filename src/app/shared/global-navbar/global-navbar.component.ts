@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
+
 
 @Component({
   selector: 'app-global-navbar',
@@ -14,7 +15,10 @@ export class GlobalNavbarComponent implements OnInit {
 
   user: Observable<firebase.User>;
   authState;
-  menuState = false;
+
+  @Input() menuState;
+  @Output()
+  onHide: any = new EventEmitter();
 
   constructor(public authService: AuthService, private router: Router) {
     this.authState = this.authService.authState;
@@ -31,14 +35,21 @@ export class GlobalNavbarComponent implements OnInit {
       this.router.navigate(['/start']);
     }
     this.menuState = false;
+    this.onHide.emit(this.menuState);
   }
 
   collapseMenu() {
     this.menuState = false;
+    this.onHide.emit(this.menuState);
   }
 
   logout() {
     this.authService.signOut();
+  }
+
+  toggleMenu() {
+    this.menuState = !this.menuState;
+    this.onHide.emit(this.menuState);
   }
 
 }

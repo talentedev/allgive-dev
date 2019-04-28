@@ -4,6 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { MailChimpService } from '../../../core/services/mailchimp.service';
+import { UserService } from '../../services/user.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-start',
@@ -21,7 +23,9 @@ export class StartComponent implements OnInit {
     private titleService: Title,
     private authService: AuthService,
     private fb: FormBuilder,
-    private mailchimpService: MailChimpService
+    private router: Router,
+    private mailchimpService: MailChimpService,
+    private userService: UserService
   ) { }
 
   signupForm = this.fb.group({
@@ -31,6 +35,7 @@ export class StartComponent implements OnInit {
   });
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.setTitle(this.title);
   }
 
@@ -50,10 +55,16 @@ export class StartComponent implements OnInit {
     )
       .then((res) => {
         this.success = true;
+        this.authService.signOut2();
+        // this.router.navigate(['link-login']);
       })
       .catch(error => {
         this.invalid = true;
     });
+  }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
   }
 
 }

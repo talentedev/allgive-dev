@@ -9,7 +9,7 @@
 }
 @media (max-width: 1200px) {
     .section {
-        padding: 50px;
+        padding: 20px;
     }
 }
 .pointer {
@@ -118,8 +118,8 @@
 }
 /* Manage contributions */
 .btn-add-charity {
-    position: absolute;
-    right: 15px;
+    // position: absolute;
+    // right: 15px;
     bottom: 0;
     background-color: #e9ecef;
     border-radius: 0;
@@ -296,4 +296,13 @@
 }
 .expand-payment-details ul.payment-charities li:last-of-type {
     margin-bottom: 0;
+}
+
+/deep/ ngx-loading  {
+    div>div.backdrop {
+        position: fixed !important;
+    }
+    div>div[ng-reflect-ng-switch]>div.spinner-three-bounce {
+        position: fixed !important;
+    }   
 }

@@ -24,6 +24,7 @@ export class PageWrapperComponent implements OnInit {
     private router: Router,
   ) {
     this.router.events.subscribe((event) => {
+      window.scrollTo(0, 0);
         if (event instanceof NavigationEnd) {
           this.ngOnInit();
           window.scroll(0, 0);
@@ -36,7 +37,6 @@ export class PageWrapperComponent implements OnInit {
 
     this.contentfulService.getTextOnlyPage(pageSlug)
     .then(res => {
-      console.log('page data in component', res);
         this.page = res;
         this.title = this.page.fields.pageTitle + ' | Allgive.org';
         this.setTitle(this.title);

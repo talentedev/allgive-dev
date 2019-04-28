@@ -16,6 +16,7 @@ export class FaqsComponent implements OnInit {
   constructor( private titleService: Title, private contentfullService: ContentfulService ) { }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.setTitle(this.title);
 
     this.contentfullService.getTextOnlyPage('faq').then(res => {

@@ -33,6 +33,7 @@ export class SignupComponent implements OnInit {
   });
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     if (this.authService.authState) {
       this.router.navigate(['/charities']);
     }

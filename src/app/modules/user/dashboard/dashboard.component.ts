@@ -12,6 +12,7 @@ import { CustomDonationComponent } from '../custom-donation/custom-donation.comp
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ChartService } from '../../../core/services/chart.service';
+import { PaymentsService } from '../../../core/services/payments.service';
 import { ContentfulService } from '../../../core/services/contentful.service';
 
 @Component({
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit {
   showPaymentDetail = [false, false];
   donationOrgs = [];
   selectedOrg = null;
+  choosedOrg = null;
   chartOptions: object;
   updateChart = false;
   totalDonation = 0;
@@ -53,6 +55,7 @@ export class DashboardComponent implements OnInit {
   faMagic = faMagic;
   faSpinner = faSpinner;
   isSavingProfile = false;
+  last4 = '';
 
   constructor(
     private titleService: Title,
@@ -64,10 +67,12 @@ export class DashboardComponent implements OnInit {
     private chartService: ChartService,
     private modalService: NgbModal,
     private mdbModalService: MDBModalService,
+    private paymentsService: PaymentsService
   ) { }
 
   ngOnInit() {
 
+    window.scrollTo(0, 0);
     this.setTitle(this.title);
     this.chartOptions = this.chartService.getChartOptions([], this);
 
@@ -75,27 +80,34 @@ export class DashboardComponent implements OnInit {
   }
 
   init() {
+
     this.loading = true;
-    this.userService.getUserInfo().subscribe(res => {
+    this.userService.getUserInfo().subscribe(async(res) => {
+
+      if (res.contributions.length > 0) {
+        this.getCharityLogos(res.contributions);
+      }
 
       this.firstName = res.firstName;
       this.totalDonation = this.chartService.calTotalDonation(res.contributions);
       this.totalProjection = this.chartService.calTotalProjection(res.contributions);
       this.averageProjection = '$' + this.totalProjection + '.00';
       this.donationOrgs = this.chartService.processSeries(res.contributions);
+
       this.chartOptions = this.chartService.getChartOptions(this.donationOrgs, this);
-      this.updateChart = true;
+      if (this.donationOrgs.length > 0) {
+        this.updateChart = true;
+      }
+
       this.payments = res.cards;
-      this.loading = false;
-      this.chartData = res.contributions;
 
       this.profileForm.patchValue({
         firstName: res.firstName,
         lastName: res.lastName,
         email: res.email
       });
-
-      this.getCharityLogos(res.contributions);
+      this.chartData = res.contributions;
+      this.loading = false;
     });
   }
 
@@ -132,24 +144,70 @@ export class DashboardComponent implements OnInit {
   }
 
   getCharityLogos(data) {
-    this.chartService.getCharityLogo(data).subscribe(res => {
-      for (let i = 0; i < res.length; ++i) {
-        this.charityLogos.push(res[i].fields.logo.fields.file.url);
-      }
+    return new Promise(resolve => {
+      this.chartService.getCharityLogo(data).subscribe(res => {
+        this.charityLogos = [];
+        for (let i = 0; i < res.length; ++i) {
+          this.charityLogos.push(res[i].fields.logo.fields.file.url);
+        }
+        resolve();
+      });
     });
   }
 
   setShowCharityManage(value, chartity= null) {
     this.showCharityManageView = value;
-    this.selectedOrg = chartity;
+
+    if(chartity != null) {
+      this.choosedOrg = {...chartity};
+      this.userService.cards.forEach(card => {
+        if (this.choosedOrg.cardId === card.id) {
+          this.last4 = card.last4;
+        }
+      });
+    }
+  }
+
+  cancelDonation() {
+    if (confirm('Are you sure to cancel this donation?')) {
+      this.updateChart = false;
+      const subscription_id = this.choosedOrg.invoices[0].subscription;
+      this.setShowCharityManage(false);
+      this.loading = true;
+      this.paymentsService.processCancelSubscription({subscription_id}).subscribe(res => {
+        this.init();
+      });
+    }
+  }
+
+  updateSchedule() {
+    const data = {
+      donation: this.choosedOrg.amount * 100,
+      frequency: this.choosedOrg.schedule,
+      charity_name: this.choosedOrg.charityname,
+      token: null,
+      subscription_id: this.choosedOrg.invoices[0].subscription,
+      customer: this.choosedOrg.invoices[0].customer
+    };
+    this.loading = true;
+    this.paymentsService.processUpdateSubscription(data).subscribe((result) => {
+      this.setShowCharityManage(false);
+      this.init();
+    });
+  }
+
+  selectDonate(amount, schedule) {
+    this.choosedOrg.amount = amount;
+    this.choosedOrg.daily = amount;
+    this.choosedOrg.schedule = schedule;
   }
 
   openCustomDonationModal() {
     const modalRef = this.mdbModalService.show(CustomDonationComponent);
     modalRef.content.action.subscribe( (result: any) => {
-      console.log(result);
-      this.selectedOrg.daily = result.amount;
-      this.selectedOrg.schedule = result.schedule;
+      this.choosedOrg.daily = result.amount;
+      this.choosedOrg.amount = result.amount;
+      this.choosedOrg.schedule = result.schedule;
     });
   }
 
@@ -176,7 +234,6 @@ export class DashboardComponent implements OnInit {
     const modalRef = this.modalService.open(EditCardComponent, { centered: true });
     modalRef.componentInstance.card = card;
     modalRef.result.then(result => {
-      console.log('open');
     }, reason => {
       if (reason === 'success') {
         this.init();
@@ -189,7 +246,6 @@ export class DashboardComponent implements OnInit {
     modalRef.componentInstance.cards = this.payments;
     modalRef.componentInstance.selectedCard = card;
     modalRef.result.then(result => {
-      console.log('open');
     }, reason => {
       if (reason === 'success') {
         this.init();

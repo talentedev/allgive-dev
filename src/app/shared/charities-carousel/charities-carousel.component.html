@@ -10,11 +10,14 @@
       [isControls]="false"
       [type]="'carousel-multi-item'"
       [animation]="'slide'"
-      [interval]="'10000'">
+      [interval]="'2000'">
       <mdb-carousel-item *ngFor="let item of slides; let i = index">
         <div class="col-md-2 col-sm-4" [ngClass]="{'d-none d-md-block': cardIndex !== 0}" *ngFor="let card of item; let cardIndex = index">
           <mdb-card class="my-1">
-            <mdb-card-img [src]="card?.fields.logo?.fields.file.url" [routerLink]="['/charities', card?.fields.slug]" alt="Card image cap"></mdb-card-img>
+            <a [routerLink]="['/', card?.fields.slug]">
+                <mdb-card-img [src]="card?.fields.logo?.fields.file.url" alt="Card image cap"></mdb-card-img>
+            </a>
+            
           </mdb-card>
         </div>
       </mdb-carousel-item>

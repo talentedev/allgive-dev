@@ -23,6 +23,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo(0, 0);
     this.contentfulService.getCharities()
       .then(res => {
         this.charities = res;

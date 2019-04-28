@@ -11,10 +11,19 @@ export class UserService {
 
   private apiUrl = environment.apiUrl;
 
+  public cards: any[] = [];
+
   constructor(
     private http: HttpClient,
     private authService: AuthService
-  ) { }
+  ) {
+
+    this.authService.authStateChange.subscribe(auth => {
+      if(auth) {
+        this.getUserCards();
+      }
+    });
+  }
 
   getUserInfo(): Observable<any> {
     const endpoint = this.apiUrl + '/getUserInfo';
@@ -24,12 +33,17 @@ export class UserService {
     return this.http.post(endpoint, requestData);
   }
 
-  getUserCards(): Observable<any> {
+  getUserCards(): Promise<any> {
     const endpoint = this.apiUrl + '/user-cards';
     const requestData = {
       email: this.authService.authState.email
     };
-    return this.http.post(endpoint, requestData);
+    return new Promise(resolve => {
+      this.http.post(endpoint, requestData).subscribe( (cards: any[]) => {
+        this.cards = cards;
+        resolve(this.cards);
+      });
+    })
   }
 
   updateCard(data): Observable<any> {

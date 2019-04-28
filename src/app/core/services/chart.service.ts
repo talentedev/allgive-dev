@@ -67,13 +67,18 @@ export class ChartService {
     const totalDonation = this.calTotalDonation(data);
     const series = [];
     for (let i = 0; i < data.length; ++i) {
-      const section = {};
+      const section = {...data[i]};
+
       section['name'] = data[i].charityname;
       section['y'] = data[i].ytd / totalDonation * 100 || 0;
       section['amount'] = data[i].ytd;
       section['projection'] = data[i].projection;
       section['daily'] = data[i].amount;
       section['schedule'] = data[i].schedule;
+      section['invoices'] = data[i].invoices;
+      section['charityname'] = data[i].charityname;
+      section['charityname'] = data[i].charityname;
+
       series.push(section);
     }
     return series;
@@ -100,6 +105,7 @@ export class ChartService {
   // Get charitiy logo
   getCharityLogo(data): Observable<any[]> {
     const responses = [];
+
     for (let i = 0; i < data.length; ++i) {
       const slug = data[i].charityname.toLowerCase().split(' ').join('-');
       responses.push(this.contentfullService.getCharityDetail(slug));
