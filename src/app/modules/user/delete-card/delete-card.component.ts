@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 import { UserService } from '../../../core/services/user.service';
 
@@ -16,6 +17,7 @@ export class DeleteCardComponent implements OnInit {
   selectedOption = 'deleteAll';
   availableCards = [];
   assignedCard;
+  faSpinner = faSpinner;
 
   isProcessing = false;
 
