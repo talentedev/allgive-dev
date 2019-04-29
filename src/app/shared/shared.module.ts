@@ -10,6 +10,7 @@ import { ValuesPipe } from './values.pipe';
 import { FeaturedCarouselComponent } from './featured-carousel/featured-carousel.component';
 import { TestimonialCarouselComponent } from './testimonial-carousel/testimonial-carousel.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 const routes: Routes = [];
 
@@ -18,7 +19,8 @@ const routes: Routes = [];
     CommonModule,
     RouterModule.forChild(routes),
     NgbModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    SlickCarouselModule
   ],
   declarations: [
     CharitiesCarouselComponent, GlobalNavbarComponent, GlobalFooterComponent,

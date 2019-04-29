@@ -14,7 +14,8 @@ export class CharitiesCarouselComponent implements OnInit {
   @Input() carouselType: string;
   charities: Entry<any>[];
   cardCount;
-  slides: any = [[]];
+  slideConfig;
+  currentSlide = 1;
 
   constructor(
     private contentfulService: ContentfulService
@@ -34,10 +35,20 @@ export class CharitiesCarouselComponent implements OnInit {
     } else {
       this.cardCount = 6;
     }
-    return this.contentfulService.getCharities()
+    this.slideConfig = {
+      autoplay: true,
+      infinite: true,
+      arrows: false,
+      slidesToShow: this.cardCount,
+      slidesToScroll: 1
+    };
+    this.contentfulService.getCharities()
       .then(res => {
         this.charities = res;
-        this.slides = this.chunk(this.charities, this.cardCount);
       });
+  }
+
+  afterChange(e) {
+    this.currentSlide = e.currentSlide;
   }
 }
