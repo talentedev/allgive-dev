@@ -101,8 +101,8 @@
               <!-- <button type="button" class="btn-close text-left" aria-label="Close" (click)="setShowCharityManage(false)">
                 <span aria-hidden="true">&times;</span>
               </button> -->
-              <div class="text-center">
-                <p>You’ve raised a total of <strong>{{ choosedOrg.amount | currency:'USD':'symbol':'.2-2' }}</strong> since {{choosedOrg.invoices[0].created * 1000 | date:'LLLL'}} <strong>{{choosedOrg.invoices[0].created * 1000 | date:'y'}}</strong> for the:</p>
+              <div class="text-center pt-3">
+                <p>You’ve raised a total of <strong>{{ choosedOrg.amount | currency:'USD':'symbol':'.2-2' }}</strong> since {{choosedOrg.invoices.length > 0 && choosedOrg.invoices[0].created * 1000 | date:'LLLL'}} <strong>{{choosedOrg.invoices.length > 0 && choosedOrg.invoices[0].created * 1000 | date:'y'}}</strong> for the:</p>
                 <h1 class="text-white">{{ choosedOrg.name }}</h1>
               </div>
               <div class="donation-dropdown-wrapper text-center">
