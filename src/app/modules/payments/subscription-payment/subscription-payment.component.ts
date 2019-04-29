@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 import { PaymentComponent } from '../payment/payment.component';
@@ -11,7 +11,7 @@ import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './subscription-payment.component.html',
   styleUrls: ['./subscription-payment.component.scss']
 })
-export class SubscriptionPaymentComponent {
+export class SubscriptionPaymentComponent implements OnInit {
 
   charity: any;
   isLoading = false;
@@ -53,7 +53,7 @@ export class SubscriptionPaymentComponent {
 
   selectDonationAmount(donation, index) {
 
-    if(this.isLoading) return;
+    if (this.isLoading) { return; }
 
     this.donationElements.forEach(element => {
       element.active = false;
@@ -107,7 +107,7 @@ export class SubscriptionPaymentComponent {
           selectedCard: this.selectedCard,
           isNewCard: this.isNewCard,
           donationElements: this.donationElements
-          //modals: [this.modalRef]
+          // modals: [this.modalRef]
         }
       };
 

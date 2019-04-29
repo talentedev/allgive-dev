@@ -104,7 +104,7 @@ export class CharityDetailsComponent implements OnInit {
       this.contentfulService.getCharityDetail(charityId)
         .then(res => {
 
-          if(res == undefined) return this.router.navigate(['not-find-page']);
+          if (res === undefined) { return this.router.navigate(['not-find-page']); }
 
           this.charity = res;
           this.charityName = this.charity.fields.charityName;
@@ -137,9 +137,9 @@ export class CharityDetailsComponent implements OnInit {
 
   checkIsDonate() {
     this.isDonate = true;
-    if(this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticated()) {
         this.contributions.forEach(contribution => {
-        if(contribution.charityname === this.charityName) {
+        if (contribution.charityname === this.charityName) {
           this.isDonate = false;
           this.choosedOrg = contribution;
         }
@@ -182,7 +182,7 @@ export class CharityDetailsComponent implements OnInit {
     }
     setTimeout(() => {
       const elements: any = document.getElementsByTagName('mdb-modal-container');
-      for(let i = 0; i < elements.length; i++) {
+      for (let i = 0; i < elements.length; i++) {
         elements[0].style.display = 'none';
       }
     }, 500);

@@ -51,7 +51,7 @@ export class PaymentConfirmationComponent implements OnInit {
 
   onSubmit() {
 
-    if(this.isSubmitting) return;
+    if (this.isSubmitting) { return; }
 
     this.invalidCard = false;
     this.errorMessage = '';
@@ -118,7 +118,7 @@ export class PaymentConfirmationComponent implements OnInit {
         isNewCard: this.isNewCard,
         donationElements: this.donationElements
 
-        //modals: [this.modalRef]
+        // modals: [this.modalRef]
       }
     };
     this.modalService.show(PaymentComponent, modalOptions);
@@ -131,7 +131,7 @@ export class PaymentConfirmationComponent implements OnInit {
     }
     setTimeout(() => {
       const elements: any = document.getElementsByTagName('mdb-modal-container');
-      for(let i = 0; i < elements.length; i++) {
+      for (let i = 0; i < elements.length; i++) {
         elements[0].style.display = 'none';
       }
     }, 500);

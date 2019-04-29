@@ -33,7 +33,7 @@ export class AuthService {
     });
   }
 
-  
+
 
   // Returns true if user is authenticated
   isAuthenticated(): boolean {
@@ -136,7 +136,7 @@ export class AuthService {
     return this.afAuth.auth.sendSignInLinkToEmail(email, actionCodeSettings)
       .then((res) => {
         console.log('res', res);
-        window.localStorage.setItem('emailForSignIn', email)
+        window.localStorage.setItem('emailForSignIn', email);
       })
       .catch(err => console.log(err));
   }

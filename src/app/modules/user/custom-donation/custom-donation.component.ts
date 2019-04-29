@@ -24,7 +24,7 @@ export class CustomDonationComponent implements OnInit {
     const data = {
       amount: this.donationAmount,
       schedule: this.donationSchedule
-    }
+    };
     this.modalRef.hide();
     this.action.next(data);
   }

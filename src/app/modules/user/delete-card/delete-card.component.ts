@@ -46,7 +46,7 @@ export class DeleteCardComponent implements OnInit {
 
   submit() {
 
-    if(this.isProcessing) return;
+    if (this.isProcessing) { return; }
     this.isProcessing = true;
     const isDelete = this.selectedOption === 'deleteAll' ? true : false;
     const assignedCard = this.selectedOption === 'deleteAll' ? null : this.assignedCard;

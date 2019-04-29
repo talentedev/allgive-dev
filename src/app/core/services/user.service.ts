@@ -19,7 +19,7 @@ export class UserService {
   ) {
 
     this.authService.authStateChange.subscribe(auth => {
-      if(auth) {
+      if (auth) {
         this.getUserCards();
       }
     });
@@ -43,7 +43,7 @@ export class UserService {
         this.cards = cards;
         resolve(this.cards);
       });
-    })
+    });
   }
 
   updateCard(data): Observable<any> {

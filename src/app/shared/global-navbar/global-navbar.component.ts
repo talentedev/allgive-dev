@@ -17,8 +17,7 @@ export class GlobalNavbarComponent implements OnInit {
   authState;
 
   @Input() menuState;
-  @Output()
-  onHide: any = new EventEmitter();
+  @Output() hide: any = new EventEmitter();
 
   constructor(public authService: AuthService, private router: Router) {
     this.authState = this.authService.authState;
@@ -35,12 +34,12 @@ export class GlobalNavbarComponent implements OnInit {
       this.router.navigate(['/start']);
     }
     this.menuState = false;
-    this.onHide.emit(this.menuState);
+    this.hide.emit(this.menuState);
   }
 
   collapseMenu() {
     this.menuState = false;
-    this.onHide.emit(this.menuState);
+    this.hide.emit(this.menuState);
   }
 
   logout() {
@@ -49,7 +48,7 @@ export class GlobalNavbarComponent implements OnInit {
 
   toggleMenu() {
     this.menuState = !this.menuState;
-    this.onHide.emit(this.menuState);
+    this.hide.emit(this.menuState);
   }
 
 }

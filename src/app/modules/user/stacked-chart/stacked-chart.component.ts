@@ -52,7 +52,7 @@ export class StackedChartComponent implements OnInit {
     tooltips: {
       callbacks: {
         label: function(tooltipItem, data) {
-          var label = data.datasets[tooltipItem.datasetIndex].label || '';
+          let label = data.datasets[tooltipItem.datasetIndex].label || '';
           if (label) {
               label += ': ';
           }

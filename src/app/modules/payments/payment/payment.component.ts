@@ -34,7 +34,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   card: StripeElement;
   isBack = false;
   donationElements;
-  
+
 
   constructor(
     public modalRef: MDBModalRef,
@@ -71,14 +71,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
       });
     this.modals.push(this.modalRef);
 
-    if(this.selectedCard == null || this.selectedCard == undefined) {
+    if (this.selectedCard === null || this.selectedCard === undefined) {
       this.isNewCard = true;
     }
   }
 
   closeAllModals() {
     console.log(this.modals);
-    
+
     // for (let i = 0; i < this.modals.length; i++) {
     //   this.modals[i].hide();
     //   // const index = i;
@@ -106,7 +106,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.card !== undefined && this.card !== null) {
+    if (this.card !== undefined && this.card !== null) {
       this.card.unmount();
     }
   }

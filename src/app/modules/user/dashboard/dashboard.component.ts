@@ -158,7 +158,7 @@ export class DashboardComponent implements OnInit {
   setShowCharityManage(value, chartity= null) {
     this.showCharityManageView = value;
 
-    if(chartity != null) {
+    if (chartity != null) {
       this.choosedOrg = {...chartity};
       this.userService.cards.forEach(card => {
         if (this.choosedOrg.cardId === card.id) {

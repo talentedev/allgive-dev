@@ -18,7 +18,7 @@ export class ChangeSubscriptionComponent implements OnInit {
   choosedOrg: any;
   callback: any;
 
-  loading: boolean = false;
+  loading = false;
   last4 = '';
   isSaving = false;
 
@@ -35,7 +35,7 @@ export class ChangeSubscriptionComponent implements OnInit {
   ngOnInit() {
     this.userService.cards.forEach(card => {
 
-      if(this.choosedOrg.invoices[0].customer === card.customer) {
+      if (this.choosedOrg.invoices[0].customer === card.customer) {
         this.last4 = card.last4;
       }
     });
@@ -46,7 +46,7 @@ export class ChangeSubscriptionComponent implements OnInit {
       const subscription_id = this.choosedOrg.invoices[0].subscription;
       this.loading = true;
       this.paymentsService.processCancelSubscription({subscription_id}).subscribe(res => {
-        //this.init();
+        // this.init();
         this.modalRef.hide();
       });
     }
