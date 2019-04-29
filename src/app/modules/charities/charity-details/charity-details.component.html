@@ -14,16 +14,24 @@
   </div>
   <div class="container charity-overview">
     <div class="row category justify-content-center">
-      <div class="col-12 col-sm-8">{{ charityCategory }}
-        <span class="divide" *ngIf="charity && charity.fields.urgent">/</span>
-        <span class="highlight" *ngIf="charity && charity.fields.urgent">Urgent help is needed!</span>
-        <span class="modal-trigger btn btn-md btn-outline-primary"(click)="open()" *ngIf="isDonate && initialized">Donate</span>
-        <span class="modal-trigger btn btn-md btn-outline-primary"(click)="openManager()" *ngIf="!isDonate && initialized">Manage</span>
+      <div class="col-12 col-sm-8">
+        <span class="desktop-category">
+          {{ charityCategory }}
+          <span class="divide" *ngIf="charity && charity.fields.urgent">/</span>
+          <span class="text-danger" *ngIf="charity && charity.fields.urgent">Urgent help is needed!</span>
+        </span>
+        <span class="modal-trigger btn btn-md btn-primary"(click)="open()" *ngIf="isDonate && initialized">Donate</span>
+        <span class="modal-trigger btn btn-md btn-primary"(click)="openManager()" *ngIf="!isDonate && initialized">Manage</span>
       </div>
     </div>
     <div class="row name justify-content-center">
       <div class="col-12 col-sm-8">
         <h1>{{ charityName }}</h1>
+        <p class="mobile-category">
+          {{ charityCategory }}
+          <span class="divide" *ngIf="charity && charity.fields.urgent">/</span>
+          <span class="text-danger ml-1" *ngIf="charity && charity.fields.urgent">Urgent help is needed!</span>
+        </p>
       </div>
     </div>
     <div class="row social justify-content-center">
