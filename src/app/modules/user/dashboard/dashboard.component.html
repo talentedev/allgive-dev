@@ -5,11 +5,11 @@
   <section class="section donation-statistics">
     <div class="row">
       <div class="col-9" *ngIf="donationOrgs.length > 0">
-        <h1 class="section-title">High-Five, {{ firstName }}!</h1>
+        <h1 class="section-title">{{ firstName ? 'High-Five, ' + firstName + '!' : 'Your Dashboard' }}</h1>
         <p class="donor-affirmation">You’ve really worked hard to make a difference and it’s showing!</p>
       </div>
       <div class="col-9" *ngIf="donationOrgs.length == 0">
-        <h1 class="section-title">So far, so good, {{ firstName }}!</h1>
+        <h1 class="section-title">{{ firstName ? 'So far, so good, ' + firstName + '!' : 'Your Dashboard' }}</h1>
         <p class="donor-affirmation">Now you just need to choose a charity and start giving. It'll only take a minute, and you'll be on your way to making a real difference.</p>
       </div>
       <div class="col-3">
