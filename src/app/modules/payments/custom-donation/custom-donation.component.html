@@ -16,6 +16,7 @@
         <span class="input-group-text">.00</span>
       </div>
     </div>
+    <p *ngIf="invalidAmount" class="text-danger">Invalid value!</p>
     <label for="donationSchedule">Donation Schedule</label>
     <select [(ngModel)]="donationSchedule" class="browser-default custom-select mb-4" id="donationSchedule">
       <option value="day">Daily</option>

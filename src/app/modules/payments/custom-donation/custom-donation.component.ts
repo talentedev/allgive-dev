@@ -21,6 +21,7 @@ export class CustomDonationComponent implements OnInit {
   isNewCard;
   donationElements;
   cards;
+  invalidAmount = false;
 
   constructor(
     public modalRef: MDBModalRef,
@@ -59,34 +60,46 @@ export class CustomDonationComponent implements OnInit {
   }
 
   next() {
-    const selectedDonation = {
-      donationAmount: this.donationAmount,
-      stripeFrequency: this.donationSchedule,
-      donationFrequency: 'every ' + this.donationSchedule
-    };
-    this.userService.getUserCards().then(cards => {
-      const modalOptions = {
-        backdrop: true,
-        keyboard: true,
-        focus: true,
-        show: false,
-        ignoreBackdropClick: false,
-        class: '',
-        containerClass: '',
-        animated: true,
-        data: {
-          charity: this.charity,
-          cards: cards,
-          donation: selectedDonation,
-          modals: this.modals,
-          selectedCard: this.selectedCard,
-          isNewCard: this.isNewCard,
-          donationElements: this.donationElements
-        }
+    this.invalidAmount = !this.isValidNumber(this.donationAmount);
+    if (!this.invalidAmount) {
+      const selectedDonation = {
+        donationAmount: this.donationAmount,
+        stripeFrequency: this.donationSchedule,
+        donationFrequency: 'every ' + this.donationSchedule
       };
-      this.modalService.show(PaymentComponent, modalOptions);
-      this.modalRef.hide();
-    });
+      this.userService.getUserCards().then(cards => {
+        const modalOptions = {
+          backdrop: true,
+          keyboard: true,
+          focus: true,
+          show: false,
+          ignoreBackdropClick: false,
+          class: '',
+          containerClass: '',
+          animated: true,
+          data: {
+            charity: this.charity,
+            cards: cards,
+            donation: selectedDonation,
+            modals: this.modals,
+            selectedCard: this.selectedCard,
+            isNewCard: this.isNewCard,
+            donationElements: this.donationElements
+          }
+        };
+        this.modalService.show(PaymentComponent, modalOptions);
+        this.modalRef.hide();
+      });
+    }
+  }
+
+  // Check valid number
+  isValidNumber(str) {
+    if (typeof str === 'number') {
+      str = str.toString();
+    }
+    var n = Math.floor(Number(str));
+    return n !== Infinity && String(n) === str && n >= 0;
   }
 
 }

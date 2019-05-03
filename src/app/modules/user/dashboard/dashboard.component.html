@@ -181,7 +181,7 @@
     <div *ngFor="let payment of payments let i = index" [attr.data-index]="i" class="payment-methods">
       <!-- <div *ngIf="i==0" class="default-payment"><strong>Default Payment Method</strong></div> -->
       <div class="row card-info">
-        <div class="col-6 col-sm-3"><img src="../../../assets/images/{{ payment.brand.toLowerCase() }}.png" class="pr-2">{{ payment.brand }} ending in {{ payment.last4}}</div>
+        <div class="col-6 col-sm-3"><img src="../../../assets/images/{{ payment.brand && payment.brand.toLowerCase() }}.png" class="pr-2">{{ payment.brand }} ending in {{ payment.last4}}</div>
         <div class="col-6 col-sm-3">Expires {{ payment.exp_month }}/{{ payment.exp_year }}</div>
         <div class="col-12 col-sm-3">Used for {{ payment.charities == undefined ? 0 : payment.charities.length }} {{payment.charities == undefined || payment.charities.length <= 1 ? 'charity' : 'charities'}}</div>
         <div class="col-12 col-sm-3">

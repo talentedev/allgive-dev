@@ -44,7 +44,16 @@ export class StackedChartComponent implements OnInit {
           }],
         yAxes: [
         {
-          stacked: true
+          stacked: true,
+          ticks: {
+            // Include a dollar sign in the ticks
+            callback: function(value, index, values) {
+              if (value === 0) {
+                return '';
+              }
+              return '$' + value;
+            }
+          }
         }
       ]
     },
