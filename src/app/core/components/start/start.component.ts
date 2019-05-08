@@ -18,7 +18,6 @@ export class StartComponent implements OnInit {
   invalid = false;
   errorMessage = '';
   success = false;
-
   constructor(
     private titleService: Title,
     private authService: AuthService,

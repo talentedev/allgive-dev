@@ -31,7 +31,7 @@ export class GlobalNavbarComponent implements OnInit {
     if (this.authService.authState) {
       this.router.navigate(['/user/dashboard']);
     } else {
-      this.router.navigate(['/start']);
+      this.router.navigate(['/back']);
     }
     this.menuState = false;
     this.hide.emit(this.menuState);
