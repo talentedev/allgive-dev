@@ -320,6 +320,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.buttonName = 'View Transactions';
     }
+    console.log('@--history', this.transactionHistory1);
   }
 
   get sortData() {
