@@ -13,10 +13,17 @@
         <p class="donor-affirmation">Now you just need to choose a charity and start giving. It'll only take a minute, and you'll be on your way to making a real difference.</p>
       </div>
       <div class="col-3">
+<<<<<<< HEAD
         <button class="btn btn-export">EXPORT DATA</button>
       </div>
     </div>
     <div class="row text-center mt-2 align-items-center">
+=======
+        <button class="btn btn-export" (click)="viewTransactions()">{{buttonName}}</button>
+      </div>
+    </div>
+    <div class="row text-center mt-2">
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
       <div class="col-12 col-md-4">
         <div class="card pt-3 pb-3">
           <div class="card-body">
@@ -38,10 +45,39 @@
           <h2>{{ averageProjection }}</h2>
         </div>
       </div>
+<<<<<<< HEAD
       <div class="col-12 col-md-5">
         <app-stacked-chart *ngIf="updateChart" [dataset]="chartData"></app-stacked-chart>
       </div>
       <div class="col-12 col-md-3">
+=======
+      <div class="col-12 col-md-5" *ngIf="!showTransaction">
+        <app-stacked-chart *ngIf="updateChart" [dataset]="chartData"></app-stacked-chart>
+      </div>
+      <div class="col-12 col-md-8 table-div" *ngIf="showTransaction">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Charity</th>
+              <th>PaymentMethod</th>
+              <th>Schedule</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of sortData">
+              <td>{{ x.Date | date:'dd MMM yyyy'}}</td>
+              <td>{{ x.Charity }}</td>
+              <td>{{ x.PaymentMethod }}</td>
+              <td>{{ x.Schedule }}</td>
+              <td>{{ x.Amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-12 col-md-3" *ngIf="!showTransaction">
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
         <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}" (mouseenter)="selectedOrg=i" (mouseleave)="selectedOrg=null">
           <div *ngIf="i !== selectedOrg">
             <h3>${{ donationOrg.daily }}/{{ donationOrg.schedule }}</h3>
@@ -63,7 +99,10 @@
       </div>
     </div>
   </section>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
   <section class="section hero-charities" *ngIf="donationOrgs.length > 0">
     <div class="row mb-3">
       <div class="col-12 col-sm-7">

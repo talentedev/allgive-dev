@@ -24,7 +24,11 @@ const fbDB = require('./server/services/firebase/database')(database);
 		
 // });
 //const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
+<<<<<<< HEAD
 const stripe = require('stripe')('sk_test_xEHDvAts6KDcJ6QEQ0kWEuIl00WBISpBby');
+=======
+const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
 
 const planService = require('./server/services/stripe/plan')(stripe);
 const productService = require('./server/services/stripe/product')(stripe);
@@ -287,7 +291,11 @@ app.post('/subscription', function (req, res) {
 app.post('/cancel-subscription', function (req, res) {
 	const subscription_id = req.body.subscription_id;
 	subscriptionService.cancelSubscription(subscription_id).then(confirmation => {
+<<<<<<< HEAD
 		res.send(confirmation);
+=======
+    res.send(confirmation);
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
 	}).catch(err => {
 		console.log(err);
 		res.send({ err });
@@ -304,6 +312,7 @@ app.post('/update-subscription', function (req, res) {
 	const charityName = req.body.charity_name;
 	const donationAmount = req.body.donation;
 	const donationFrequency = req.body.frequency;
+<<<<<<< HEAD
 	const customerId = req.body.customer;
 
 	subscriptionService.cancelSubscription(subscription_id).then(confirmation => {
@@ -311,6 +320,15 @@ app.post('/update-subscription', function (req, res) {
 			.then(result => res.send(result))
 			.catch(err => res.send(err));
 
+=======
+  const customerId = req.body.customer;
+  const cardId = req.body.cardId;
+
+	subscriptionService.cancelSubscription(subscription_id).then(confirmation => {
+		createSubscription(customerId, cardId, charityName, donationAmount, donationFrequency)
+			.then(result => res.send(result))
+			.catch(err => res.send(err));
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
 	}).catch(err => {
 		console.log(err);
 		res.send({ err });

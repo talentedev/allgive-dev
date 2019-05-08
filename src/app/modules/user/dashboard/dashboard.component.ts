@@ -3,7 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+<<<<<<< HEAD
 import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
+=======
+import { faMagic, faSpinner, faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
 import { MDBModalService } from 'angular-bootstrap-md';
 
 import { EditCardComponent } from '../edit-card/edit-card.component';
@@ -56,6 +60,12 @@ export class DashboardComponent implements OnInit {
   faSpinner = faSpinner;
   isSavingProfile = false;
   last4 = '';
+<<<<<<< HEAD
+=======
+  showTransaction = false;
+  buttonName = 'View Transactions';
+  transactionHistory1: any[];
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
 
   constructor(
     private titleService: Title,
@@ -100,7 +110,11 @@ export class DashboardComponent implements OnInit {
       }
 
       this.payments = res.cards;
+<<<<<<< HEAD
 
+=======
+      this.getTransactionHistory(res.contributions);
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
       this.profileForm.patchValue({
         firstName: res.firstName,
         lastName: res.lastName,
@@ -155,6 +169,48 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
+=======
+  isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+  getTransactionHistory(data) {
+    return new Promise(resolve => {
+      this.transactionHistory1 = [];
+      for (let i = 0; i < data.length; ++i) {
+        if (this.isEmpty(data[i]) == false) {
+          var payment = this.payments.find(payment => payment.id === data[i].cardId);
+          if(payment != undefined) {
+            payment = payment.brand;
+          } else {
+            payment = '';
+          }
+
+          for (let j=0; j < data[i].invoices.length; ++j) {
+            if (this.isEmpty(data[i].invoices[j]) == false) {
+              const currency = (data[i].invoices[j].currency == 'usd') ? '$' : '';
+              var date = new Date(data[i].invoices[j].date * 1000);
+              date.toString();
+              this.transactionHistory1.push({
+                "Date": date,
+                "Charity": data[i].charityname,
+                "PaymentMethod": payment,
+                "Schedule": data[i].schedule,
+                "Amount": currency + data[i].amount,
+              });
+            }
+          }
+        }
+      }
+      resolve();
+    });
+  }
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
   setShowCharityManage(value, chartity= null) {
     this.showCharityManageView = value;
 
@@ -187,11 +243,23 @@ export class DashboardComponent implements OnInit {
       charity_name: this.choosedOrg.charityname,
       token: null,
       subscription_id: this.choosedOrg.invoices[0].subscription,
+<<<<<<< HEAD
       customer: this.choosedOrg.invoices[0].customer
     };
     this.loading = true;
     this.paymentsService.processUpdateSubscription(data).subscribe((result) => {
       this.setShowCharityManage(false);
+=======
+      customer: this.choosedOrg.invoices[0].customer,
+      cardId: this.choosedOrg.cardId,
+    };
+    console.log('@--data', data);
+    this.setShowCharityManage(false);
+    this.loading = true;
+
+    this.paymentsService.processUpdateSubscription(data).subscribe(result => {
+      
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
       this.init();
     });
   }
@@ -266,4 +334,23 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
+=======
+  viewTransactions() {
+    this.showTransaction = !this.showTransaction;
+    if (this.showTransaction)
+    {
+      this.buttonName = 'View Graph';      
+    } else {
+      this.buttonName = 'View Transactions';
+    }
+  }
+
+  get sortData() {
+    return this.transactionHistory1.sort((a, b) => {
+      return <any>new Date(b.Date) - <any>new Date(a.Date);
+    });
+  }
+
+>>>>>>> b1fa8a0225ed4600dffbe984b79af4865af07d5d
 }
