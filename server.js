@@ -24,7 +24,7 @@ const fbDB = require('./server/services/firebase/database')(database);
 		
 // });
 //const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
-const stripe = require('stripe')('sk_test_xEHDvAts6KDcJ6QEQ0kWEuIl00WBISpBby');
+const stripe = require('stripe')('sk_test_LVx3d8fWhuQl1YCV3BnfWzP4');
 
 const planService = require('./server/services/stripe/plan')(stripe);
 const productService = require('./server/services/stripe/product')(stripe);
