@@ -158,28 +158,40 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
   getTransactionHistory(data) {
     return new Promise(resolve => {
       this.transactionHistory1 = [];
       for (let i = 0; i < data.length; ++i) {
-        var payment = this.payments.find(payment => payment.id === data[i].cardId);
-        if(payment != undefined) {
-          payment = payment.brand;
-        } else {
-          payment = '';
-        }
+        if (this.isEmpty(data[i]) == false) {
+          var payment = this.payments.find(payment => payment.id === data[i].cardId);
+          if(payment != undefined) {
+            payment = payment.brand;
+          } else {
+            payment = '';
+          }
 
-        for (let j=0; j < data[i].invoices.length; ++j) {
-          const currency = (data[i].invoices[j].currency == 'usd') ? '$' : '';
-          var date = new Date(data[i].invoices[j].date * 1000);
-          date.toString();
-          this.transactionHistory1.push({
-            "Date": date,
-            "Charity": data[i].charityname,
-            "PaymentMethod": payment,
-            "Schedule": data[i].schedule,
-            "Amount": currency + data[i].amount,
-          });
+          for (let j=0; j < data[i].invoices.length; ++j) {
+            if (this.isEmpty(data[i].invoices[j]) == false) {
+              const currency = (data[i].invoices[j].currency == 'usd') ? '$' : '';
+              var date = new Date(data[i].invoices[j].date * 1000);
+              date.toString();
+              this.transactionHistory1.push({
+                "Date": date,
+                "Charity": data[i].charityname,
+                "PaymentMethod": payment,
+                "Schedule": data[i].schedule,
+                "Amount": currency + data[i].amount,
+              });
+            }
+          }
         }
       }
       resolve();
