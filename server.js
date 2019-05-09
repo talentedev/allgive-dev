@@ -14,6 +14,8 @@ let database = firebase.database();
 let fbAuth = firebase.auth();
 const fbDB = require('./server/services/firebase/database')(database);
 
+var templateData = require('./src/assets/template-email.html');
+
 // database.ref('users').orderByChild("email").equalTo('devskill2015@yandex.com').once("value").then(ddd => {
 	
 	
@@ -242,9 +244,6 @@ app.post('/new-subscription', function (req, res) {
 
 	customerService.findOrcreateCustomer(authUser.email).then(customer => {
 		stripe.customers.createSource(customer.id, {source: token.id}, function(err, card) {
-      if (card == null) {
-        return res.send(err);
-      }
 			createSubscription(customer.id, card.id, charity.fields.charityName, donationAmount, donationFrequency)
 			.then(result => res.send(result))
 			.catch(err => res.send(err))
@@ -700,7 +699,7 @@ app.post('/send-email', async function (req, res) {
 	    to: req.body.toEmail, // list of receivers
 	    subject: "hello", // Subject line
 	    text: "Hello world", // plaintext body
-	    html: "<b>hello world!</b>" // html body
+	    html: templateData // html body
 	});
 
 	res.send("Email has been sent successfully");
