@@ -692,20 +692,22 @@ app.post('/sync-payments', function (req, res) {
  *    Send message to user email                                           *
  *                                                                         *
  ***************************************************************************/
-app.post('/send-email', async function (req, res) {
+app.post('/send-email', function (req, res) {
 	const toEmail = req.body.toEmail; 
 
 	fs.readFile('./src/assets/template-email.html','UTF-8',function(err,data)
-	 {
-	     templateData=data;
-	 });
+	{
+	    templateData = data;
 
-	await nodemailer.mail({
-	    from: "support@allgive.com", // sender address
-	    to: req.body.toEmail, // list of receivers
-	    subject: "hello", // Subject line
-	    text: "Hello world", // plaintext body
-	    html: templateData // html body
+	    nodemailer.mail({
+		    from: "support@allgive.com", // sender address
+		    to: req.body.toEmail, // list of receivers
+		    subject: "hello", // Subject line
+		    text: "Hello world", // plaintext body
+		    html: templateData // html body
+		});
+
+		console.log(templateData);
 	});
 
 	res.send("Email has been sent successfully");
