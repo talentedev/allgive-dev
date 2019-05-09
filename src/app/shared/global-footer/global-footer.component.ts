@@ -27,7 +27,7 @@ export class GlobalFooterComponent implements OnInit {
     if (this.authService.authState) {
       this.router.navigate(['/user/dashboard']);
     } else {
-      this.router.navigate(['/start']);
+      this.router.navigate(['/back']);
     }
   }
 

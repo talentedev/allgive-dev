@@ -47,6 +47,7 @@
     "highcharts-angular": "^2.4.0",
     "jquery": "^3.4.0",
     "marked": "^0.6.2",
+    "ngx-device-detector": "^1.3.5",
     "ngx-loading": "^2.0.1",
     "ngx-slick-carousel": "^0.4.4",
     "ngx-stripe": "^7.2.0",
