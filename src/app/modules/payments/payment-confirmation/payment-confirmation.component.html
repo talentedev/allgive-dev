@@ -23,7 +23,8 @@
   <div class="modal-footer">
     <button type="submit" color="primary" class="relative waves-light" mdbWavesEffect (click)="onSubmit()">
       <fa-icon *ngIf="isSubmitting" [icon]="faSpinner" [spin]="true" class="mr-2"></fa-icon>
-      <span>{{ isSubmitting ? 'Submitting...' : 'Submit' }}</span>
+      <span *ngIf="!invalidCard">{{ isSubmitting ? 'Submitting...' : 'Submit' }}</span>
+      <span *ngIf="invalidCard">Cancel</span>
     </button>
   </div>
 </div>

@@ -10,6 +10,7 @@ import { NgxStripeModule } from 'ngx-stripe';
 import { NgxLoadingModule } from 'ngx-loading';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { environment } from '../environments/environment';
 
@@ -46,6 +47,7 @@ import { PaymentComponent } from './modules/payments/payment/payment.component';
 import { PaymentConfirmationComponent } from './modules/payments/payment-confirmation/payment-confirmation.component';
 import { PasswordlessAuthComponent } from './modules/auth/passwordless-auth/passwordless-auth.component';
 import { StartComponent } from './core/components/start/start.component';
+import { BackComponent } from './core/components/back/back.component';
 
 
 @NgModule({
@@ -57,6 +59,7 @@ import { StartComponent } from './core/components/start/start.component';
     ContactComponent,
     PasswordlessAuthComponent,
     StartComponent,
+    BackComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +81,8 @@ import { StartComponent } from './core/components/start/start.component';
     AppRoutingModule,
     NgxLoadingModule.forRoot({}),
     FontAwesomeModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService,

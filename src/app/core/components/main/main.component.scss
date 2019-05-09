@@ -12,6 +12,10 @@
     p {
         font-size: 1.5rem;
     }
+
+    strong {
+        color: #0872ba;
+    }
 }
 .hero-works {
     background-color: #058cb3;
@@ -43,20 +47,7 @@
 }
 .hero-adds {
     background-color: white;
-    padding: 3vw 0;
-    h4 {
-        font-weight: 700;
-        font-size: 1.5rem;
-        margin-bottom: 4rem;
-        color: #333;
-        text-align: center;
-    }
-    p {
-        color: #333;
-        font-size: 2rem;
-        font-weight: 800;
-        text-align: center;
-    }
+    padding-top:1.5rem ;
 }
 .hero-charities {
     padding: 3vw 0;

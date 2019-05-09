@@ -1,4 +1,7 @@
 .testimonials {
+    .mobile {
+      display: none;
+    }
     .carousel-caption {
         left: 10%;
     }
@@ -48,4 +51,109 @@
         left: 0;
         margin: auto;
     }
+}
+
+/* Styles for mobile devices */
+
+@media (max-width: 768px) and (min-width: 100px) {
+  .desktop {
+      display: none !important;
+  }
+
+  .mobile {
+    display: block !important;
+    font-size: 12px !important;
+  }
+
+  .testimonials {
+    .card .card-body {
+      font-size: 18px !important;
+      padding: 5px !important;
+        .card-text {
+          font-size: 18px !important;
+          color: white !important;
+        }
+    }
+
+    .card-footer {
+      height: 50px !important;
+      padding: 0px;
+      font-size: 12px;
+
+        .row {
+          height: 100%;
+        }
+
+        .col-3 {
+          height: 100%;
+        }
+
+        .col-6 {
+          height: 100%;
+          padding: 0px;
+          font-size: 12px !important;
+        }
+
+        .testimonial-name {
+          padding: 0px;
+          font-size: 12px !important;
+          margin-top: 5px;
+        }
+
+        .testimonial-city {
+          padding: 0px;
+          font-size: 12px !important;
+          margin-top: 2px;
+        }
+    }
+  }
+  .testimonial-card {
+    min-height: 5vw;
+    font-size: 18px !important;
+  }
+
+  .carousel-caption {
+    width: 40%;
+    margin: 0px;
+    height: 100%;
+    margin-left: -8%;
+  }
+
+  .card {
+    padding: 0px !important;
+    height: 100%;
+  }
+
+  .card .card-body {
+    height: 150px !important;
+    padding: 0px !important;
+    overflow-y: auto !important;
+    display: inline-block !important;
+  }
+
+  .card-text {
+    height: 100% !important;
+    font-size: 18px !important;
+    color: white !important;
+  }
+
+}
+
+@media (max-width: 1200px) and (min-width: 991px) {
+  .desktop {
+    display: block !important;
+  }
+
+  .mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 992px) and (min-width: 769px) {
+  .desktop {
+    display: block !important;
+  }
+
+  .mobile {
+    display: none !important;
+  }
 }

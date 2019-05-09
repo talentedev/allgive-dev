@@ -33,7 +33,6 @@ export class PaymentConfirmationComponent implements OnInit {
   selectedCard;
   isNewCard;
   donationElements;
-
   constructor(
     public modalRef: MDBModalRef,
     private payments: PaymentsService,
@@ -52,7 +51,10 @@ export class PaymentConfirmationComponent implements OnInit {
   onSubmit() {
 
     if (this.isSubmitting) { return; }
-
+    if (this.invalidCard) {
+      this.closeAllModals();
+      return;
+    }
     this.invalidCard = false;
     this.errorMessage = '';
     // Convert charge amount to pennies for Stripe

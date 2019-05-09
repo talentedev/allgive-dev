@@ -11,7 +11,7 @@
                       [config]="slideConfig"
                       (afterChange)="afterChange($event)">
       <div ngxSlickItem *ngFor="let slide of charities" class="slide">
-        <a [routerLink]="['/', slide?.fields.slug]">
+        <a href={{slide.fields.slug}}>
           <img [src]="slide?.fields.logo?.fields.file.url" class="img-fluid">
         </a>
       </div>

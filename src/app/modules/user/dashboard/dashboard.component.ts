@@ -181,7 +181,7 @@ export class DashboardComponent implements OnInit {
           for (let j=0; j < data[i].invoices.length; ++j) {
             if (this.isEmpty(data[i].invoices[j]) == false) {
               const currency = (data[i].invoices[j].currency == 'usd') ? '$' : '';
-              var date = new Date(data[i].invoices[j].date * 1000);
+              var date = new Date(data[i].invoices[j].status_transitions.paid_at * 1000);
               date.toString();
               this.transactionHistory1.push({
                 "Date": date,
@@ -320,6 +320,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.buttonName = 'View Transactions';
     }
+    console.log('@--history', this.transactionHistory1);
   }
 
   get sortData() {
