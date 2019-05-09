@@ -10,6 +10,7 @@ import { NgxStripeModule } from 'ngx-stripe';
 import { NgxLoadingModule } from 'ngx-loading';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { environment } from '../environments/environment';
 
@@ -80,7 +81,8 @@ import { BackComponent } from './core/components/back/back.component';
     AppRoutingModule,
     NgxLoadingModule.forRoot({}),
     FontAwesomeModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     HttpClient, Title, ContentfulService, ContentfulPreviewService, TitleService,
