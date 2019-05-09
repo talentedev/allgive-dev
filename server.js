@@ -5,6 +5,9 @@ const cors = require('cors');
 const path = require('path');
 const firebase = require('firebase');
 const fbConfig = require('./firebase.json');
+
+var nodemailer = require('nodemailer');
+
 // Initialize Firebase
 firebase.initializeApp(fbConfig);
 let database = firebase.database();
@@ -683,6 +686,24 @@ app.post('/get-schedule', async function (req, res) {
  ***************************************************************************/
 app.post('/sync-payments', function (req, res) {
 
+});
+/***************************************************************************
+ *                                                                         *
+ *    Send message to user email                                           *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/send-email', async function (req, res) {
+	const toEmail = req.body.toEmail; 
+
+	await nodemailer.mail({
+	    from: "support@allgive.com", // sender address
+	    to: req.body.toEmail, // list of receivers
+	    subject: "hello", // Subject line
+	    text: "Hello world", // plaintext body
+	    html: "<b>hello world!</b>" // html body
+	});
+
+	res.send("Email has been sent successfully");
 });
 
 // Start the app by listening on the default Heroku port
