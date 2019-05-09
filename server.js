@@ -239,6 +239,9 @@ app.post('/new-subscription', function (req, res) {
 
 	customerService.findOrcreateCustomer(authUser.email).then(customer => {
 		stripe.customers.createSource(customer.id, {source: token.id}, function(err, card) {
+      if (card == null) {
+        return res.send(err);
+      }
 			createSubscription(customer.id, card.id, charity.fields.charityName, donationAmount, donationFrequency)
 			.then(result => res.send(result))
 			.catch(err => res.send(err))
