@@ -36,8 +36,17 @@ const customerService = require('./server/services/stripe/customer')(stripe, fbD
 const dateService = require('./server/services/common/date');
 
 
+const cron = require("node-cron");
+const fs = require("fs");
 const app = express();
+var admin = require("firebase-admin");
 
+// var serviceAccount = require("path/to/serviceAccountKey.json");
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://allgive-app-25240.firebaseio.com"
+// });
 //Set CORS middleware : Uncomment for production
 // let corsOptions = {
 // 	origin: 'http://localhost:4200',
@@ -63,6 +72,34 @@ app.use('/', express.static(__dirname + '/dist'));
 
 app.get('*', function (req, res) {
 	res.sendFile(path.join(__dirname + '/dist/index.html'));
+});
+
+/***************************************************************************
+ *                                                                         *
+ *     Check if user's payment expire on database                          *
+ *                                                                         *
+ ***************************************************************************/
+cron.schedule("* * * * *", function() {
+  console.log("running a task every minute");
+  fbDB.getAllUsers().then(function (users) {
+		users.forEach(function (user) {
+			customerService.getCustomersByEmail(user.val().email).then(function (customers) {
+				for (var i = 0; i < customers.data.length; i++) {
+          //Check if expiration date
+          const cardDateMonth = customers.data[i].sources.data[0].exp_month;
+          const cardDateYear = customers.data[i].sources.data[0].exp_year;
+          const currentDate = new Date();
+          var months = (cardDateYear - currentDate.getFullYear()) * 12;
+          months += cardDateMonth - currentDate.getMonth() - 1;
+          console.log('@-----herer', cardDateMonth, cardDateYear, months);
+          if (months <= 1) {
+            //store it's info on db
+            console.log('@-----', user.val().email);
+          }
+				}
+			});
+		});
+	});
 });
 
 /***************************************************************************
