@@ -15,6 +15,7 @@ let fbAuth = firebase.auth();
 const fbDB = require('./server/services/firebase/database')(database);
 
 var fs=require('fs');
+const replaceString = require('replace-string');
 var templateData;
 
 // database.ref('users').orderByChild("email").equalTo('devskill2015@yandex.com').once("value").then(ddd => {
@@ -692,22 +693,24 @@ app.post('/sync-payments', function (req, res) {
  *    Send message to user email                                           *
  *                                                                         *
  ***************************************************************************/
-app.post('/send-email', function (req, res) {
-	const toEmail = req.body.toEmail; 
+app.post('/send-email', async function (req, res) {
+	var subjetEmail = 'Houston, We Have a Problem';
+	var defaultEmailContent = 'Hey Kevin!';
+	var replaseEmailContent = 'Uh oh. It looks like we are having an issue with your preferred method of payment, Visa ending in 9876. These problems usually occur for one of two reasons. Either your card on file has expired, or there were insufficient funds in the preferred account to make your daily gift. We will try to run the card again tomorrow. *If this problem persists please contact AllGive customer support at <a href="#" targer="_blank">help@allgive.org</a>.';
 
 	fs.readFile('./src/assets/template-email.html','UTF-8',function(err,data)
 	{
 	    templateData = data;
+	    templateData = replaceString(data, defaultEmailContent, replaseEmailContent);
+	    console.log(templateData);
+	});
 
-	    nodemailer.mail({
-		    from: "support@allgive.com", // sender address
-		    to: req.body.toEmail, // list of receivers
-		    subject: "hello", // Subject line
-		    text: "Hello world", // plaintext body
-		    html: templateData // html body
-		});
-
-		console.log(templateData);
+	await nodemailer.mail({
+	    from: "support@allgive.com", // sender address
+	    to: req.body.toEmail, // list of receivers
+	    subject: subjetEmail, // Subject line
+	    // text: "Hello world", // plaintext body
+	    html: templateData // html body
 	});
 
 	res.send("Email has been sent successfully");
