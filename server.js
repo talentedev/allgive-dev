@@ -43,10 +43,7 @@ const customerService = require('./server/services/stripe/customer')(stripe, fbD
 const dateService = require('./server/services/common/date');
 
 
-const cron = require("node-cron");
-const fs = require("fs");
 const app = express();
-var admin = require("firebase-admin");
 
 // var serviceAccount = require("path/to/serviceAccountKey.json");
 
@@ -76,14 +73,13 @@ app.use(function (err, req, res, next) {
 const cron = require("node-cron");
 
 // cron.schedule("* * * * *", function() {
-  getExpireCards();
+//   getExpireCards();
 // });
 
 async function getExpireCards() {
   var dt = new Date();
 	const year = dt.getFullYear();
 	const month = dt.getMonth() + 1;
-  var subjetEmail = 'Uh Oh! Your Payment Method Expires Soon!';
 	const users = await fbDB.getAllUsers();
 	let cards = [];
 	const promises = [];
@@ -106,6 +102,7 @@ async function getExpireCards() {
 				if(card.exp_year == year && (card.exp_month == (month + 1))) {
           const cardInfo = card.brand + ' ending in ' + card.last4;
           const expireMailContent = 'your payment method expires soon';
+          var subjetEmail = 'Uh Oh! Your Payment Method Expires Soon!';
 					sendEmail(data.userData.email, data.userData.firstName + ' ' + data.userData.lastName, subjetEmail, expireMailContent, cardInfo);
 				}
 			});
@@ -129,7 +126,7 @@ async function sendEmail(emailTo, userName, subjetEmail, contentEmail, cardInfo)
         subject: subjetEmail, // Subject line
         // text: "Hello world", // plaintext body
         html: templateData // html body
-    });
+      });
   });
 }
 // Serve only the static files form the dist directory
@@ -144,28 +141,28 @@ app.get('*', function (req, res) {
  *     Check if user's payment expire on database                          *
  *                                                                         *
  ***************************************************************************/
-cron.schedule("* * * * *", function() {
-  console.log("running a task every minute");
-  fbDB.getAllUsers().then(function (users) {
-		users.forEach(function (user) {
-			customerService.getCustomersByEmail(user.val().email).then(function (customers) {
-				for (var i = 0; i < customers.data.length; i++) {
-          //Check if expiration date
-          const cardDateMonth = customers.data[i].sources.data[0].exp_month;
-          const cardDateYear = customers.data[i].sources.data[0].exp_year;
-          const currentDate = new Date();
-          var months = (cardDateYear - currentDate.getFullYear()) * 12;
-          months += cardDateMonth - currentDate.getMonth() - 1;
-          console.log('@-----herer', cardDateMonth, cardDateYear, months);
-          if (months <= 1) {
-            //store it's info on db
-            console.log('@-----', user.val().email);
-          }
-				}
-			});
-		});
-	});
-});
+// cron.schedule("* * * * *", function() {
+//   console.log("running a task every minute");
+//   fbDB.getAllUsers().then(function (users) {
+// 		users.forEach(function (user) {
+// 			customerService.getCustomersByEmail(user.val().email).then(function (customers) {
+// 				for (var i = 0; i < customers.data.length; i++) {
+//           //Check if expiration date
+//           const cardDateMonth = customers.data[i].sources.data[0].exp_month;
+//           const cardDateYear = customers.data[i].sources.data[0].exp_year;
+//           const currentDate = new Date();
+//           var months = (cardDateYear - currentDate.getFullYear()) * 12;
+//           months += cardDateMonth - currentDate.getMonth() - 1;
+//           console.log('@-----herer', cardDateMonth, cardDateYear, months);
+//           if (months <= 1) {
+//             //store it's info on db
+//             console.log('@-----', user.val().email);
+//           }
+// 				}
+// 			});
+// 		});
+// 	});
+// });
 
 /***************************************************************************
  *                                                                         *
@@ -811,5 +808,25 @@ app.post('/send-email', async function (req, res) {
 	res.send("Email has been sent successfully");
 });
 
+/***************************************************************************
+ *                                                                         *
+ *    Send message to user email in case of Payment Method Removed- Email  *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/card-remove-email', async function(req, res){
+  const cardBrand = req.body.card.brand;
+  const cardLast4 = req.body.card.last4;
+	const uid = req.body.uid;
+
+  var userData = await fbDB.getUserById(uid);
+  var user = userData.val();
+  console.log(user);
+  const cardInfo = cardBrand + ' ending in ' + cardLast4;
+  const expireMailContent = 'you just removed a payment method from your account';
+  const subjetEmail = 'you just removed a payment method from your account';
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+  res.send({message : 'success'});
+});
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
