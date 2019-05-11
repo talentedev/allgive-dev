@@ -63,7 +63,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-12 col-md-3" *ngIf="!showTransaction">
+      <div class="col-12 col-md-3  chart-div" *ngIf="!showTransaction">
         <div *ngFor="let donationOrg of donationOrgs; let i = index" [attr.data-index]="i" class="donation-item border-color-{{i}}" (mouseenter)="selectedOrg=i" (mouseleave)="selectedOrg=null">
           <div *ngIf="i !== selectedOrg">
             <h3>${{ donationOrg.daily }}/{{ donationOrg.schedule }}</h3>

@@ -173,7 +173,7 @@ export class DashboardComponent implements OnInit {
         if (this.isEmpty(data[i]) == false) {
           var payment = this.payments.find(payment => payment.id === data[i].cardId);
           if(payment != undefined) {
-            payment = payment.brand;
+            payment = payment.brand + '-' + payment.last4;
           } else {
             payment = '';
           }
@@ -320,7 +320,6 @@ export class DashboardComponent implements OnInit {
     } else {
       this.buttonName = 'View Transactions';
     }
-    console.log('@--history', this.transactionHistory1);
   }
 
   get sortData() {

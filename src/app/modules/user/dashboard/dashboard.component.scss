@@ -339,3 +339,9 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #ffffff;
 }
+
+.chart-div {
+  display: block;
+  overflow: auto;
+  max-height: 350px;
+}
