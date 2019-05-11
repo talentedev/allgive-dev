@@ -14,7 +14,9 @@ let database = firebase.database();
 let fbAuth = firebase.auth();
 const fbDB = require('./server/services/firebase/database')(database);
 
-var templateData = require('./src/assets/template-email.html');
+var fs=require('fs');
+const replaceString = require('replace-string');
+var templateData;
 
 // database.ref('users').orderByChild("email").equalTo('devskill2015@yandex.com').once("value").then(ddd => {
 	
@@ -43,6 +45,12 @@ const dateService = require('./server/services/common/date');
 
 const app = express();
 
+// var serviceAccount = require("path/to/serviceAccountKey.json");
+
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://allgive-app-25240.firebaseio.com"
+// });
 //Set CORS middleware : Uncomment for production
 // let corsOptions = {
 // 	origin: 'http://localhost:4200',
@@ -62,13 +70,99 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.send(err);
 });
+const cron = require("node-cron");
 
+// cron.schedule("* * * * *", function() {
+//   getExpireCards();
+// });
+
+async function getExpireCards() {
+  var dt = new Date();
+	const year = dt.getFullYear();
+	const month = dt.getMonth() + 1;
+	const users = await fbDB.getAllUsers();
+	let cards = [];
+	const promises = [];
+	users.forEach(user => {
+		const p = new Promise(async (resolved, rejected) => {
+			const userData = user.val();
+			if(userData.customerId != undefined && userData.customerId != null) {
+				const data = await customerService.getCards(userData.customerId);
+				resolved({data: data, userData: userData});
+			} else {
+				resolved({cards: []});
+			}
+		});
+		promises.push(p);
+	});
+  
+	Promise.all(promises).then(results => {
+		results.forEach(data => {
+			data.data.cards.forEach(card => {
+				if(card.exp_year == year && (card.exp_month == (month + 1))) {
+          const cardInfo = card.brand + ' ending in ' + card.last4;
+          const expireMailContent = 'your payment method expires soon';
+          var subjetEmail = 'Uh Oh! Your Payment Method Expires Soon!';
+					sendEmail(data.userData.email, data.userData.firstName + ' ' + data.userData.lastName, subjetEmail, expireMailContent, cardInfo);
+				}
+			});
+		});
+	})
+}
+
+async function sendEmail(emailTo, userName, subjetEmail, contentEmail, cardInfo) {
+  var defaultEmailContent = 'Hey Kevin!';
+	var defaultEmailContentHeader = 'Hey ' + userName + ' !';
+	var replaseEmailContent = defaultEmailContentHeader + `<br>Uh oh. It looks like ${contentEmail}, ${cardInfo}. These problems usually occur for one of two reasons. Either your card on file has expired, or there were insufficient funds in the preferred account to make your daily gift. We will try to run the card again tomorrow. *If this problem persists please contact AllGive customer support at <a href="#" targer="_blank">help@allgive.org</a>.`;
+
+	fs.readFile('./src/assets/template-email.html','UTF-8',function(err,data)
+	{
+      templateData = data;
+      templateData = replaceString(data, defaultEmailContent, replaseEmailContent);
+
+      nodemailer.mail({
+        from: "support@allgive.com", // sender address
+        to: emailTo, // list of receivers
+        subject: subjetEmail, // Subject line
+        // text: "Hello world", // plaintext body
+        html: templateData // html body
+      });
+  });
+}
 // Serve only the static files form the dist directory
 app.use('/', express.static(__dirname + '/dist'));
 
 app.get('*', function (req, res) {
 	res.sendFile(path.join(__dirname + '/dist/index.html'));
 });
+
+/***************************************************************************
+ *                                                                         *
+ *     Check if user's payment expire on database                          *
+ *                                                                         *
+ ***************************************************************************/
+// cron.schedule("* * * * *", function() {
+//   console.log("running a task every minute");
+//   fbDB.getAllUsers().then(function (users) {
+// 		users.forEach(function (user) {
+// 			customerService.getCustomersByEmail(user.val().email).then(function (customers) {
+// 				for (var i = 0; i < customers.data.length; i++) {
+//           //Check if expiration date
+//           const cardDateMonth = customers.data[i].sources.data[0].exp_month;
+//           const cardDateYear = customers.data[i].sources.data[0].exp_year;
+//           const currentDate = new Date();
+//           var months = (cardDateYear - currentDate.getFullYear()) * 12;
+//           months += cardDateMonth - currentDate.getMonth() - 1;
+//           console.log('@-----herer', cardDateMonth, cardDateYear, months);
+//           if (months <= 1) {
+//             //store it's info on db
+//             console.log('@-----', user.val().email);
+//           }
+// 				}
+// 			});
+// 		});
+// 	});
+// });
 
 /***************************************************************************
  *                                                                         *
@@ -235,7 +329,7 @@ function createSubscription(customerId, cardId, charityName, donationAmount, don
  *     Create new subscription for new customer                            *
  *                                                                         *
  ***************************************************************************/
-app.post('/new-subscription', function (req, res) {
+app.post('/new-subscription', async function (req, res) {
 	const charity = req.body.charity;
 	const donationAmount = req.body.donation;
 	const donationFrequency = req.body.frequency;
@@ -244,10 +338,15 @@ app.post('/new-subscription', function (req, res) {
 
 	customerService.findOrcreateCustomer(authUser.email).then(customer => {
 		stripe.customers.createSource(customer.id, {source: token.id}, function(err, card) {
+      if (err != null) {
+        res.send(err);
+        return;
+      }      
 			createSubscription(customer.id, card.id, charity.fields.charityName, donationAmount, donationFrequency)
 			.then(result => res.send(result))
 			.catch(err => res.send(err))
-		});
+    })
+    .catch(err => res.send(err));
 
 		
 		// Save card information to DB.
@@ -259,7 +358,16 @@ app.post('/new-subscription', function (req, res) {
 			exp_year: token.card.exp_year,
 			last4: token.card.last4,
 			active: true
-		});
+    });
+
+    fbDB.getUserById(authUser.uid).then(userData => {
+      var user = userData.val();
+      //send Email for Add new payment method
+      const cardInfo = token.card.brand + ' ending in ' + token.card.last4;
+      const expireMailContent = 'you just added a new payment method to your account';
+      const subjetEmail = 'You Added a New Payment Method';
+      sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+    });
 	});
 });
 
@@ -692,18 +800,100 @@ app.post('/sync-payments', function (req, res) {
  *                                                                         *
  ***************************************************************************/
 app.post('/send-email', async function (req, res) {
-	const toEmail = req.body.toEmail; 
+	var subjetEmail = 'Houston, We Have a Problem';
+	var defaultEmailContent = 'Hey Kevin!';
+	var replaseEmailContent = 'Uh oh. It looks like we are having an issue with your preferred method of payment, Visa ending in 9876. These problems usually occur for one of two reasons. Either your card on file has expired, or there were insufficient funds in the preferred account to make your daily gift. We will try to run the card again tomorrow. *If this problem persists please contact AllGive customer support at <a href="#" targer="_blank">help@allgive.org</a>.';
+
+	fs.readFile('./src/assets/template-email.html','UTF-8',function(err,data)
+	{
+	    templateData = data;
+	    templateData = replaceString(data, defaultEmailContent, replaseEmailContent);
+	    console.log(templateData);
+	});
 
 	await nodemailer.mail({
 	    from: "support@allgive.com", // sender address
 	    to: req.body.toEmail, // list of receivers
-	    subject: "hello", // Subject line
-	    text: "Hello world", // plaintext body
+	    subject: subjetEmail, // Subject line
+	    // text: "Hello world", // plaintext body
 	    html: templateData // html body
 	});
 
 	res.send("Email has been sent successfully");
 });
 
+/***************************************************************************
+ *                                                                         *
+ *    Send message to user email in case of Payment Method Removed         *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/card-remove-email', async function(req, res){
+  const cardBrand = req.body.card.brand;
+  const cardLast4 = req.body.card.last4;
+	const uid = req.body.uid;
+
+  var userData = await fbDB.getUserById(uid);
+  var user = userData.val();
+  const cardInfo = cardBrand + ' ending in ' + cardLast4;
+  const expireMailContent = 'you just removed a payment method from your account';
+  const subjetEmail = 'You just removed a payment method from your account';
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+  res.send({message : 'success'});
+});
+
+/***************************************************************************
+ *                                                                         *
+ *    Send message to user email in case of Payment Method Added-          *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/card-added-email', async function(req, res){
+  const cardBrand = req.body.card.brand;
+  const cardLast4 = req.body.card.last4;
+	const uid = req.body.uid;
+
+  var userData = await fbDB.getUserById(uid);
+  var user = userData.val();
+
+  const cardInfo = cardBrand + ' ending in ' + cardLast4;
+  const expireMailContent = 'you just added a new payment method to your account';
+  const subjetEmail = 'You Added a New Payment Method';
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+  res.send({message : 'success'});
+});
+
+app.post('/add-new-card', async function(req, res){
+  const authUser = req.body.user;
+	const token = req.body.token;
+
+  // Save card information to DB.
+  fbDB.createPayment(authUser.uid, {
+    id: token.id,
+    brand: token.card.brand,
+    customer: customer.id,
+    exp_month: token.card.exp_month,
+    exp_year: token.card.exp_year,
+    last4: token.card.last4,
+    active: true
+  });
+})
+
+app.post('/card-error', async function(req, res){
+  const cardBrand = req.body.card.brand;
+  const cardLast4 = req.body.card.last4;
+  const errorMsg = req.body.msg;
+	const uid = req.body.user.uid;
+
+  var userData = await fbDB.getUserById(uid);
+  var user = userData.val();
+
+  const cardInfo = cardBrand + ' ending in ' + cardLast4;
+  const expireMailContent = 'we are having an issue with your preferred method of payment';
+  const subjetEmail = 'Houston, We Have a Problem';
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+  res.send({message : 'success'});
+})
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);

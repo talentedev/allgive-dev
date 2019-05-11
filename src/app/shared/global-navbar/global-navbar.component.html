@@ -29,8 +29,11 @@
           <a class="nav-link" (click)="collapseMenu()" *ngIf="!authService.authState" routerLink="/link-login">Login</a>
           <a class="nav-link" (click)="collapseMenu()" *ngIf="authService.authState" (click)="logout()">Logout</a>
         </li>
+        <li class="nav-item" *ngIf="isMobile">
+          <a class="nav-link" (click)="goToDashboard()">{{ authService.authState ? 'My Portfolio': 'Get Started' }}</a>
+        </li>
       </ul>
-      <button class="btn btn-allgive-primary" (click)="goToDashboard()">
+      <button class="btn btn-allgive-primary" (click)="goToDashboard()" *ngIf="!isMobile">
         {{ authService.authState ? 'My Portfolio': 'Get Started' }}
       </button>
     </div>

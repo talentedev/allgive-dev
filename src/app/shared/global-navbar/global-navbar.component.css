@@ -34,12 +34,24 @@ nav .nav-item .nav-link:hover {
     text-decoration: underline;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px)  and (min-width: 100px) {
     .navbar-collapse {
         text-align: center;
         background-color: #c7eef9;
     }
     .btn-allgive-primary {
         margin-bottom: 15px;
+    }
+
+    .nav-item {
+      margin-right: 1.5rem;
+      text-align:right;
+      border-bottom: 1px inset #ccc;
+      margin-right: 0px;
+      padding-right: 1em;
+    }
+
+    .nav-bar {
+      padding: 0px;
     }
 }
