@@ -60,4 +60,12 @@ export class UserService {
     const endpoint = this.apiUrl + '/update-profile';
     return this.http.post(endpoint, data);
   }
+
+  sendEmailForDeletePaymentMethod(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/card-remove-email', data);
+  }
+
+  sendEmailForAddedPaymentMethod(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/card-added-email', data);
+  }
 }

@@ -58,4 +58,8 @@ export class PaymentsService {
     return this.http.get<any>(this.apiUrl + '/customer', user);
   }
 
+  addNewCard(data: Object): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/add-new-card', data);
+  }
+
 }
