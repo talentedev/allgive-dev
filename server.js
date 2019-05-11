@@ -329,7 +329,7 @@ function createSubscription(customerId, cardId, charityName, donationAmount, don
  *     Create new subscription for new customer                            *
  *                                                                         *
  ***************************************************************************/
-app.post('/new-subscription', function (req, res) {
+app.post('/new-subscription', async function (req, res) {
 	const charity = req.body.charity;
 	const donationAmount = req.body.donation;
 	const donationFrequency = req.body.frequency;
@@ -353,7 +353,16 @@ app.post('/new-subscription', function (req, res) {
 			exp_year: token.card.exp_year,
 			last4: token.card.last4,
 			active: true
-		});
+    });
+
+    fbDB.getUserById(authUser.uid).then(userData => {
+      var user = userData.val();
+      //send Email for Add new payment method
+      const cardInfo = token.card.brand + ' ending in ' + token.card.last4;
+      const expireMailContent = 'you just added a new payment method to your account';
+      const subjetEmail = 'You Added a New Payment Method';
+      sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+    });
 	});
 });
 
@@ -810,7 +819,7 @@ app.post('/send-email', async function (req, res) {
 
 /***************************************************************************
  *                                                                         *
- *    Send message to user email in case of Payment Method Removed- Email  *
+ *    Send message to user email in case of Payment Method Removed         *
  *                                                                         *
  ***************************************************************************/
 app.post('/card-remove-email', async function(req, res){
@@ -820,13 +829,49 @@ app.post('/card-remove-email', async function(req, res){
 
   var userData = await fbDB.getUserById(uid);
   var user = userData.val();
-  console.log(user);
   const cardInfo = cardBrand + ' ending in ' + cardLast4;
   const expireMailContent = 'you just removed a payment method from your account';
-  const subjetEmail = 'you just removed a payment method from your account';
+  const subjetEmail = 'You just removed a payment method from your account';
   await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
 
   res.send({message : 'success'});
 });
+
+/***************************************************************************
+ *                                                                         *
+ *    Send message to user email in case of Payment Method Added-          *
+ *                                                                         *
+ ***************************************************************************/
+app.post('/card-added-email', async function(req, res){
+  const cardBrand = req.body.card.brand;
+  const cardLast4 = req.body.card.last4;
+	const uid = req.body.uid;
+
+  var userData = await fbDB.getUserById(uid);
+  var user = userData.val();
+
+  const cardInfo = cardBrand + ' ending in ' + cardLast4;
+  const expireMailContent = 'you just added a new payment method to your account';
+  const subjetEmail = 'You Added a New Payment Method';
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+  res.send({message : 'success'});
+});
+
+app.post('/add-new-card', async function(req, res){
+  const authUser = req.body.user;
+	const token = req.body.token;
+
+  // Save card information to DB.
+  fbDB.createPayment(authUser.uid, {
+    id: token.id,
+    brand: token.card.brand,
+    customer: customer.id,
+    exp_month: token.card.exp_month,
+    exp_year: token.card.exp_year,
+    last4: token.card.last4,
+    active: true
+  });
+})
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);

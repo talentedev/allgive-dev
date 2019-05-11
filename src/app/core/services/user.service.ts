@@ -64,4 +64,8 @@ export class UserService {
   sendEmailForDeletePaymentMethod(data): Observable<any> {
     return this.http.post<any>(this.apiUrl + '/card-remove-email', data);
   }
+
+  sendEmailForAddedPaymentMethod(data): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/card-added-email', data);
+  }
 }
