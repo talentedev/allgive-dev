@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService } from '../../core/services/auth.service';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-global-navbar',
@@ -15,16 +15,20 @@ export class GlobalNavbarComponent implements OnInit {
 
   user: Observable<firebase.User>;
   authState;
-
+  deviceInfo = null;
+  isMobile;
   @Input() menuState;
   @Output() hide: any = new EventEmitter();
 
-  constructor(public authService: AuthService, private router: Router) {
+  constructor(public authService: AuthService, 
+    private deviceService: DeviceDetectorService,
+    private router: Router) {
     this.authState = this.authService.authState;
   }
 
   ngOnInit() {
     //
+    this.epicFunction();
   }
 
   goToDashboard() {
@@ -51,4 +55,12 @@ export class GlobalNavbarComponent implements OnInit {
     this.hide.emit(this.menuState);
   }
 
+  epicFunction() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    const isMobile = this.deviceService.isMobile();
+
+    if (isMobile) {
+      this.isMobile = isMobile;      
+    }
+  }
 }
