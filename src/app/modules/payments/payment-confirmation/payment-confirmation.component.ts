@@ -8,6 +8,7 @@ import { PaymentsService } from '../../../core/services/payments.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { PaymentComponent } from '../payment/payment.component';
+import { tokenKey } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-payment-confirmation',
@@ -68,7 +69,6 @@ export class PaymentConfirmationComponent implements OnInit {
       customer: this.customer,
       card_id: this.selectedCard ? this.selectedCard.id : null
     };
-
     this.isSubmitting = true;
 
     if (this.token != null) {
@@ -77,6 +77,13 @@ export class PaymentConfirmationComponent implements OnInit {
           this.isSubmitting = false;
           if (res.message) {
             this.invalidCard = true;
+            const errorData = {
+              user: this.authState,
+              msg: res.message,
+              card: this.token.card,
+            }
+            this.payments.processCardError(errorData).subscribe(res => {
+            });
             this.errorMessage = res.message;
           } else {
             this.closeAllModals();
@@ -89,6 +96,14 @@ export class PaymentConfirmationComponent implements OnInit {
           this.isSubmitting = false;
           if (res.message) {
             this.invalidCard = true;
+            const errorData = {
+              user: this.authState,
+              msg: res.message,
+              card: this.selectedCard,
+            }
+            this.payments.processCardError(errorData).subscribe(res => {
+              
+            });
             this.errorMessage = res.message;
           } else {
             this.ngZone.run(_ => {

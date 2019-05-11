@@ -338,10 +338,15 @@ app.post('/new-subscription', async function (req, res) {
 
 	customerService.findOrcreateCustomer(authUser.email).then(customer => {
 		stripe.customers.createSource(customer.id, {source: token.id}, function(err, card) {
+      if (err != null) {
+        res.send(err);
+        return;
+      }      
 			createSubscription(customer.id, card.id, charity.fields.charityName, donationAmount, donationFrequency)
 			.then(result => res.send(result))
 			.catch(err => res.send(err))
-		});
+    })
+    .catch(err => res.send(err));
 
 		
 		// Save card information to DB.
@@ -872,6 +877,23 @@ app.post('/add-new-card', async function(req, res){
     last4: token.card.last4,
     active: true
   });
+})
+
+app.post('/card-error', async function(req, res){
+  const cardBrand = req.body.card.brand;
+  const cardLast4 = req.body.card.last4;
+  const errorMsg = req.body.msg;
+	const uid = req.body.user.uid;
+
+  var userData = await fbDB.getUserById(uid);
+  var user = userData.val();
+
+  const cardInfo = cardBrand + ' ending in ' + cardLast4;
+  const expireMailContent = 'we are having an issue with your preferred method of payment';
+  const subjetEmail = 'Houston, We Have a Problem';
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+  res.send({message : 'success'});
 })
 // Start the app by listening on the default Heroku port
 app.listen(process.env.PORT || 8080);
