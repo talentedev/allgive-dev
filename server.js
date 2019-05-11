@@ -64,7 +64,65 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.send(err);
 });
+const cron = require("node-cron");
 
+// cron.schedule("* * * * *", function() {
+  getExpireCards();
+// });
+
+async function getExpireCards() {
+  var dt = new Date();
+	const year = dt.getFullYear();
+	const month = dt.getMonth() + 1;
+  var subjetEmail = 'Uh Oh! Your Payment Method Expires Soon!';
+	const users = await fbDB.getAllUsers();
+	let cards = [];
+	const promises = [];
+	users.forEach(user => {
+		const p = new Promise(async (resolved, rejected) => {
+			const userData = user.val();
+			if(userData.customerId != undefined && userData.customerId != null) {
+				const data = await customerService.getCards(userData.customerId);
+				resolved({data: data, userData: userData});
+			} else {
+				resolved({cards: []});
+			}
+		});
+		promises.push(p);
+	});
+  
+	Promise.all(promises).then(results => {
+		results.forEach(data => {
+			data.data.cards.forEach(card => {
+				if(card.exp_year == year && (card.exp_month == (month + 1))) {
+          const cardInfo = card.brand + ' ending in ' + card.last4;
+          const expireMailContent = 'your payment method expires soon';
+					sendEmail(data.userData.email, data.userData.firstName + ' ' + data.userData.lastName, subjetEmail, expireMailContent, cardInfo);
+				}
+			});
+		});
+	})
+}
+
+async function sendEmail(emailTo, userName, subjetEmail, contentEmail, cardInfo) {
+  var defaultEmailContent = 'Hey Kevin!';
+	var defaultEmailContentHeader = 'Hey ' + userName + ' !';
+	var replaseEmailContent = defaultEmailContentHeader + `<br>Uh oh. It looks like ${contentEmail}, ${cardInfo}. These problems usually occur for one of two reasons. Either your card on file has expired, or there were insufficient funds in the preferred account to make your daily gift. We will try to run the card again tomorrow. *If this problem persists please contact AllGive customer support at <a href="#" targer="_blank">help@allgive.org</a>.`;
+
+	fs.readFile('./src/assets/template-email.html','UTF-8',function(err,data)
+	{
+      templateData = data;
+      templateData = replaceString(data, defaultEmailContent, replaseEmailContent);
+
+      nodemailer.mail({
+        from: "support@allgive.com", // sender address
+        to: emailTo, // list of receivers
+        subject: subjetEmail, // Subject line
+        // text: "Hello world", // plaintext body
+        html: templateData // html body
+    });
+  });
+}
 // Serve only the static files form the dist directory
 app.use('/', express.static(__dirname + '/dist'));
 
