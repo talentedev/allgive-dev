@@ -62,4 +62,8 @@ export class PaymentsService {
     return this.http.post<any>(this.apiUrl + '/add-new-card', data);
   }
 
+  processCardError(data: Object): Observable<any> {
+    return this.http.post<any>(this.apiUrl + '/card-error', data);
+  }
+
 }
