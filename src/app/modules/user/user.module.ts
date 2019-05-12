@@ -17,6 +17,7 @@ import { EditCardComponent } from './edit-card/edit-card.component';
 import { DeleteCardComponent } from './delete-card/delete-card.component';
 import { StackedChartComponent } from './stacked-chart/stacked-chart.component';
 import { CustomDonationComponent } from './custom-donation/custom-donation.component';
+import { AddNewCardComponent } from './add-card/add-card.component';
 
 @NgModule({
   imports: [
@@ -42,12 +43,14 @@ import { CustomDonationComponent } from './custom-donation/custom-donation.compo
     EditCardComponent,
     DeleteCardComponent,
     StackedChartComponent,
-    CustomDonationComponent
+    CustomDonationComponent,
+    AddNewCardComponent
   ],
   entryComponents: [
     EditCardComponent,
     DeleteCardComponent,
-    CustomDonationComponent
+    CustomDonationComponent,
+    AddNewCardComponent
   ]
 })
 export class UserModule { }

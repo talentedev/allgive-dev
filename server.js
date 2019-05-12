@@ -867,16 +867,43 @@ app.post('/add-new-card', async function(req, res){
   const authUser = req.body.user;
 	const token = req.body.token;
 
-  // Save card information to DB.
-  fbDB.createPayment(authUser.uid, {
-    id: token.id,
-    brand: token.card.brand,
-    customer: customer.id,
-    exp_month: token.card.exp_month,
-    exp_year: token.card.exp_year,
-    last4: token.card.last4,
-    active: true
-  });
+  try {
+    customerService.findOrcreateCustomer(authUser.email).then(customer => {
+      stripe.customers.createSource(customer.id, {source: token.id}, function(err, card) {
+        if (err != null) {
+          res.send(err);
+          return;
+        }      
+      });
+      // Save card information to DB.
+      fbDB.createPayment(authUser.uid, {
+        id: token.id,
+        brand: token.card.brand,
+        customer: customer.id,
+        exp_month: token.card.exp_month,
+        exp_year: token.card.exp_year,
+        last4: token.card.last4,
+        active: true
+      });
+
+      const cardBrand = req.body.token.card.brand;
+      const cardLast4 = req.body.token.card.last4;
+      const uid = authUser.uid;
+
+      fbDB.getUserById(uid).then(userData => {
+        var user = userData.val();
+
+        const cardInfo = cardBrand + ' ending in ' + cardLast4;
+        const expireMailContent = 'you just added a new payment method to your account';
+        const subjetEmail = 'You Added a New Payment Method';
+        sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+
+        res.send({message : 'success'});
+      });
+    });
+  } catch (err) {
+    res.send({message : err});
+  }
 })
 
 app.post('/card-error', async function(req, res){
