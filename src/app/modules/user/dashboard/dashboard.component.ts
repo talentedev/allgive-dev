@@ -8,6 +8,7 @@ import { MDBModalService } from 'angular-bootstrap-md';
 
 import { EditCardComponent } from '../edit-card/edit-card.component';
 import { DeleteCardComponent } from '../delete-card/delete-card.component';
+import { AddNewCardComponent } from '../add-card/add-card.component';
 import { CustomDonationComponent } from '../custom-donation/custom-donation.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
@@ -232,7 +233,6 @@ export class DashboardComponent implements OnInit {
       customer: this.choosedOrg.invoices[0].customer,
       cardId: this.choosedOrg.cardId,
     };
-    console.log('@--data', data);
     this.setShowCharityManage(false);
     this.loading = true;
 
@@ -328,4 +328,20 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  addNewPaymentMethod() {
+    const modalRef = this.modalService.open(AddNewCardComponent, { centered: true });
+    modalRef.result.then(result => {
+    }, reason => {
+      if (reason === 'success') {
+        this.loading = true;
+        this.userService.getUserCards().then(userCards => {
+          this.payments = userCards;
+          this.loading = false;
+        }).catch(err => {
+          console.log('@--err', err);
+          this.loading = false;
+        });
+      }
+    });
+  }
 }
