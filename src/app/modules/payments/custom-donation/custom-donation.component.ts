@@ -12,7 +12,7 @@ import { SubscriptionPaymentComponent } from '../subscription-payment/subscripti
 })
 export class CustomDonationComponent implements OnInit {
 
-  donationAmount = 10;
+  donationAmount;
   donationSchedule = 'week';
   charity;
   modals = [];
@@ -31,6 +31,8 @@ export class CustomDonationComponent implements OnInit {
 
   ngOnInit() {
     this.modals.push(this.modalRef);
+    const amount = 10;
+    this.donationAmount = amount.toFixed(2);
   }
 
   back() {

@@ -12,9 +12,9 @@
         <span class="input-group-text">$</span>
       </div>
       <input [(ngModel)]="donationAmount" type="text" id="donationAmount" class="form-control text-right" aria-label="Amount (to the nearest dollar)">
-      <div class="input-group-append">
+      <!-- <div class="input-group-append">
         <span class="input-group-text">.00</span>
-      </div>
+      </div> -->
     </div>
     <p *ngIf="invalidAmount" class="text-danger">Invalid value!</p>
     <label for="donationSchedule">Donation Schedule</label>
