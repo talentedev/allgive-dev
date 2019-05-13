@@ -8,7 +8,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { PaymentsService } from '../../../core/services/payments.service';
 import { UserService } from '../../../core/services/user.service';
 import { SubscriptionPaymentComponent } from '../subscription-payment/subscription-payment.component';
-
+import { faMagic, faSpinner } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -34,7 +34,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
   card: StripeElement;
   isBack = false;
   donationElements;
-
+  isSubmitting = false;
+  faSpinner = faSpinner;
 
   constructor(
     public modalRef: MDBModalRef,
@@ -145,12 +146,11 @@ export class PaymentComponent implements OnInit, OnDestroy {
   }
   open() {
     this.invalidCard = false;
+    this.isSubmitting = true;
     this.errorMessage = '';
     if (this.isNewCard) {
-
       this.stripeService.createToken(this.card, {}).subscribe(async(result) => {
         if (result.token) {
-
           const modalOptions = {
             backdrop: true,
             keyboard: true,
@@ -177,6 +177,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
           this.modalRef.hide();
         } else {
           this.invalidCard = true;
+          this.isSubmitting = false;
           this.errorMessage = result.error.message;
         }
       });
@@ -204,7 +205,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
             donationElements: this.donationElements
         }
       };
-
       this.modalService.show(PaymentConfirmationComponent, modalOptions);
       this.modalRef.hide();
     }
