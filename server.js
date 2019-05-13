@@ -72,9 +72,9 @@ app.use(function (err, req, res, next) {
 });
 const cron = require("node-cron");
 
-// cron.schedule("* * * * *", function() {
-//   getExpireCards();
-// });
+cron.schedule("0 0 0 * * *", function() {
+  getExpireCards();
+});
 
 async function getExpireCards() {
   var dt = new Date();
@@ -103,17 +103,40 @@ async function getExpireCards() {
           const cardInfo = card.brand + ' ending in ' + card.last4;
           const expireMailContent = 'your payment method expires soon';
           var subjetEmail = 'Uh Oh! Your Payment Method Expires Soon!';
-					sendEmail(data.userData.email, data.userData.firstName + ' ' + data.userData.lastName, subjetEmail, expireMailContent, cardInfo);
+					sendEmail(data.userData.email, data.userData.firstName + ' ' + data.userData.lastName, subjetEmail, expireMailContent, cardInfo, EXP_CARD_EMAIL);
 				}
 			});
 		});
 	})
 }
 
-async function sendEmail(emailTo, userName, subjetEmail, contentEmail, cardInfo) {
+const ADD_CARD_EMAIL = 0;
+const DEL_CARD_EMAIL = 1;
+const EXP_CARD_EMAIL = 2;
+const DEC_CARD_EMAIL = 3;
+async function sendEmail(emailTo, userName, subjetEmail, contentEmail, cardInfo, emailType) {
   var defaultEmailContent = 'Hey Kevin!';
-	var defaultEmailContentHeader = 'Hey ' + userName + ' !';
-	var replaseEmailContent = defaultEmailContentHeader + `<br>Uh oh. It looks like ${contentEmail}, ${cardInfo}. These problems usually occur for one of two reasons. Either your card on file has expired, or there were insufficient funds in the preferred account to make your daily gift. We will try to run the card again tomorrow. *If this problem persists please contact AllGive customer support at <a href="#" targer="_blank">help@allgive.org</a>.`;
+  var defaultEmailContentHeader = 'Hey ' + userName + ' !';
+  const addNewEmailContent = `Make sure to delete your old card number if this is a replacement number. If this is just an alternate method of payment then carry on! If this notification seems wrong or you didn’t add a new payment method, you’d better let us know right away! *If this problem persists please contact AllGive customer support at help@allgive.org.`
+  const deleteCardEmailContent = `Make sure to add a new payment method if this was your only card on file so your donations will continue to be delivered to your charities. If this notification seems wrong or you didn’t remove a payment method, you’d better let us know right away!
+  *If this problem persists please contact AllGive customer support at help@allgive.org.`
+  const cardDeclinedEmailContent = `These problems usually occur for one of two reasons. Either your card on file has expired, or there were insufficient funds in the preferred account to make your daily gift. We will try to run the card again tomorrow. *If this problem persists please contact AllGive customer support at <a href="#" targer="_blank">help@allgive.org</a>.`
+  const expirationEmailContent = `Make sure to add a new payment method if this was your only card on file so your donations will continue to be delivered to your charities. If this notification seems wrong or you, you’d better let us know right away! *If this problem persists please contact AllGive customer support at help@allgive.org.`
+  var replaseEmailContent = defaultEmailContentHeader + `<br>Uh oh. It looks like ${contentEmail}, ${cardInfo}.`;
+  switch(emailType) {
+    case ADD_CARD_EMAIL:
+      replaseEmailContent += addNewEmailContent;
+      break;
+    case DEL_CARD_EMAIL:
+      replaseEmailContent += deleteCardEmailContent;
+      break;
+    case EXP_CARD_EMAIL:
+      replaseEmailContent += expirationEmailContent;
+      break;
+    case DEC_CARD_EMAIL:
+      replaseEmailContent += cardDeclinedEmailContent;
+      break;
+  }
 
 	fs.readFile('./src/assets/template-email.html','UTF-8',function(err,data)
 	{
@@ -366,7 +389,7 @@ app.post('/new-subscription', async function (req, res) {
       const cardInfo = token.card.brand + ' ending in ' + token.card.last4;
       const expireMailContent = 'you just added a new payment method to your account';
       const subjetEmail = 'You Added a New Payment Method';
-      sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+      sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo, ADD_CARD_EMAIL);
     });
 	});
 });
@@ -837,7 +860,7 @@ app.post('/card-remove-email', async function(req, res){
   const cardInfo = cardBrand + ' ending in ' + cardLast4;
   const expireMailContent = 'you just removed a payment method from your account';
   const subjetEmail = 'You just removed a payment method from your account';
-  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo, DEL_CARD_EMAIL);
 
   res.send({message : 'success'});
 });
@@ -858,7 +881,7 @@ app.post('/card-added-email', async function(req, res){
   const cardInfo = cardBrand + ' ending in ' + cardLast4;
   const expireMailContent = 'you just added a new payment method to your account';
   const subjetEmail = 'You Added a New Payment Method';
-  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo, ADD_CARD_EMAIL);
 
   res.send({message : 'success'});
 });
@@ -896,7 +919,7 @@ app.post('/add-new-card', async function(req, res){
         const cardInfo = cardBrand + ' ending in ' + cardLast4;
         const expireMailContent = 'you just added a new payment method to your account';
         const subjetEmail = 'You Added a New Payment Method';
-        sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+        sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo, ADD_CARD_EMAIL);
 
         res.send({message : 'success'});
       });
@@ -918,7 +941,7 @@ app.post('/card-error', async function(req, res){
   const cardInfo = cardBrand + ' ending in ' + cardLast4;
   const expireMailContent = 'we are having an issue with your preferred method of payment';
   const subjetEmail = 'Houston, We Have a Problem';
-  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo);
+  await sendEmail(user.email, user.firstName + ' ' + user.lastName, subjetEmail, expireMailContent, cardInfo, DEC_CARD_EMAIL);
 
   res.send({message : 'success'});
 })
