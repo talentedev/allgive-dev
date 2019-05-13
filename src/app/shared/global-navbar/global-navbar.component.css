@@ -35,6 +35,9 @@ nav .nav-item .nav-link:hover {
 }
 
 @media (max-width: 768px)  and (min-width: 100px) {
+    .navbar {
+        padding: 0;
+    }
     .navbar-collapse {
         text-align: center;
         background-color: #c7eef9;
