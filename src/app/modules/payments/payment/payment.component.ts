@@ -36,7 +36,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
   donationElements;
   isSubmitting = false;
   faSpinner = faSpinner;
-
+  customerName = '';
+  isShowInputName = false;
   constructor(
     public modalRef: MDBModalRef,
     private modalService: MDBModalService,
@@ -50,6 +51,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.stripeService.elements()
       .subscribe(elements => {
         this.elements = elements;
+        this.isShowInputName = true;
         if (!this.card) {
           this.card = this.elements.create('card', {
             style: {
@@ -149,6 +151,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
     this.isSubmitting = true;
     this.errorMessage = '';
     if (this.isNewCard) {
+      if ( this.customerName === '' ) {
+        this.errorMessage = 'Please input your name.';
+        return;
+      }
       this.stripeService.createToken(this.card, {}).subscribe(async(result) => {
         if (result.token) {
           const modalOptions = {
@@ -169,7 +175,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
                 cards: this.cards,
                 modals: this.modals,
                 isNewCard: this.isNewCard,
-                donationElements: this.donationElements
+                donationElements: this.donationElements,
+                customerName: this.customerName,
             }
           };
           await this.userService.getUserCards();

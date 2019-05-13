@@ -23,7 +23,11 @@
         New Card
       </label>
     </div>
-    <div id="card-element" class="field mb-3"></div>
+    <div id="card-element" class="field mb-3">
+    </div>
+    <input *ngIf="isShowInputName" [(ngModel)]="customerName" type="text" id="customerName" class="form-control text-center" aria-label="Amount (to the nearest dollar)" 
+    placeholder="Please input your name.">
+
 
     <div *ngIf="invalidCard" class="alert alert-danger" role="alert">
       <strong>{{ errorMessage }}</strong>
