@@ -8,7 +8,8 @@
         <div id="carousel-text" class="col-md-12 col-lg-6 col-xl-5 text-left">
           <h1>Help the world a little at a time.</h1>
           <p>Micro-donating makes giving easy.</p>
-          <p class="featured">Featured Organization: <a [routerLink]="['/charities', slugs[i]]">{{ charityNames[i] }}</a></p>
+          <p class="featured" *ngIf="!isMobile">Featured Organization: <a [routerLink]="['/charities', slugs[i]]">{{ charityNames[i] }}</a></p>
+          <p class="featured" *ngIf="isMobile">Featured Organization: <br><a [routerLink]="['/charities', slugs[i]]">{{ charityNames[i] }}</a></p>
           <div class="button" [routerLink]="['/start']">Learn More</div>
         </div>
       </div>

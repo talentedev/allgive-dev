@@ -3,7 +3,7 @@ import { Entry } from 'contentful';
 import { CarouselModule, WavesModule } from 'angular-bootstrap-md';
 
 import { ContentfulService } from '../../core/services/contentful.service';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-featured-carousel',
   templateUrl: './featured-carousel.component.html',
@@ -18,11 +18,15 @@ export class FeaturedCarouselComponent implements OnInit {
   charityNames: Entry<any>[] = [];
   showNavigationArrows = false;
   showNavigationIndicators = false;
-
-  constructor(private contentfulService: ContentfulService) {
+  isMobile;
+  deviceInfo;
+  constructor(
+    private contentfulService: ContentfulService,
+    private deviceService: DeviceDetectorService) {
   }
 
   ngOnInit() {
+    this.epicFunction();
     return this.contentfulService.getFeaturedCharities()
       .then(res => {
         this.charities = res;
@@ -32,5 +36,14 @@ export class FeaturedCarouselComponent implements OnInit {
           this.charityNames.push(res[i].fields.charityName);
         }
       });
+  }
+
+  epicFunction() {
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    const isMobile = this.deviceService.isMobile();
+
+    if (isMobile) {
+      this.isMobile = isMobile;      
+    }
   }
 }

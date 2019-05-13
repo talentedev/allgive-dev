@@ -23,7 +23,11 @@
         New Card
       </label>
     </div>
-    <div id="card-element" class="field mb-3"></div>
+    <div id="card-element" class="field mb-3">
+    </div>
+    <input *ngIf="isShowInputName" [(ngModel)]="customerName" type="text" id="customerName" class="form-control text-center" aria-label="Amount (to the nearest dollar)" 
+    placeholder="Please input your name.">
+
 
     <div *ngIf="invalidCard" class="alert alert-danger" role="alert">
       <strong>{{ errorMessage }}</strong>
@@ -31,6 +35,10 @@
 
   </div>
   <div class="modal-footer">
-    <button type="button" color="primary" class="relative waves-light" mdbWavesEffect (click)="open()">Next</button>
+    <button type="button" color="primary" class="relative waves-light" mdbWavesEffect (click)="open()">
+      <fa-icon *ngIf="isSubmitting" [icon]="faSpinner" [spin]="true" class="mr-2"></fa-icon>
+      <span *ngIf="!invalidCard">{{ isSubmitting ? 'Processing...' : 'Next' }}</span>
+      <span *ngIf="invalidCard">Cancel</span>
+    </button>
   </div>
 </div>
