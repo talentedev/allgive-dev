@@ -54,7 +54,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let x of sortData">
-              <td>{{ x.Date | date:'dd MMM yyyy'}}</td>
+              <td>{{ x.Date | date:'dd/MM/yyyy'}}</td>
               <td>{{ x.Charity }}</td>
               <td>{{ x.PaymentMethod }}</td>
               <td>{{ x.Schedule }}</td>
@@ -192,9 +192,9 @@
       <div class="col-12 col-sm-7">
         <h3 class="section-title">Payment Settings</h3>
       </div>
-      <div class="col-12 col-sm-5 text-right">
+      <!-- <div class="col-12 col-sm-5 text-right">
         <button class="btn btn-add-charity" (click)="addNewPaymentMethod()">ADD PAYMENT METHOD</button>
-      </div>
+      </div> -->
     </div>
     <div *ngIf="payments.length==0" class="p-4">
       <h5 class="text-center">You have not any payment method yet.</h5>
