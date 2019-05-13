@@ -101,7 +101,6 @@ export class AddNewCardComponent implements OnInit {
         };
         this.payments.addNewCard(data)
           .subscribe(res => {
-            console.log('@----res---', res);
             if (res.message === 'success') {
               this.errorMessage = res.message;
               this.closeModal(true);
