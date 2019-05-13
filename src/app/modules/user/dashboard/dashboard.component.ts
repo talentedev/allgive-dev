@@ -176,6 +176,7 @@ export class DashboardComponent implements OnInit {
           if(payment != undefined) {
             payment = payment.brand + '-' + payment.last4;
           } else {
+            console.log('2----id', data[i]);
             payment = '';
           }
 
