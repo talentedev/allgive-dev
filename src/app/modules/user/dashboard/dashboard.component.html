@@ -41,12 +41,12 @@
       <div class="col-12 col-md-5" *ngIf="!showTransaction">
         <app-stacked-chart *ngIf="updateChart" [dataset]="chartData"></app-stacked-chart>
       </div>
-      <div class="col-12 col-md-8 table-div" *ngIf="showTransaction">
-        <table>
+      <div class="col-12 col-md-8 table-div table-responsive" *ngIf="showTransaction">
+        <table class="table table-condensed table-hover">
           <thead>
             <tr>
               <th>Date</th>
-              <th>Charity</th>
+              <th align="left">Charity</th>
               <th>PaymentMethod</th>
               <th>Schedule</th>
               <th>Amount</th>
@@ -54,11 +54,11 @@
           </thead>
           <tbody>
             <tr *ngFor="let x of sortData">
-              <td>{{ x.Date | date:'dd/MM/yyyy'}}</td>
-              <td>{{ x.Charity }}</td>
+              <td>{{ x.Date | date:'MM/dd/yyyy'}}</td>
+              <td align="left">{{ x.Charity }}</td>
               <td>{{ x.PaymentMethod }}</td>
               <td>{{ x.Schedule }}</td>
-              <td>{{ x.Amount }}</td>
+              <td align="right">{{ x.Amount }}</td>
             </tr>
           </tbody>
         </table>

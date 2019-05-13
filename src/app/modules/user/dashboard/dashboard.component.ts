@@ -189,8 +189,8 @@ export class DashboardComponent implements OnInit {
                 "Date": date,
                 "Charity": data[i].charityname,
                 "PaymentMethod": payment,
-                "Schedule": data[i].schedule,
-                "Amount": currency + data[i].amount,
+                "Schedule": data[i].schedule.charAt(0).toUpperCase() + data[i].schedule.slice(1),
+                "Amount": currency + data[i].amount.toFixed(2),
               });
             }
           }
