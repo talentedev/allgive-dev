@@ -8,6 +8,7 @@ import { StartComponent } from './core/components/start/start.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { CharityDetailsComponent } from './modules/charities/charity-details/charity-details.component';
 import { BackComponent } from './core/components/back/back.component';
+import { ContactComponent } from './core/components/contact/contact.component';
 
 const routes: Routes = [
   {
@@ -35,7 +36,11 @@ const routes: Routes = [
     component: PageNotFoundComponent,
     data: {title: 'Page not found'}
   },
-
+  {
+    path: 'contact',
+    component: ContactComponent,
+    data: {title: 'Contact Us'}
+  },
   // {
   //   path: '**',
   //   component: PageNotFoundComponent,
