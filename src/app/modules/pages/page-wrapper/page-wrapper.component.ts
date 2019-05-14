@@ -33,7 +33,11 @@ export class PageWrapperComponent implements OnInit {
   }
 
   ngOnInit() {
-    const pageSlug = this.route.snapshot.paramMap.get('slug');
+    let pageSlug = this.route.snapshot.paramMap.get('slug');
+
+    if (pageSlug === 'legal') {
+      pageSlug = 'privacy-policy';
+    }
 
     this.contentfulService.getTextOnlyPage(pageSlug)
     .then(res => {
